@@ -9,6 +9,7 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
 * will be called based on the HTTP request and URL.
@@ -58,6 +59,8 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 }));
+
+app.use(flash());
 
 // Place to define global variables - not used in practical 1
 app.use(function (req, res, next) {

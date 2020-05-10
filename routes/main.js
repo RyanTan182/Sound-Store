@@ -25,7 +25,7 @@ router.get('/showRegister', (req, res) => {
 router.get('/about', (req, res) => {
 	const author = 'Denzel Washington';
 	alertMessage(res, 'success', 'This is an important message', 'fas fa-sign-in-alt', true);
-alertMessage(res, 'danger','Unauthorised access', 'fas fa-exclamation-circle', false);
+	alertMessage(res, 'danger','Unauthorised access', 'fas fa-exclamation-circle', false);
 	let error = 'Error message using error object';
 	let errors = [{text:'First error message'},
 					{text:'Second error message'},
@@ -40,7 +40,7 @@ alertMessage(res, 'danger','Unauthorised access', 'fas fa-exclamation-circle', f
 	success_msg: success_msg,
 	error_msg: error_msg
 	})
-	});
+});
 
 // Logout User
 router.get('/logout', (req, res) => {

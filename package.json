@@ -1,10 +1,10 @@
 {
-  "name": "vidjot",
+  "name": "soundstore",
   "version": "1.0.0",
-  "description": "Video Jotter",
-  "main": "app.js",
+  "description": "Sound Store",
+  "main": "soundstore.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node soundstore.js"
   },
   "keywords": [],
   "author": "Chew Phuay Hern",

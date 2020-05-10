@@ -1,25 +1,19 @@
+const alertMessage = require('../helpers/messenger');
 const express = require('express');
 const router = express.Router();
-const alertMessage = require('../helpers/messenger');
 
-// Home pg
+
 router.get('/', (req, res) => {
 	const title = 'Video Jotter';
 	res.render('index', {title: title}) // renders views/index.handlebars
 });
 
-// Login pg
-router.get('/showLogin', (req, res) => {
-	res.render('user/login') // renders views/user.handlebars
+// Logout User
+router.get('/logout', (req, res) => {
+	req.logout();
+	res.redirect('/');
 });
 
-
-// Register pg
-router.get('/showRegister', (req, res) => {
-	res.render('user/register') // renders views/register.handlebars
-});
-
-// About page
 router.get('/about', (req, res) => {
 	const author = 'Denzel Washington';
 	alertMessage(res, 'success', 'This is an important message', 'fas fa-sign-in-alt', true);
@@ -39,6 +33,17 @@ router.get('/about', (req, res) => {
 		error_msg:error_msg
 	})
 });
+	
+
+// Login
+router.get('/showLogin', (req, res) => {
+	res.render('user/login')
+});
+
+// Register
+router.get('/showRegister', (req, res) => {
+	res.render('user/register')
+});
 
 // About
 router.get('/about', (req, res) => {
@@ -46,12 +51,4 @@ router.get('/about', (req, res) => {
 	res.render('about', {author:author}) // renders views/about.handlebars
 });
 
-// Logout User
-router.get('/logout', (req, res) => {
-	req.logout();
-	res.redirect('/');
-});
-
-
 module.exports = router;
-

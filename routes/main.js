@@ -15,7 +15,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-	const author = 'Denzel Washington';
+	const author = 'Uwais';
 	alertMessage(res, 'success', 'This is an important message', 'fas fa-sign-in-alt', true);
 	alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', false);
 	let error = 'Error message using error object';

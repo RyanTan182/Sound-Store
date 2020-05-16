@@ -1,3 +1,4 @@
+
 module.exports = {
     host: 'localhost',
     database: 'sstore',

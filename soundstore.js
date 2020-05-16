@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
+const passport = require('passport');
  // To set up database with new tables set (true)
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
@@ -18,13 +19,16 @@ const FlashMessenger = require('flash-messenger');
 */
 const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
-
+const productRoute = require('./routes/product');
 
 const sstoreDB = require('./config/DBConnection');
 // Connects to MySQL database
 sstoreDB.setUpDB(false);
+const authenticate = require('./config/passport');
+authenticate.localStrategy(passport);
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
+
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -83,8 +87,11 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use(FlashMessenger.middleware);
+
 
 app.use(function(req, res, next){
 	res.locals.success_msg = req.flash('success_msg');
@@ -108,7 +115,7 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
 app.use('/user', userRoute);
-
+app.use('/product', productRoute);
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known

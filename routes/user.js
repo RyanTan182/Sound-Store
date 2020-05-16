@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const alertMessage = require('../helpers/messenger');
 const passport = require('passport');
-
+var bcrypt = require('bcryptjs');
 // User register URL using HTTP post => /user/register
 router.post('/register', (req, res) => {
     let errors = [];
@@ -44,22 +44,26 @@ router.post('/register', (req, res) => {
                         });
                 } else {
                     // Create new user record
-                    User.create({ name, email, password })
-                    .then(user => {
-                        alertMessage(res, 'success', user.name + ' added. Please login', 
-                                    'fas fa-sign-in-alt', true);
-                        res.redirect('/showLogin');
-                     })
-                    .catch(err => console.log(err));
+                    bcrypt.genSalt(10,(err,salt) =>{
+                        bcrypt.hash(password,salt,(err,hash) =>{
+                            if(err) throw err;
+                            password = hash;
+                            User.create({ name, email, password })
+                            .then(user => {
+                                alertMessage(res, 'success', user.name + ' added.Please login', 'fas fa-sign-in-alt', true);
+                                res.redirect('/showLogin');
+                            })
+                            .catch(err => console.log(err));
+                        })
+                    });
                 }
             });
-    }
-});
-
+        }
+    });
 // Login Form POST => /user/login
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/video/listVideos', // Route to /video/listVideos URL
+        successRedirect: '/video/listProducts', // Route to /video/listVideos URL
         failureRedirect: '/showLogin', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the

@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-	const title = 'Video Jotter';
+	const title = 'SoundStore';
 	res.render('index', {title: title}) // renders views/index.handlebars
 });
 

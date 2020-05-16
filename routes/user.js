@@ -51,7 +51,6 @@ router.post('/register', (req, res) => {
                         res.redirect('/showLogin');
                      })
                     .catch(err => console.log(err));
-
                 }
             });
     }

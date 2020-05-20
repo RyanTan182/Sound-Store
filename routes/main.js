@@ -16,21 +16,9 @@ router.get('/logout', (req, res) => {
 
 router.get('/about', (req, res) => {
 	const author = 'Uwais';
-	alertMessage(res, 'success', 'This is an important message', 'fas fa-sign-in-alt', true);
-	alertMessage(res, 'danger', 'Unauthorised access to video', 'fas fa-exclamation-circle', false);
-	let error = 'Error message using error object';
-	let errors = [{text:'First error message'},
-				   {text:'Second error message'},
-				    {text:'Third error message'}];
-	let success_msg = 'Success message!';
-	let error_msg = 'Error message using error_msg';
 	
 	res.render('about', {
 		author: author,
-		error: error,
-		errors,
-		success_msg:success_msg,
-		error_msg:error_msg
 	})
 });
 	

@@ -1,0 +1,107 @@
+<div class="container">
+	<div class="card card-body">
+		<h3>Add Product</h3>
+		<form action="/video/addVideo" method="post" id="addVideo">
+			<div class="form-group">
+				<label class="font-italic" for="story">Name</label>
+				<textarea class="form-control" id="title" name="title" rows="1"></textarea>
+			</div>
+			<div class="form-group">
+				<br>
+				<form action="/action_page.php">
+					<label class="font-italic" for="img">Select image:</label>
+					<input type="file" id="img" name="img" accept="image/*">
+					<input type="submit">
+				</form>
+				<br>
+				<br>
+			</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="story">Description</label>
+				<textarea class="form-control" id="story" name="story" rows="7"></textarea>
+			</div>
+
+			<div class="form-group">
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
+						<label id="Date of Release" class="font-italic">Release Date</label>
+						<input id="datepicker" width="200" name="dateRelease">
+					</div>
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+						<label id="language" class="font-italic">Type</label>
+						<br>
+						{{!-- Practical 5 Exercise 2: Language radio buttons here'--}}
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="language" id="chinese" value="Chinese" checked>
+							<label class="form-check-label" for="chinese">Headphones</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="language" id="english" value="English">
+							<label class="form-check-label" for="englishLang">Headset</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="language" id="malay" value="Malay">
+							<label class="form-check-label" for="malay">Earbuds</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="language" id="tamil" value="Tamil">
+							<label class="form-check-label" for="tamil">Earpiece</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label id="subtitles" class="font-italic">Brand</label>
+						<br>
+						<div class="btn-group dropright">
+						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Brands
+						</button>
+						<div id="brands" class="dropdown-menu">
+							<a class="dropdown-item" href="#">Razer</a>
+							<a class="dropdown-item" href="#">Beats by Dre</a>
+							<a class="dropdown-item" href="#">Sennheiser</a>
+							<a class="dropdown-item" href="#">Sony</a>
+						</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label id="classification" class="font-italic">Price</label>
+						<br>
+						<textarea class="form-control" id="price" name="price" rows="1" width="10px"></textarea>
+					</div>
+				</div>
+
+			</div>
+			<br>
+			<button id="butAddVideo" type="submit" class="btn btn-primary">Save
+			</button>
+		</form>
+	</div>
+</div>
+
+<script>
+		$('#datepicker').datepicker({
+			format: 'dd/mm/yyyy',
+			value: new Date().toLocaleDateString('EN-SG'),
+			uiLibrary: 'bootstrap4',
+		});
+</script>
+
+
+<script>
+	$(function(){
+
+		$("#brands a").click(function(){
+
+		$(".btn:first-child").text($(this).text());
+		$(".btn:first-child").val($(this).text());
+
+	});
+
+	});
+</script>

@@ -7,14 +7,18 @@
 				<textarea class="form-control" id="title" name="title" rows="1"></textarea>
 			</div>
 			<div class="form-group">
+			<div>
 				<br>
-				<form action="/action_page.php">
-					<label class="font-italic" for="img">Select image:</label>
-					<input type="file" id="img" name="img" accept="image/*">
-					<input type="submit">
-				</form>
+				<input type="file" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+				<div class="font-weight-bold text-danger small" id="posterErr"style="display:none">oh no</div>
 				<br>
 				<br>
+			</div>
+			<div>
+				<label id="classification" class="font-italic">Quantity</label>
+						<br>
+				<textarea class="form-control" id="quantity" name="quantity" rows="1"></textarea>
+			</div>
 			</div>
 			<div class="form-group mb-4">
 				<label class="font-italic" for="story">Description</label>
@@ -54,19 +58,15 @@
 			<div class="form-group">
 				<div class="row">
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-						<label id="subtitles" class="font-italic">Brand</label>
+						<label id="brand" class="font-italic">Brand</label>
 						<br>
-						<div class="btn-group dropright">
-						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Brands
-						</button>
-						<div id="brands" class="dropdown-menu">
-							<a class="dropdown-item" href="#">Razer</a>
-							<a class="dropdown-item" href="#">Beats by Dre</a>
-							<a class="dropdown-item" href="#">Sennheiser</a>
-							<a class="dropdown-item" href="#">Sony</a>
-						</div>
-						</div>
+						<select class="custom-select">
+							<option selected>Choose a Brand</option>
+							<option value="1">Sony</option>
+							<option value="2">Beats by Dre</option>
+							<option value="3">Sennheiser</option>
+							<option value="4">Razer</option>
+						</select>
 					</div>
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -93,15 +93,9 @@
 </script>
 
 
+<!-- Material Select Initialization-->
 <script>
-	$(function(){
-
-		$("#brands a").click(function(){
-
-		$(".btn:first-child").text($(this).text());
-		$(".btn:first-child").val($(this).text());
-
-	});
-
+	$(document).ready(function() {
+		$('.mdb-select').materialSelect();
 	});
 </script>

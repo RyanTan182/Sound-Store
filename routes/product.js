@@ -25,7 +25,7 @@ router.post('/addProducts', (req, res) => {
     let userId = req.user.id;
 
     // Multi-value components return array of strings or undefined
-    Video.create({
+    Product.create({
         title,
         story,
         classification,
@@ -33,8 +33,13 @@ router.post('/addProducts', (req, res) => {
         subtitles,
         dateRelease,
         userId
-    }) .then(video => {
+    }) .then(product => {
         res.redirect('/product/listProducts');
     })
     .catch(err => console.log(err))
 });
+
+//route for the optionPage
+router.get('/optionPage', (req, res) => {
+    res.render('product/optionPage')
+})

@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    
 
 </head>
 <style>
@@ -56,20 +56,7 @@ border-bottom: 0px none;
 </tr>
   <br>
     <!--This is a comment. Comments are not displayed in the browser -->
-    {% for cartitem in cartList %}
-        <tr>
-        <td>{{ cartitem.get_prodname() }}</td>
-        <td>${{ cartitem.get_price() }}</td>
-        <td>{{ cartitem.get_quantity() }}
-        <a href="/updateCart/{{cartitem.get_id()}}" class="btn btn-warning">Edit</a></td>
-        <td>
-            <form action="{{url_for('removeFromCart', id=cartitem.get_id())}}" method="POST">
-                <input type="submit" value="Remove" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove {{cartitem.get_prodname()}}?')">
-            </form>.
-        </td>
-        <td>$ {{ cartitem.get_total() }}</td>
-{% endfor %}
-
+    
 
 
 </tr>
@@ -79,7 +66,7 @@ border-bottom: 0px none;
 <div class="total">
     <div class="total-item">
         <label class="Bottomlabel">Subtotal:</label>
-        <div class="total1" id="cart-subtotal">${{ subtotal }}</div>
+        <div class="total1" id="cart-subtotal">$</div>
     </div>
     <div class="shipping">
         <label class="Bottomlabel">Shipping Fee:</label>
@@ -87,7 +74,7 @@ border-bottom: 0px none;
     </div>
     <div class="total-cost">
         <label class="Bottomlabel">Total Price:</label>
-        <div class="finalprice" id="final">${{ totalprice }}</div>
+        <div class="finalprice" id="final">$</div>
 
     </div>
     <a href="/payment">

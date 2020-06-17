@@ -1,4 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get
+router.get('/listDelivery', (req, res) => {
+    res.render('Delivery/listDelivery')
+})
+
+module.exports = router;

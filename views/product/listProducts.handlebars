@@ -8,25 +8,25 @@
 		{{#each products}}
 			<div class="card border-primary mb-2 w-100 mx-auto">
 				<div class="card-header">
-					<h5 class="card-name">{{name}}</h5>
+					<h5 class="card-title">{{productTitle}}</h5>
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic">Subtitles</p>
+							<p class="font-italic">Type</p>
 							<p class="text-info">
-								{{subtitles}}
+								{{type}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic">Language</p>
+							<p class="font-italic">Brand</p>
 							<p class="text-info">
-								{{language}}
+								{{brand}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic">Classification</p>
-							<p class="text-info">{{classification}}</p>
+							<p class="font-italic">Price</p>
+							<p class="text-info">${{price}}</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic">Date Release</p>
@@ -62,7 +62,7 @@
 					<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne"
 						 data-parent="#storyAccordion">
 						<div class="card-body">
-						  {{story}}
+						  {{description}}
 						</div>
 					</div>
 				</div>

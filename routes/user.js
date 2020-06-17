@@ -72,7 +72,6 @@ router.post('/loginUser', (req, res, next) => {
     })(req, res, next);
 });
 
-
 router.post('/loginStaff', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/product/listProducts', // Route to /video/listVideos URL
@@ -84,3 +83,13 @@ router.post('/loginStaff', (req, res, next) => {
     })(req, res, next);
 });
 module.exports = router;
+
+router.post('/forgotPassword', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/user/loginUser', // Route to /video/listVideos URL // Route to /login URL
+        failureFlash: true
+        /* Setting the failureFlash option to true instructs Passport to flash an error message using the
+        message given by the strategy's verify callback, if any. When a failure occur passport passes the message
+        object as error */
+    })(req, res, next);
+});

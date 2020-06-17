@@ -3,14 +3,13 @@ const router = express.Router();
 const moment = require('moment');
 const Product = require('../models/Product');
 
-// List videos belonging to current logged in user
-router.get('/listProducts', (req, res) => {
+    router.get('/listProducts', (req, res) => {
     Product.findAll({
         where: {
             userId: req.user.id
         },
         order: [
-            ['name', 'ASC']
+            ['productTitle', 'ASC']
         ],
         raw: true
     })
@@ -31,27 +30,44 @@ router.get('/addProducts', (req, res) => {
 
 // Adds new products from /product/addProducts
 router.post('/addProducts', (req, res) => {
-    let name = req.body.name;
+    let productTitle = req.body.productTitle;
     let description = req.body.description.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, 'DD/MM/YYYY');
-    let type = req.body.type.toString();
-    let subtitles = req.body.subtitles === undefined ? '' :req.body.subtitles.toString();
-    let classification = req.body.classification;
+    let type = req.body.type;
+    let brand = req.body.brand;
+    let price = req.body.price;
     let userId = req.user.id;
 
     // Multi-value components return array of strings or undefined
     Product.create({
-        name,
+        productTitle,
         description,
-        classification,
-        language,
-        subtitles,
+        type,
+        price,
+        brand,
         dateRelease,
         userId
     }) .then(product => {
         res.redirect('/product/listProducts');
     })
     .catch(err => console.log(err))
+});
+
+router.get('/edit/:id', (req, res) => {
+    Product.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((product) => {
+        if(!product){
+            alertMessage(res, 'info', 'No such videos', 'fas fa-exclamation-circle', true);
+        }
+        checkOptions(product);
+            // call views/video/editVideo.handlebar to render the edit video page
+        res.render('product/editProduct', {
+            product // passes video object to handlebar
+        });
+    }).catch(err => console.log(err)); // To catch no video ID
 });
 
 //route for the optionPage

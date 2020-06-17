@@ -51,7 +51,7 @@ router.post('/register', (req, res) => {
                             User.create({ name, email, password })
                             .then(user => {
                                 alertMessage(res, 'success', user.name + ' added.Please login', 'fas fa-sign-in-alt', true);
-                                res.redirect('/showLogin');
+                                res.redirect('/showLoginUser');
                             })
                             .catch(err => console.log(err));
                         })
@@ -61,10 +61,10 @@ router.post('/register', (req, res) => {
         }
     });
 // Login Form POST => /user/login
-router.post('/login', (req, res, next) => {
+router.post('/loginUser', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/product/listProducts', // Route to /video/listVideos URL
-        failureRedirect: '/showLogin', // Route to /login URL
+        failureRedirect: '/showLoginUser', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the
         message given by the strategy's verify callback, if any. When a failure occur passport passes the message
@@ -72,4 +72,15 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+
+router.post('/loginStaff', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/product/listProducts', // Route to /video/listVideos URL
+        failureRedirect: '/showLoginStaff', // Route to /login URL
+        failureFlash: true
+        /* Setting the failureFlash option to true instructs Passport to flash an error message using the
+        message given by the strategy's verify callback, if any. When a failure occur passport passes the message
+        object as error */
+    })(req, res, next);
+});
 module.exports = router;

@@ -24,8 +24,12 @@ router.get('/about', (req, res) => {
 	
 
 // Login
-router.get('/showLogin', (req, res) => {
-	res.render('user/login')
+router.get('/showLoginUser', (req, res) => {
+	res.render('user/loginUser')
+});
+
+router.get('/showLoginStaff', (req, res) => {
+	res.render('user/loginStaff')
 });
 
 // Register

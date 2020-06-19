@@ -40,6 +40,18 @@ router.get('/showRegister', (req, res) => {
 	res.render('user/register')
 });
 
+//User Management
+router.get('/showAccountManage', (req, res) => {
+	res.render('user/accountManagement')
+});
+
+router.get('/showBillingInfo', (req, res) => {
+	res.render('user/billingInfo')
+});
+
+router.get('/showDeliveryAddress', (req, res) => {
+	res.render('user/deliveryAddress')
+});
 // About
 router.get('/about', (req, res) => {
 	const author = 'Geralt'

@@ -21,12 +21,14 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
+const {formatDate} = require('./helpers/hbs');
 
 const sstoreDB = require('./config/DBConnection');
 // Connects to MySQL database
 sstoreDB.setUpDB(false);
 const authenticate = require('./config/passport');
 authenticate.localStrategy(passport);
+
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
@@ -48,6 +50,10 @@ const app = express();
 *
 * */
 app.engine('handlebars', exphbs({
+	helpers: {
+		formatDate: formatDate
+	},
+	
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
 app.set('view engine', 'handlebars');

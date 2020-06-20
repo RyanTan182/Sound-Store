@@ -21,6 +21,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
+const deliveryRoute = require('./routes/Delivery')
 
 const sstoreDB = require('./config/DBConnection');
 // Connects to MySQL database
@@ -118,6 +119,7 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 app.use('/user', userRoute);
 app.use('/product', productRoute);
 app.use('/order', orderRoute);
+app.use('/Delivery', deliveryRoute);
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known

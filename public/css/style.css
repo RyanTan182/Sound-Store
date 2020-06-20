@@ -217,3 +217,12 @@
 }
 
 
+/**/
+
+.card border-primary mb-2 w-100 mx-auto{
+  color: aquamarine;
+}
+
+#addTitle{
+  color: aquamarine;
+}

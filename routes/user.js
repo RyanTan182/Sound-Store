@@ -94,3 +94,7 @@ router.post('/forgotPassword', (req, res, next) => {
         object as error */
     })(req, res, next);
 });
+
+router.get('/accountManagement', (req, res, next) => {
+    res.render('user/accountManagement')
+})

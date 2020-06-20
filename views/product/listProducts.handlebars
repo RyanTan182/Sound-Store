@@ -4,14 +4,14 @@
 <div class="container">
 {{#if products}}
 	<div class="card card-body">
-		<h3 class="text-muted">Your Products</h3>
+		<h3 class="text-warning">Your Products</h3>
 		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
 		<br>
 		{{#each products}}
 			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
-				<div class="card-header border-info">
-					<h5 id="titlez" class="card-title text-white">{{productTitle}}</h5>
-				</div>
+			<div id="productHeader" class="border-info">
+				<h5 id="titlez" class="card-title text-white">{{productTitle}}</h5>
+						
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-3">
@@ -50,7 +50,7 @@
 
 				</div>
 
-				<div class="accordion bg-secondary" id="storyAccordion">
+				<div class="accordion bg-dark" id="storyAccordion">
 					<div class="card-header border-info" id="headingOne">
 						<button class="btn btn-link text-info" type="button" data-toggle="collapse"
 								data-target="#collapseOne{{id}}"
@@ -68,6 +68,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		{{/each}}
 	</div>
 
@@ -83,7 +84,7 @@
 	$(document).ready(function(){
 	$("#myInput").on("keyup", function() {
 		var value = $(this).val().toLowerCase();
-		$("#Product h5").filter(function() {
+		$("#Product ").filter(function() {
 		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
 	});

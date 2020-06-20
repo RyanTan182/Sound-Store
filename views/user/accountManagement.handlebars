@@ -1,0 +1,22 @@
+<div class="container">
+		<h1 class="display-4">{{name}}</h1>
+	</div>
+<div class="container2">
+		<h1 class="display-4">{{name}}</h1>
+	</div>
+<div class="row">
+	<div class="col-md-6 mx-auto">
+		<div class="card card-body">
+			<form method="post" action="/user/accountManagement"> 
+				<div class="form-group">
+					<label for="email">New Password</label>
+					<input type="text" name="newpassword" class="form-control" required>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <label for="email">Confirm New Password</label>
+					<input type="text" name="newpassword" class="form-control" required>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+				</div>			
+                </form>
+		</div>
+	</div>
+</div>

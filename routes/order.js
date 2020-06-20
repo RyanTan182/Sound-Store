@@ -12,6 +12,17 @@ router.get('/cart', (req, res) => {
 });
 
 
+router.get('/address', (req, res) => {
+	res.render('order/address')
+});
 
+router.get('/payment', (req, res) => {
+	res.render('order/payment')
+});
+
+
+router.get('/confirmation', (req, res) => {
+	res.render('order/confirmation')
+});
 
 module.exports = router;

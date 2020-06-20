@@ -4,41 +4,43 @@
 <div class="container">
 {{#if products}}
 	<div class="card card-body">
-		<h3 class="text-primary">Video Jots</h3>
+		<h3 class="text-muted">Your Products</h3>
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
+		<br>
 		{{#each products}}
-			<div class="card border-primary mb-2 w-100 mx-auto">
-				<div class="card-header">
-					<h5 class="card-title">{{productTitle}}</h5>
+			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
+				<div class="card-header border-info">
+					<h5 id="titlez" class="card-title text-white">{{productTitle}}</h5>
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic">Type</p>
+							<p class="font-italic text-white">Type</p>
 							<p class="text-info">
 								{{type}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic">Brand</p>
+							<p class="font-italic text-white">Brand</p>
 							<p class="text-info">
 								{{brand}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic">Price</p>
+							<p class="font-italic text-white">Price</p>
 							<p class="text-info">${{price}}</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic">Date Release</p>
+							<p class="font-italic text-white">Date Release</p>
 							<p class="text-info">{{formatDate dateRelease 'DD MMM YYYY'}}</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic"></p>
-							<a href="/product/edit/{{id}}" class="card-link">
+							<a href="/product/edit/{{id}}" class="card-link text-success">
 								<i class="fas fa-pencil-alt"></i>
 								Edit
 							</a>
-							<a href="" class="card-link" data-toggle="confirmation"
+							<a href="" class="card-link text-danger" data-toggle="confirmation"
 							   data-title="Confirm delete?">
 								<i class="far fa-trash-alt"></i>
 								Delete
@@ -48,20 +50,19 @@
 
 				</div>
 
-				<div class="accordion" id="storyAccordion">
-					<div class="card-header" id="headingOne">
-						<button class="btn btn-link" type="button" data-toggle="collapse"
+				<div class="accordion bg-secondary" id="storyAccordion">
+					<div class="card-header border-info" id="headingOne">
+						<button class="btn btn-link text-info" type="button" data-toggle="collapse"
 								data-target="#collapseOne{{id}}"
-								aria-expanded="true" aria-controls="collapseOne{{id}}"
-						>
-							description<i class="fas fa-chevron-down"></i>
+								aria-expanded="true" aria-controls="collapseOne{{id}}">
+							Description<i class="fas fa-chevron-down"></i>
 						</button>
 
 					</div>
 
 					<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne"
 						 data-parent="#storyAccordion">
-						<div class="card-body">
+						<div class="card-body text-white">
 						  {{description}}
 						</div>
 					</div>
@@ -74,3 +75,17 @@
 {{else}}
 	<h3>No videos jotted</h3>
 {{/if}}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#Product h5").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>

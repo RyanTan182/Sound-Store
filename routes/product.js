@@ -3,7 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const Product = require('../models/Product');
 
-    router.get('/listProducts', (req, res) => {
+router.get('/listProducts', (req, res) => {
     Product.findAll({
         where: {
             userId: req.user.id
@@ -14,7 +14,6 @@ const Product = require('../models/Product');
         raw: true
     })
     .then((products) => {
-        // pass object to listVideos.handlebar
         res.render('product/listProducts', {
             products: products
         });
@@ -33,7 +32,7 @@ router.post('/addProducts', (req, res) => {
     let productTitle = req.body.productTitle;
     let description = req.body.description.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, 'DD/MM/YYYY');
-    let type = req.body.type;
+    let type = req.body.type.toString();
     let brand = req.body.brand;
     let price = req.body.price;
     let userId = req.user.id;

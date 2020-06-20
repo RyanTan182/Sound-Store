@@ -6,7 +6,7 @@ const Product = db.define('product', {
         type: Sequelize.STRING
     },
     description: {
-        type: Sequelize.STRING(2000)
+        type: Sequelize.STRING
     },
     type: {
         type: Sequelize.STRING
@@ -21,4 +21,5 @@ const Product = db.define('product', {
         type: Sequelize.DATE
     }, 
 });
+
 module.exports = Product;

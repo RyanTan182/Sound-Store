@@ -36,8 +36,12 @@ router.get('/showForgotPassword', (req, res) => {
 	res.render('user/forgotPassword')
 });
 // Register
-router.get('/showRegister', (req, res) => {
-	res.render('user/register')
+router.get('/showRegisterUser', (req, res) => {
+	res.render('user/registerUser')
+});
+
+router.get('/showRegisterStaff', (req, res) => {
+	res.render('user/registerStaff')
 });
 
 //User Management

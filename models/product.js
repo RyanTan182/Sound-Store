@@ -5,6 +5,9 @@ const Product = db.define('product', {
     productTitle: {
         type: Sequelize.STRING
     },
+    productImage: {
+        type: Sequelize.STRING
+    },
     description: {
         type: Sequelize.STRING
     },

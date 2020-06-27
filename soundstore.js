@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
 const passport = require('passport');
+
  // To set up database with new tables set (true)
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function

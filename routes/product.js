@@ -2,6 +2,18 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const Product = require('../models/Product');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/uploads/');
+    },
+    filename: function(req, file, cb){
+        cb(null, file.originalname)
+    }
+});
+
+const upload = multer({storage: storage});
 
 router.get('/listProducts', (req, res) => {
     Product.findAll({
@@ -15,7 +27,8 @@ router.get('/listProducts', (req, res) => {
     })
     .then((products) => {
         res.render('product/listProducts', {
-            products: products
+            products: products,
+            productImage: products.productImage
         });
     })  
     .catch(err => console.log(err));
@@ -28,8 +41,9 @@ router.get('/addProducts', (req, res) => {
 })
 
 // Adds new products from /product/addProducts
-router.post('/addProducts', (req, res) => {
+router.post('/addProducts', upload.single('productImage'), (req, res) => {
     let productTitle = req.body.productTitle;
+    let productImage = req.file.originalname;
     let description = req.body.description.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, 'DD/MM/YYYY');
     let type = req.body.type.toString();
@@ -40,6 +54,7 @@ router.post('/addProducts', (req, res) => {
     // Multi-value components return array of strings or undefined
     Product.create({
         productTitle,
+        productImage,
         description,
         type,
         price,
@@ -73,5 +88,6 @@ router.get('/edit/:id', (req, res) => {
 router.get('/optionPage', (req, res) => {
     res.render('product/optionPage')
 })
+
 
 module.exports = router;

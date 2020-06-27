@@ -11,7 +11,7 @@ router.get('/editDelivery', (req, res) => {
 
 
 router.get('/listdeliveryforuser', (req, res) => {
-	res.render('Delivery/listdeliveryforuse')
+	res.render('Delivery/listdeliveryforuser')
 });
 
 router.get('/makedelivery', (req, res) => {

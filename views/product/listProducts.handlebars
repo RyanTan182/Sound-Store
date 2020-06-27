@@ -10,7 +10,7 @@
 		{{#each products}}
 			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
 			<div id="productHeader" class="border-info">
-				<h5 id="titlez" class="card-title text-white">{{productTitle}}</h5>
+				<h5 id="titlez" class="card-title text-white">{{productTitle}}&nbsp;&nbsp;<img src='/uploads/{{productImage}}' width="90px" height="70px" id="productImages"></h5>
 						
 				<div class="card-body">
 					<div class="row">
@@ -62,7 +62,7 @@
 
 					<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne"
 						 data-parent="#storyAccordion">
-						<div class="card-body text-white">
+						<div class="card-body text-white">	
 						  {{description}}
 						</div>
 					</div>
@@ -74,7 +74,7 @@
 
 </div>
 {{else}}
-	<h3>No videos jotted</h3>
+	<h3>No products listed</h3>
 {{/if}}
 
 

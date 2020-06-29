@@ -155,3 +155,11 @@ router.post('/forgotPassword', (req, res, next) => {
 router.get('/accountManagement', (req, res, next) => {
     res.render('user/accountManagement')
 })
+
+router.get('/billingInfo', (req, res, next) => {
+    res.render('user/billingInfo')
+})
+
+router.get('/deliveryAddress', (req, res, next) => {
+    res.render('user/deliveryAddress')
+})

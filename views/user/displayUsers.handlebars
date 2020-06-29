@@ -1,0 +1,65 @@
+{{users}}
+
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+
+
+<div class="container">
+{{#if users}}
+	<div class="card card-body">
+		<h3 class="text-primary">Video Jots</h3>
+		{{#each users}}
+			<div class="card border-primary mb-2 w-100 mx-auto">
+				<div class="card-header">
+					<h5 class="card-title">{{email}}</h5>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic">Email</p>
+							<p class="text-info">
+								{{email}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic">Password</p>
+							<p class="text-info">
+								{{password}}
+							</p>
+						</div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic">Name</p>
+							<p class="text-info">
+								{{name}}
+							</p>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="accordion" id="storyAccordion">
+					<div class="card-header" id="headingOne">
+						<button class="btn btn-link" type="button" data-toggle="collapse"
+								data-target="#collapseOne{{email}}"
+								aria-expanded="false" aria-controls="collapseOne{{email}}" 
+						>
+							Story<i class="fas fa-chevron-down"></i>
+						</button>
+
+					</div>
+
+					<div id="collapseOne{{email}}" class="collapse" aria-labelledby="headingOne"
+						 data-parent="#storyAccordion"
+					>
+						<div class="card-body">
+						  {{password}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+	<h3>No users</h3>
+{{/if}}

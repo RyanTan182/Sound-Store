@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Staff = require('../models/Staff');
 const alertMessage = require('../helpers/messenger');
 const passport = require('passport');
 var bcrypt = require('bcryptjs');
+
+
 // User register URL using HTTP post => /user/register
 router.post('/registerUser', (req, res) => {
     let errors = [];
@@ -86,13 +89,13 @@ router.post('/registerStaff', (req, res) => {
         });
     } else {
         // If all is well, checks if user is already registered
-        User.findOne({ where: {email: req.body.email} })
-            .then(user => {
-                if (user) {
+        Staff.findOne({ where: {email: req.body.email} })
+            .then(staff => {
+                if (staff) {
                 // If user is found, that means email has already been
                     // registered
                     res.render('user/registerStaff', {
-                        error: user.email + ' already registered',
+                        error: staff.email + ' already registered',
                         name,
                         email,
                         password,
@@ -104,10 +107,10 @@ router.post('/registerStaff', (req, res) => {
                         bcrypt.hash(password,salt,(err,hash) =>{
                             if(err) throw err;
                             password = hash;
-                            User.create({ name, email, password })
-                            .then(user => {
+                            Staff.create({ name, email, password })
+                            .then(staff => {
                                 alertMessage(res, 'success', user.name + ' added.Please login', 'fas fa-sign-in-alt', true);
-                                res.redirect('/showLoginUser');
+                                res.redirect('/showLoginStaff');
                             })
                             .catch(err => console.log(err));
                         })
@@ -131,7 +134,7 @@ router.post('/loginUser', (req, res, next) => {
 
 router.post('/loginStaff', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/product/listProducts', // Route to /video/listVideos URL
+        successRedirect: '/user/ListUsers', // Route to /video/listVideos URL
         failureRedirect: '/showLoginStaff', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the
@@ -156,10 +159,10 @@ router.get('/accountManagement', (req, res, next) => {
     res.render('user/accountManagement')
 })
 
-router.get('/billingInfo', (req, res, next) => {
-    res.render('user/billingInfo')
+router.get('/displayUsers', (req, res, next) => {
+    res.render('user/displayUsers')
 })
 
-router.get('/deliveryAddress', (req, res, next) => {
-    res.render('user/deliveryAddress')
+router.get('/ListUsers', (req, res, next) => {
+    res.render('user/ListUsers')
 })

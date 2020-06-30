@@ -4,8 +4,8 @@ const User = require('../models/User');
 const Staff = require('../models/Staff');
 const alertMessage = require('../helpers/messenger');
 const passport = require('passport');
-var bcrypt = require('bcryptjs');
-
+const bcrypt = require('bcryptjs');
+const db=require('../config/db')
 
 // User register URL using HTTP post => /user/register
 router.post('/registerUser', (req, res) => {
@@ -160,9 +160,26 @@ router.get('/accountManagement', (req, res, next) => {
 })
 
 router.get('/displayUsers', (req, res, next) => {
-    res.render('user/displayUsers')
-})
+    User.findAll({
+        where: {
+            id: req.user.id
+        },
+        order: [
+            ['email', 'ASC']
+        ],
+        raw: true
+    })
+    .then((users) => {
+        res.render('user/displayUsers', {
+            users: users,
+        });
+    })  
+    .catch(err => console.log(err));
+});
 
-router.get('/ListUsers', (req, res, next) => {
-    res.render('user/ListUsers')
-})
+router.get('/listUsers', (req, res, next) => {
+    db.query("SELECT * FROM users", function (err, data, fields) {
+        if (err) throw err;
+    res.render('user/displayUsers')
+});
+});

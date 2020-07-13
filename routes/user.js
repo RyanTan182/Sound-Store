@@ -178,7 +178,7 @@ router.post('/registerStaff', (req, res) => {
                             password = hash;
                             Staff.create({ name, email, password })
                             .then(staff => {
-                                alertMessage(res, 'success', user.name + ' added.Please login', 'fas fa-sign-in-alt', true);
+                                alertMessage(res, 'success', staff.name + ' added.Please login', 'fas fa-sign-in-alt', true);
                                 res.redirect('/showLoginStaff');
                             })
                             .catch(err => console.log(err));
@@ -203,7 +203,7 @@ router.post('/loginUser', (req, res, next) => {
 
 router.post('/loginStaff', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/product/listProducts', // Route to /video/listVideos URL
+        successRedirect: '/user/ListUsers', // Route to /video/listVideos URL
         failureRedirect: '/showLoginStaff', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the

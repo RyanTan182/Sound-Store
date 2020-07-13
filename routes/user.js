@@ -204,7 +204,7 @@ router.post('/loginUser', (req, res, next) => {
 
 router.post('/loginStaff', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/user/ListUsers', // Route to /video/listVideos URL
+        successRedirect: '/product/listProducts', // Route to /video/listVideos URL
         failureRedirect: '/showLoginStaff', // Route to /login URL
         failureFlash: true
         /* Setting the failureFlash option to true instructs Passport to flash an error message using the

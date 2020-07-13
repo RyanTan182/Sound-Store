@@ -2,80 +2,16 @@
 
 
 <div class="container">
-{{#if products}}
-	<div class="card card-body">
-		<h3 class="text-warning">Your Products</h3>
-		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
-		<br>
-		{{#each products}}
-			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
-			<div id="productHeader" class="border-info">
-				<h5 id="titlez" class="card-title text-white">{{productTitle}}&nbsp;&nbsp;<img src='/uploads/{{productImage}}' width="90px" height="70px" id="productImages"></h5>
-						
-				<div class="card-body">
-					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic text-white">Type</p>
-							<p class="text-info">
-								{{type}}
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-3">
-							<p class="font-italic text-white">Brand</p>
-							<p class="text-info">
-								{{brand}}
-							</p>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic text-white">Price</p>
-							<p class="text-info">${{price}}</p>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic text-white">Date Release</p>
-							<p class="text-info">{{formatDate dateRelease 'DD MMM YYYY'}}</p>
-						</div>
-						<div class="col-sm-12 col-md-12 col-lg-2">
-							<p class="font-italic"></p>
-							<a href="/product/edit/{{id}}" class="card-link text-success">
-								<i class="fas fa-pencil-alt"></i>
-								Edit
-							</a>
-							<a href="" class="card-link text-danger" data-toggle="confirmation"
-							   data-title="Confirm delete?">
-								<i class="far fa-trash-alt"></i>
-								Delete
-							</a>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="accordion bg-dark" id="storyAccordion">
-					<div class="card-header border-info" id="headingOne">
-						<button class="btn btn-link text-info" type="button" data-toggle="collapse"
-								data-target="#collapseOne{{id}}"
-								aria-expanded="true" aria-controls="collapseOne{{id}}">
-							Description<i class="fas fa-chevron-down"></i>
-						</button>
-
-					</div>
-
-					<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne"
-						 data-parent="#storyAccordion">
-						<div class="card-body text-white">	
-						  {{description}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		{{/each}}
+	<div class="card">
+		<img src="../../public/uploads/logo.png" alt="Denim Jeans" style="width:100%">
+		<h1>Tailored Jeans</h1>
+		<p class="price">$19.99</p>
+		<p>Some text about the jeans..</p>
+		<p><button>Add to Cart</button></p>
 	</div>
 
 </div>
-{{else}}
 	<h3>No products listed</h3>
-{{/if}}
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -22,7 +22,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
-const {formatDate} = require('./helpers/hbs');
+const {formatDate, radioCheck} = require('./helpers/hbs');
 const deliveryRoute = require('./routes/Delivery')
 
 const sstoreDB = require('./config/DBConnection');
@@ -53,7 +53,8 @@ const app = express();
 * */
 app.engine('handlebars', exphbs({
 	helpers: {
-		formatDate: formatDate
+		formatDate: formatDate,
+		radioCheck: radioCheck
 	},
 	
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 

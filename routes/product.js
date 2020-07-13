@@ -3,6 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const Product = require('../models/Product');
 const multer = require('multer');
+const { radioCheck } = require('../helpers/hbs');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -73,9 +74,7 @@ router.get('/edit/:id', (req, res) => {
             id: req.params.id
         }
     }).then((product) => {
-        if(!product){
-            alertMessage(res, 'info', 'No such products', 'fas fa-exclamation-circle', true);
-        }
+        console.log(req.params.id)
         checkOptions(product);
 
         res.render('product/editProducts', {
@@ -85,10 +84,10 @@ router.get('/edit/:id', (req, res) => {
 });
 
 function checkOptions(product){
-    product.headphones = (product.type.search('Headphones') >= 0) ? 'checked' : '';
-    product.headset = (product.type.search('Headset') >= 0) ? 'checked' : '';
-    product.earbuds = (product.type.search('Earbuds') >= 0) ? 'checked' : '';
-    product.earpiece = (product.type.search('Earpiece') >= 0) ? 'checked' : '';
+    product.headphonesType = (product.type.search('Headphones') >= 0) ? 'checked' : '';
+    product.headsetType = (product.type.search('Headset') >= 0) ? 'checked' : '';
+    product.earbudsType = (product.type.search('Earbuds') >= 0) ? 'checked' : '';
+    product.earpieceType = (product.type.search('Earpiece') >= 0) ? 'checked' : '';
 }
 
 //route for the optionPage

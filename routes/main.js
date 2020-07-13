@@ -1,7 +1,7 @@
 const alertMessage = require('../helpers/messenger');
 const express = require('express');
 const router = express.Router();
-
+const nodemailer=require('nodemailer');
 
 router.get('/', (req, res) => {
 	const title = 'SoundStore';
@@ -61,6 +61,38 @@ router.get('/ListUsers', (req, res) => {
 router.get('/about', (req, res) => {
 	const author = 'Geralt'
 	res.render('about', {author:author}) // renders views/about.handlebars
+});
+
+
+//newsletter
+router.get('/newsletter', (req, res) => {
+	res.render('newsletter')
+});
+
+router.post('/newsletter', (req, res) => {
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+	  user: 'soundstore182@gmail.com',
+	  pass: 'SoundStore182'
+	}
+  });
+  
+  var mailOptions = {
+	from: 'soundstore182@gmail.com',
+	to: 'ryantan182@hotmail.com',
+	subject: 'Thanks for suscribing!',
+	text: 'Thank you for subscribing to our Newsletter! We will keep you updated with all the latest news and discounts on Sound Store!'
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+	if (error) {
+	  console.log(error);
+	} else {
+	  console.log('Email sent: ' + info.response);
+	  res.render('newsletter')
+	}
+  });
 });
 
 module.exports = router;

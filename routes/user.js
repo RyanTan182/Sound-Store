@@ -7,7 +7,6 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const sgMail=require('@sendgrid/mail');
 const jwt=require('jsonwebtoken');
-const nodemailer=require('nodemailer');
 
 // User register URL using HTTP post => /user/register
 router.post('/registerUser', (req, res) => {

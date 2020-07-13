@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="card card-body">
+		<h3>Edit</h3>
+		<form action="/user/saveEditedUser/{{user.id}}?_method=PUT" method="post">
+		<input type="hidden" name="_method" value="PUT">
+			
+			<div class="form-group">
+				<label class="font-italic" for="description">Name</label>
+				<textarea class="form-control" id="productTitle" name="productTitle" rows="1">{{user.name}}</textarea>
+			</div>
+		</div>
+			<br>
+			<button id="butAddVideo" type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</div>

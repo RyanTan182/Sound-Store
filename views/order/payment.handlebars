@@ -1,3 +1,7 @@
+
+
+
+
 <div class="row">
 	<div class="col-md-6 mx-auto">
 		<div class="card card-body">
@@ -29,11 +33,11 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Expiration Date of Card</label>
-					<input type="password"  name="password" class="form-control" value="" required>
+					<input type="text"  name="password" class="form-control" value="" required>
 				</div>
 				<div class="form-group">
 					<label for="password2">Security Number</label>
-					<input type="password"  name="password2" class="form-control" value="" required>
+					<input type="text"  name="password2" class="form-control" value="" required>
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
@@ -45,17 +49,60 @@
 					<div class="card-header" id="headingOne">
 						<button class="btn btn-link" type="button" data-toggle="collapse"
 								data-target="#collapseOne"
-								aria-expanded="false" aria-controls="collapseOne"
-						>
+								aria-expanded="false" aria-controls="collapseOne">
 							Paypal<i class="fas fa-chevron-down"></i>
 						</button>
 
 					</div>
 
 					<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-						 data-parent="#storyAccordion"
-					>		
+						 data-parent="#storyAccordion">		
 						<div class="card-body">
-						  
+
+<head>
+    <!-- Add meta tags for mobile and IE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+
+<body>
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=SGD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+		
+            
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '10'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+</body>
+    
 						</div>
+					
 </div>
+

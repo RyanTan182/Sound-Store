@@ -49,13 +49,14 @@ router.get('/showAccountManage', (req, res) => {
 	res.render('user/accountManagement')
 });
 
-router.get('/showBillingInfo', (req, res) => {
-	res.render('user/billingInfo')
+router.get('/displayUsers', (req, res) => {
+	res.render('user/displayUsers')
 });
 
-router.get('/showDeliveryAddress', (req, res) => {
-	res.render('user/deliveryAddress')
+router.get('/ListUsers', (req, res) => {
+	res.render('user/ListUsers')
 });
+
 // About
 router.get('/about', (req, res) => {
 	const author = 'Geralt'

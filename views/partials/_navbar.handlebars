@@ -19,6 +19,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/about">About</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/newsletter">Newsletter</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				{{#if user}}
@@ -28,7 +31,7 @@
 					<li class="nav-item">
 						<a href="/logout" class="nav-link">Logout</a>
 					</li>	
-				{{else if staff}}
+				{{#if staffs}}
 					<li class="nav-item">
 						<a href="/product/optionPage" class="nav-link">Products Management</a>
 					</li>
@@ -38,6 +41,7 @@
 					<li class="nav-item">
 						<a href="/logout" class="nav-link">Logout</a>
 					</li>	
+					{{/if}}
 				{{else}}
 					<li class="nav-item">
 						<a href="/showLoginUser" class="nav-link">Login</a>

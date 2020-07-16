@@ -7,7 +7,7 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const sgMail=require('@sendgrid/mail');
 const jwt=require('jsonwebtoken');
-const request=require('request');
+/* const request=require('request'); */
 const bodyParser=require('body-parser');
 
 // User register URL using HTTP post => /user/register

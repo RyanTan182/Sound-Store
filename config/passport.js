@@ -41,7 +41,7 @@ console.log(done);
 });
 }
 
-function localStrategy(passport){
+/* function localStrategy(passport){
     passport.use(new LocalStrategy({usernameField: 'email'}, (email, password,
     done) => {
     Staff.findOne({ where: {email: email} })
@@ -76,6 +76,6 @@ function localStrategy(passport){
     console.log(done);
     });
     });
-    }
+    } */
     
 module.exports = {localStrategy};

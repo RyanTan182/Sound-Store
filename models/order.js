@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const Product = db.define('order', {
+const Order = db.define('order', {
     productTitle: {
         type: Sequelize.STRING
     },

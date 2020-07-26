@@ -233,21 +233,6 @@
 }
 
 
-/*product filter*/
-.product-filter {
-  display: flex;
-}
-.product-filter h1 {
-  flex-grow: 1;
-}
-.sort {
-  display: flex;
-} 
-.collection-sort {
-  display: flex;
-  flex-direction: column;
-}
-
 
 
 /*products styling*/
@@ -325,13 +310,13 @@
             animation-name: opacity;
     -webkit-animation-duration: .3s;
             animation-duration: .3s; }
-
+/*
 .card {
   margin-top: 50px;
   background: #eee;
   padding: 3em;
   line-height: 1.5em; }
-
+*/
 @media screen and (min-width: 997px) {
   .wrapper {
     display: -webkit-box;
@@ -465,7 +450,7 @@ label {
           align-items: center;
 }
 
-input {
+input[type=checkbox] {
   position: relative !important;
   -webkit-appearance: none;
      -moz-appearance: none;

@@ -1,10 +1,11 @@
+<script>console.log(productTitle + 'HELOOOOOOOO')</script>
 <div class="container">
 	<div class="card card-body">
 		<h3>Add Product</h3>
 		<form action="/product/addProducts" method="post" id="editVideo" enctype="multipart/form-data">
 			<div class="form-group">
 				<input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-				<img src="../../public/uploads/WhatsApp Image 2020-04-13 at 9.31.19 AM.jpeg" id="blah" width="500" height="250" >
+				<img src="/uploads/{{product.productImage}}" id="blah" width="500" height="250" >
 			</div>
 			
 			<div class="form-group">

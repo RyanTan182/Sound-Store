@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 // Load user model
 const User = require('../models/User');
+/* var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; */
 
 function localStrategy(passport){
 passport.use('User',new LocalStrategy({usernameField: 'email'}, (email, password,
@@ -39,6 +40,20 @@ console.log(done);
 });
 });
 }
+
+/* function GoogleStrategy(passport){
+    passport.use(new GoogleStrategy({
+        clientID: '633151802088-au8g5atiipjdddkc9q4aqt1o22teti3h.apps.googleusercontent.com',
+        clientSecret: 'dbSR1EDMoHP5495QWaA2dFDK',
+        callbackURL: "http://localhost:5000/"
+      },
+      function(accessToken, refreshToken, profile, done) {
+           User.findOrCreate({ googleId: profile.id }, function (err, user) {
+             return done(err, user);
+           });
+      }
+    ));
+} */
 
     
 module.exports = {localStrategy};

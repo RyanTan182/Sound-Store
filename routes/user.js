@@ -18,7 +18,7 @@ router.post('/registerUser', (req, res) => {
     let errors = [];
 
     // Retrieves fields from register page from request body
-    let {name, email, password, password2,UserType} = req.body;
+    let {name, email, password, password2,UserType,captcha} = req.body;
 
     // Checks if both passwords entered are the same
     if(password !== password2) {
@@ -61,7 +61,6 @@ router.post('/registerUser', (req, res) => {
             //If success
             return res.json({"success":true,"msg":"Captcha passed"});
         }) */
-      
         // If all is well, checks if user is already registered
         User.findOne({ where: {email: req.body.email} })
             .then(user => {
@@ -90,7 +89,7 @@ router.post('/registerUser', (req, res) => {
                 }
             });
         }
-      
+      /* } */
     );
 
     
@@ -205,27 +204,55 @@ router.post('/forgotPassword', (req, res, next) => {
 
       
 router.get('/displayUsers', (req, res, next) => {
+  if (req.user.UserType=='Admin'){
+    res.redirect('displayUsers2')
+  }
+  else{
     User.findAll({
-        where: {
-            id: req.user.id
-        },
-        order: [
-            ['email', 'ASC']
-        ],
-        raw: true
-    })
-    .then((users) => {
-        res.render('user/displayUsers', {
-            users: users,
-        });
-    })  
-    .catch(err => console.log(err));
+      where: {
+          id: req.user.id
+      },
+      order: [
+          ['email', 'ASC']
+      ],
+      raw: true
+  })
+  .then((users) => {
+      res.render('user/displayUsers', {
+          users: users,
+      });
+  })  
+  .catch(err => console.log(err));
+  }
+});
+
+router.get('/displayUsers2', (req, res, next) => {
+  if (req.user.UserType=='Customer'){
+    res.redirect('displayUsers')
+  }
+  else{
+    User.findAll({
+      where: {
+          id: req.user.id
+      },
+      order: [
+          ['email', 'ASC']
+      ],
+      raw: true
+  })
+  .then((users) => {
+      res.render('user/displayUsers2', {
+          users: users,
+      });
+  })  
+  .catch(err => console.log(err));
+  }
 });
 
 router.get('/listUsers', (req, res, next) => {
     User.findAll({
         where: {
-            id: req.user.id
+            UserType:'Customer'
         },
         order: [
             ['email', 'ASC']
@@ -247,15 +274,15 @@ router.get('/edit/:id', (req, res) => {
         }
     }).then((users) => {
         res.render('user/editUser', {
-            users
+            id:req.params.id,
+            name:users.name
         });
     }).catch(err => console.log(err)); 
 });
 
-router.put('/saveEditedUser/:id', (req, res) => {
+router.post('/saveEditedUser/:id', (req, res) => {
     // Retrieves edited values from req.body
     User.update({
-        id:req.body.id,
         name:req.body.name
     }, {
     where: {
@@ -287,5 +314,24 @@ router.get('/delete/:id', (req, res) => {
         }
     })
 })
+
+// GET /auth/google
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  The first step in Google authentication will involve
+//   redirecting the user to google.com.  After authorization, Google
+//   will redirect the user back to this application at /auth/google/callback
+router.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+// GET /auth/google/callback
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  If authentication fails, the user will be redirected back to the
+//   login page.  Otherwise, the primary route function function will be called,
+//   which, in this example, will redirect the user to the home page.
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/showLoginUser' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 module.exports = router ;

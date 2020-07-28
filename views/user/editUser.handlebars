@@ -1,12 +1,11 @@
 <div class="container">
 	<div class="card card-body">
 		<h3>Edit</h3>
-		<form action="/user/saveEditedUser/{{user.id}}?_method=PUT" method="post">
-		<input type="hidden" name="_method" value="PUT">
+		<form action="/user/saveEditedUser/{{id}}" method="post">
 			
 			<div class="form-group">
 				<label class="font-italic" for="description">Name</label>
-				<textarea class="form-control" id="productTitle" name="productTitle" rows="1">{{user.name}}</textarea>
+				<input class="form-control" id="name" name="name" value="{{name}}"></input>
 			</div>
 		</div>
 			<br>

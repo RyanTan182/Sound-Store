@@ -40,10 +40,6 @@ router.get('/showRegisterUser', (req, res) => {
 	res.render('user/registerUser')
 });
 
-router.get('/showRegisterStaff', (req, res) => {
-	res.render('user/registerStaff')
-});
-
 //User Management
 router.get('/showAccountManage', (req, res) => {
 	res.render('user/accountManagement')
@@ -73,13 +69,13 @@ router.post('/newsletter', (req, res) => {
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-	  user: 'soundstore182@gmail.com',
-	  pass: 'SoundStore182'
+	  user: 'soundstore111@gmail.com',
+	  pass: 'SoundStore182?'
 	}
   });
   
   var mailOptions = {
-	from: 'soundstore182@gmail.com',
+	from: 'kangkhen182@gmail.com',
 	to: 'ryantan182@hotmail.com',
 	subject: 'Thanks for suscribing!',
 	text: 'Thank you for subscribing to our Newsletter! We will keep you updated with all the latest news and discounts on Sound Store!'

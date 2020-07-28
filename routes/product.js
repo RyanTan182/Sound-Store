@@ -4,6 +4,8 @@ const moment = require('moment');
 const Product = require('../models/Product');
 const multer = require('multer');
 const { radioCheck } = require('../helpers/hbs');
+const fs = require('fs');
+const { query } = require('express');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -15,6 +17,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage});
+
+let directory = './public/uploads/';
+let imgFiles = fs.readdirSync(directory);
+console.log(imgFiles)
 
 router.get('/listProducts', (req, res) => {
     Product.findAll({
@@ -68,6 +74,7 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     .catch(err => console.log(err))
 });
 
+
 router.get('/edit/:id', (req, res) => {
     Product.findOne({
         where: {
@@ -75,13 +82,14 @@ router.get('/edit/:id', (req, res) => {
         }
     }).then((product) => {
         console.log(req.params.id)
-        checkOptions(product);
-
+        
         res.render('product/editProducts', {
             product
         });
     }).catch(err => console.log(err)); 
 });
+
+
 
 function checkOptions(product){
     product.headphonesType = (product.type.search('Headphones') >= 0) ? 'checked' : '';
@@ -119,15 +127,8 @@ router.get('/delete/:id', (req, res) => {
     })
 })
 
-router.get('/browseProducts', (req, res) => {
-    res.render('product/browseProducts')
-})
-
-router.get('/browseProducts', (req, res) => {
+router.get('/browseProducts',(req, res) => {
     Product.findAll({
-        where: {
-            userId: req.user.id
-        },
         order: [
             ['productTitle', 'ASC']
         ],
@@ -135,11 +136,28 @@ router.get('/browseProducts', (req, res) => {
     })
     .then((products) => {
         res.render('product/browseProducts', {
-            products: products,
-            productImage: products.productImage
+            imgFiles:imgFiles,
+            products: products
         });
     })  
     .catch(err => console.log(err));
 });
+
+
+router.get('/details/:id', (req, res) => {
+    Product.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((product) => {
+        console.log(req.params.id)
+        checkOptions(product);
+
+        res.render('product/productDetails', {
+            product
+        });
+    }).catch(err => console.log(err)); 
+});
+
 
 module.exports = router;

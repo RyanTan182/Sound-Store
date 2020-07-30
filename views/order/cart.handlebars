@@ -46,9 +46,10 @@ border-bottom: 0px none;
 
 <body>
 <h1>Shopping Cart</h1>
-<table  align="center" border="1">
+<table  id="table" align="center" border="1">
 <tr>
   <th>Product</th>
+  <th></th>
   <th>Price</th>
   <th>Quantity</th>
   <th>Remove</th>
@@ -56,10 +57,19 @@ border-bottom: 0px none;
 </tr>
   <br>
     <!--This is a comment. Comments are not displayed in the browser -->
-    
-
-
+{{#if orders}}    
+<tr>
+    {{#each orders}}
+    <td>{{productTitle}}</td>
+    <td></td>
+    <td>{{price}}</td>
+    <td>{{quantity}}</td>
+    <td><form action="/order/delete/{{id}}" method="POST">
+                <input type="submit" value="&#xf00d" class="fa fa-close" style="color:red;border:none;float:left;cursor:pointer;">
+            </form></td>
+    <td>${{totalPrice}}</td>
 </tr>
+{{/each}}
     </table>
 
 
@@ -74,14 +84,31 @@ border-bottom: 0px none;
     </div>
     <div class="total-cost">
         <label class="Bottomlabel">Total Price:</label>
-        <div class="finalprice" id="final">$</div>
+        <div class="finalprice" id="final">$<span id="total"></span></div>
 
+{{else}}
+	<h3>No Items in cart</h3>
+{{/if}}
     </div>
-    <a href="/order/address">
+    <form method="post" action="/order/address">
+    <input type="hidden" id="totalprice" name="totalprice">
     <button id="pay" class="btn btn-primary shop-item-button" type="Submit" >Proceed to payment</button>
-        </a>
+       
+        </form>
 </div>
+<script>
+window.onload = load()
+function load() {
+    /* TOTAL CALCULATION */
+    var total = 0;
+    var table = document.getElementById('table');
+    for (i = 1; i < table.rows.length; i++) {
+        var objCells = table.rows.item(i).cells;
+        total += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML);
+    }
+    document.getElementById('total').innerHTML = total;
+    document.getElementById('totalprice').value = total;
+}
 
-
-
+</script>
 </body>

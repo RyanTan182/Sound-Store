@@ -11,6 +11,16 @@ const Order = db.define('order', {
     price: {
         type: Sequelize.INTEGER
     },
+    quantity: {
+        type: Sequelize.INTEGER
+    },
+    userId: {
+        type: Sequelize.INTEGER
+    },
+    totalPrice: {
+        type: Sequelize.INTEGER
+    },
+    
 });
 
 module.exports = Order;

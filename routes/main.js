@@ -66,6 +66,7 @@ router.get('/newsletter', (req, res) => {
 });
 
 router.post('/newsletter', (req, res) => {
+	console.log(req.body.email)
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -75,8 +76,8 @@ const transporter = nodemailer.createTransport({
   });
   
   var mailOptions = {
-	from: 'kangkhen182@gmail.com',
-	to: 'ryantan182@hotmail.com',
+	from: 'soundstore111@gmail.com',
+	to: req.body.email,
 	subject: 'Thanks for suscribing!',
 	text: 'Thank you for subscribing to our Newsletter! We will keep you updated with all the latest news and discounts on Sound Store!'
   };

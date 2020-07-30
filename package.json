@@ -10,7 +10,6 @@
   "author": "Chew Phuay Hern",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",

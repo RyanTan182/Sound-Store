@@ -4,7 +4,6 @@ const User = require('../models/User');
 const alertMessage = require('../helpers/messenger');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-const sgMail=require('@sendgrid/mail');
 const jwt=require('jsonwebtoken');
 const request=require('request');
 const bodyParser=require('body-parser');
@@ -106,102 +105,60 @@ router.post('/loginUser', (req, res, next) => {
 });
 
 
-router.post('/forgotPassword', (req, res, next) => {
-    async.waterfall([
-        function(done) {
-          crypto.randomBytes(20, function(err, buf) {
-            var token = buf.toString('hex');
-            done(err, token);
-          });
-        },
-        function(token, done) {
-          User.findOne({ email: req.body.email }, function(err, user) {
-            if (!user) {
-              req.flash('error', 'No account with that email address exists.');
-              return res.redirect('/forgot');
-            }
-    
-            user.resetPasswordToken = token;
-            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    
-            user.save(function(err) {
-              done(err, token, user);
-            });
-          });
-        },
-        function(token, user, done) {
-          var smtpTransport = nodemailer.createTransport('SMTP', {
-            service: 'SendGrid',
-            auth: {
-              user: '!!! YOUR SENDGRID USERNAME !!!',
-              pass: '!!! YOUR SENDGRID PASSWORD !!!'
-            }
-          });
-          var mailOptions = {
-            to: user.email,
-            from: 'passwordreset@demo.com',
-            subject: 'Node.js Password Reset',
-            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-              'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-              'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-              'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-          };
-          smtpTransport.sendMail(mailOptions, function(err) {
-            req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-            done(err, 'done');
-          });
-        }
-      ], function(err) {
-        if (err) return next(err);
-        res.redirect('/forgot');
-      });
+router.post('/forgotPassword', (req, res) => {
+  let errors = []
+  // Retrieves fields from register page from request body
+  let {name, email, password, password2} = req.body;
+  // If all is well, checks if user is already registered
+  User.findOne({ where: {email: req.body.email} })
+  .then(user => {
+  if (user) {
+    res.redirect('newPassword');
+  } else {
+  // If user is found, that means email has already been
+   // registered
+   res.render('user/forgotPassword', {
+    error:'No account registered on our end! Please create a new account!',
     });
+  }
+  });
+  }
+  );
 
-    app.post('/reset/:token', function(req, res) {
-        async.waterfall([
-          function(done) {
-            User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
-              if (!user) {
-                req.flash('error', 'Password reset token is invalid or has expired.');
-                return res.redirect('back');
-              }
-      
-              user.password = req.body.password;
-              user.resetPasswordToken = undefined;
-              user.resetPasswordExpires = undefined;
-      
-              user.save(function(err) {
-                req.logIn(user, function(err) {
-                  done(err, user);
-                });
-              });
-            });
-          },
-          function(user, done) {
-            var smtpTransport = nodemailer.createTransport('SMTP', {
-              service: 'SendGrid',
-              auth: {
-                user: '!!! YOUR SENDGRID USERNAME !!!',
-                pass: '!!! YOUR SENDGRID PASSWORD !!!'
-              }
-            });
-            var mailOptions = {
-              to: user.email,
-              from: 'passwordreset@demo.com',
-              subject: 'Your password has been changed',
-              text: 'Hello,\n\n' +
-                'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function(err) {
-              req.flash('success', 'Success! Your password has been changed.');
-              done(err);
-            });
-          }
-        ], function(err) {
-          res.redirect('/');
-        });
-      });
+  router.get('/newPassword', (req, res) => {
+    let errors = [];
+    let {email,password/* ,password2 */}=req.body
+    /* if(password !== password2) {
+      errors.push({text: 'Passwords do not match'});
+    } */
+    /* else */{
+        res.render('user/newPassword', {
+          email:req.body.email,
+          password:req.body.password
+        })};
+});
 
+router.post('/savePassword', (req, res) => {
+    // Create new user record
+    let{password,email}=req.body
+        bcrypt.hash(password,10,function(err,hash) {
+            if(err) throw err;
+            password = hash;
+            User.update({
+                password
+            }, 
+            {
+            where: {
+            email:req.body.email
+            }
+            })
+            .then(user => {
+              res.redirect('/');
+                }).catch(err => console.log(err));
+                console.log(password)
+        
+    });
+})
       
 router.get('/displayUsers', (req, res, next) => {
   if (req.user.UserType=='Admin'){
@@ -275,24 +232,35 @@ router.get('/edit/:id', (req, res) => {
     }).then((users) => {
         res.render('user/editUser', {
             id:req.params.id,
-            name:users.name
+            name:users.name,
+            email:users.email,
+            password:users.password
         });
     }).catch(err => console.log(err)); 
 });
 
 router.post('/saveEditedUser/:id', (req, res) => {
+    let {password} = req.body;
+        bcrypt.hash(password, 10, function(err, hash) {
+            if(err) throw err;
+            password = hash;
     // Retrieves edited values from req.body
     User.update({
-        name:req.body.name
-    }, {
+        name:req.body.name,
+        email:req.body.email,
+        password
+    }, 
+    {
     where: {
     id: req.params.id
     }
     }).then(() => {
     // After saving, redirect to router.get(/listVideos...) to retrieve all updated
     // videos
+    console.log(password)
     res.redirect('/user/displayUsers');
     }).catch(err => console.log(err));
+});
     });
 
 router.get('/delete/:id', (req, res) => {
@@ -314,8 +282,22 @@ router.get('/delete/:id', (req, res) => {
         }
     })
 })
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    successRedirect: '/user/displayUsers';
+  }
 
-// GET /auth/google
+function signOut() {
+var auth2 = gapi.auth2.getAuthInstance();
+auth2.signOut().then(function () {
+    console.log('User signed out.');
+});
+}
+
+/* // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  The first step in Google authentication will involve
 //   redirecting the user to google.com.  After authorization, Google
@@ -332,6 +314,6 @@ router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/showLoginUser' }),
   function(req, res) {
     res.redirect('/');
-  });
+  }); */
 
 module.exports = router ;

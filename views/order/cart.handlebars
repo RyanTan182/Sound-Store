@@ -21,7 +21,7 @@ title{
 }
 
 h1{font-weight:bold;
-font-size:20px;
+font-size:50px;
 }
 th{
   padding: 70px;
@@ -41,6 +41,14 @@ border-right: 0px none;
 border-top: 0px none;
 border-bottom: 0px none;
 }
+h1{
+    text-align: center;
+}
+#del{
+    text-align: center;
+    float:inherit;
+
+}
 
 </style>
 
@@ -48,8 +56,7 @@ border-bottom: 0px none;
 <h1>Shopping Cart</h1>
 <table  id="table" align="center" border="1">
 <tr>
-  <th>Product</th>
-  <th></th>
+  <th colspan="2">Product</th>
   <th>Price</th>
   <th>Quantity</th>
   <th>Remove</th>
@@ -60,12 +67,14 @@ border-bottom: 0px none;
 {{#if orders}}    
 <tr>
     {{#each orders}}
+    <td><img src='/uploads/{{productImage}}'width="120px" height="100px"></td>
     <td>{{productTitle}}</td>
-    <td></td>
     <td>{{price}}</td>
-    <td>{{quantity}}</td>
-    <td><form action="/order/delete/{{id}}" method="POST">
-                <input type="submit" value="&#xf00d" class="fa fa-close" style="color:red;border:none;float:left;cursor:pointer;">
+    <td>{{quantity}}&nbsp;&nbsp;<form id="del" action="/order/update/{{id}}" method="get">
+                <input type="submit" value="&#xf044" class="fa fa-edit" style="color:blue;border:none;float:center;cursor:pointer;font-size:25px;">
+            </form></td>
+    <td id="del"><form action="/order/delete/{{id}}" method="POST">
+                <input type="submit" value="&#xf00d" class="fa fa-close" style="color:red;border:none;float:center;cursor:pointer;font-size:25px;">
             </form></td>
     <td>${{totalPrice}}</td>
 </tr>
@@ -75,16 +84,16 @@ border-bottom: 0px none;
 
 <div class="total">
     <div class="total-item">
-        <label class="Bottomlabel">Subtotal:</label>
-        <div class="total1" id="cart-subtotal">$</div>
+        <label class="Bottomlabel">Subtotal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="total1" id="cart-subtotal">$<span id="subtotal"></span></div></label>
+        
     </div>
     <div class="shipping">
-        <label class="Bottomlabel">Shipping Fee:</label>
-        <div class="Shipping-total" id="shipping">$10</div>
+        <label class="Bottomlabel">Shipping Fee:&nbsp;&nbsp;&nbsp;<div class="Shipping-total" id="shipping">$10</div></label>
+        
     </div>
     <div class="total-cost">
-        <label class="Bottomlabel">Total Price:</label>
-        <div class="finalprice" id="final">$<span id="total"></span></div>
+        <label class="Bottomlabel">Total Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="finalprice" id="final">$<span id="total"></span></div></label>
+        
 
 {{else}}
 	<h3>No Items in cart</h3>
@@ -101,12 +110,18 @@ window.onload = load()
 function load() {
     /* TOTAL CALCULATION */
     var total = 0;
+    var subtotal = 0;
     var table = document.getElementById('table');
     for (i = 1; i < table.rows.length; i++) {
         var objCells = table.rows.item(i).cells;
-        total += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML);
+        total += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML)+10;
+    }
+     for (i = 1; i < table.rows.length; i++) {
+        var objCells = table.rows.item(i).cells;
+        subtotal += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML);
     }
     document.getElementById('total').innerHTML = total;
+    document.getElementById('subtotal').innerHTML = subtotal;
     document.getElementById('totalprice').value = total;
 }
 

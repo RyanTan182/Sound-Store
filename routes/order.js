@@ -39,6 +39,21 @@ router.post('/cart/:id', (req, res) => {
 	})	
 });
 
+router.get('/update/:id', (req, res) => {
+    Order.findOne({
+        where: {
+            userId: req.params.id
+        }
+    }).then((order) => {
+        console.log(req.params.id)
+        
+        res.render('order/editquantity', {
+            order
+        });
+    })
+});
+
+
 
 router.post('/delete/:id', (req, res) => {
 	Order.destroy({
@@ -85,7 +100,7 @@ router.post('/payment', (req, res) => {
 			userId:req.user.id,
 		},
 	}).then((payment)=>{
-		console.log(payment.total)
+		
 		res.render('order/payment',{payment,total:payment.total})
 
 	})
@@ -93,8 +108,17 @@ router.post('/payment', (req, res) => {
 });
 
 
-router.get('/confirmation', (req, res) => {
-	res.render('order/confirmation')
+router.post('/confirmation', (req, res) => {
+	Payment.findOne({
+		where:{
+			userId:req.user.id,
+		},
+	}).then((payment)=>{
+		
+		res.render('order/confirmation',{payment,total:payment.total})
+
+	})
+	
 });
 
 module.exports = router;

@@ -27,5 +27,10 @@ router.get('/OrderCheckUser', (req, res) => {
 	res.render('Delivery/OrderCheckUse')
 });
 
+router.post('/listDelivery',(req, res) =>{
+	
+}
+)
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const Delivery = db.define('product', {
+const Deluvery = db.define('review', {
     productTitle: {
         type: Sequelize.STRING
     },
@@ -20,17 +20,6 @@ const Delivery = db.define('product', {
     totalPrice: {
         type: Sequelize.INTEGER
     },
-    address:{
-        type: Sequelize.STRING
-    },
-    phone:{
-        type: Sequelize.INTEGER
-    },
-    status:{
-        type : Sequelize.STRING
-    }
 });
 
-
-
-module.exports = Delivery;
+module.exports = Review

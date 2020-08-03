@@ -17,24 +17,29 @@
     </form>
   </div>
 
-<script>
-  var rec_array = [];
-</script>
-  {{#each products}}
-  <div class="rowz">
-    <div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
-      <div class="product-grid5">
-        <div class="product-image5">
-          <a href="#">
-            <img class="pic-1" src="/uploads/{{productImage}}">
-            <img class="pic-2" src="/uploads/{{productImage}}">
-          </a>
-          <ul class="social">
-            <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-            <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-            <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-          </ul>
-          <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
+{{#each products}}
+<div class="rowz">
+	<div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
+        <div class="product-grid5">
+            <div class="product-image5">
+                <a href="#">
+                    <img class="pic-1" src="/uploads/{{productImage}}" >
+                    <img class="pic-2" src="/uploads/{{productImage}}">
+                </a>
+                <ul class="social">
+                    <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                    <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+                    <li><form method="POST" action="/order/cart/{{id}}">
+							<button type="submit" data-tip="Add to cart"><i class="far fa-cart-alt"></i></button>													
+							</form></li>
+                </ul>
+                <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
+            </div>
+			
+            <div class="product-content">
+                <h3 class="title">{{productTitle}}</h3>
+                <div class="price">${{price}}</div>
+            </div>
         </div>
 
         <div class="product-content">

@@ -1,9 +1,57 @@
+<style>
+    h1{
+        ;
+        text-align: center;
+        font-size: 25px;
+        padding-top:80px;
+
+    }
+    p{
+        text-align: center;
+        font-size: 20px;
+        padding-top: 30px;
+    }
+    .home{
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        padding-left:495px;
+        padding-top: 200px;
+
+    }
+    #hi{
+        align: center;
+        padding-left: 485px;
+        padding-top: 20px;
+    }
+</style>
+
+
+
+
 <head>
     <meta charset="UTF-8">
     <title>Confirmation</title>
     
 
 </head>
+
 <body>
-    <p1>hello</p1>
+    <img id = "hi" src="/img/SAlogo1.png">
+    <h1>Your order has been placed<br>An email has been sent to your account</h1>
+    
+
+
+    <p>${{total}} has been deducted from your account.</p>
+    <br>
+    <br>
+    <br>
+    <br>
+<a href="/">
+    <div class="home">
+    <button>Return to Home</button>
+  </div>
+    </a>
 </body>

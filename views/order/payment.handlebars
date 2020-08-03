@@ -1,7 +1,4 @@
 
-
-
-
 <div class="row">
 	<div class="col-md-6 mx-auto">
 		<div class="card card-body">
@@ -22,7 +19,7 @@
 						 data-parent="#storyAccordion"
 					>		
 						<div class="card-body">
-			<form action="/order/confirmation" method="">
+			<form action="/order/confirmation" method="post">
 				<div class="form-group">
 					<label for="name">Credit Card Number</label>
 					<input type="text" class="form-control" name="name" value="" required>
@@ -59,36 +56,37 @@
 						 data-parent="#storyAccordion">		
 						<div class="card-body">
 
-<head>
-    <!-- Add meta tags for mobile and IE -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-</head>
 
-<body>
+
+
     <!-- Set up a container element for the button -->
     <div id="paypal-button-container"></div>
 
     <!-- Include the PayPal JavaScript SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=SGD"></script>
 
-    <script>
+    <script>	
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
 		
             
-
+			
+			
             // Set up the transaction
             createOrder: function(data, actions) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '10'
+                            value:"{{total}}"
                         }
-                    }]
+                    }],
+				redirect_urls: {
+          			return_url: 'http://localhost:5000/order/confirmation',
+       
+        			}
                 });
             },
-
+			
             // Finalize the transaction
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
@@ -100,7 +98,8 @@
 
         }).render('#paypal-button-container');
     </script>
-</body>
+	
+
     
 						</div>
 					

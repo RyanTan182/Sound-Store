@@ -1,0 +1,36 @@
+title{
+    text-align:center;
+}
+
+.total{
+    float:right;
+    padding-top:50px;
+    padding-right:50px;
+}
+#pay{
+    float:right;
+
+    padding-right:50px;
+}
+
+h1{font-weight:bold;
+font-size:20px;
+}
+th{
+  padding: 70px;
+  border: collapse;
+  border-left: 0px none;
+  border-right: 0px none;
+  border-top: 0px none;
+}
+tr{
+  text-align: center;
+  border: collapse;
+}
+td
+{
+border-left: 0px none;
+border-right: 0px none;
+border-top: 0px none;
+border-bottom: 0px none;
+}

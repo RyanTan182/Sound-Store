@@ -12,6 +12,10 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger');
 const passport = require('passport');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+const Handlebars = require('handlebars')
+const insecureHandlebars = allowInsecurePrototypeAccess(Handlebars)
+
 
  // To set up database with new tables set (true)
 /*
@@ -52,6 +56,7 @@ const app = express();
 *
 * */
 app.engine('handlebars', exphbs({
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	helpers: {
 		formatDate: formatDate,
 		radioCheck: radioCheck

@@ -1,24 +1,20 @@
 <div class="container">
 	<div class="card card-body">
 		<h3>Add Product</h3>
-		<form action="/product/addProducts" method="post" id="addVideo" enctype="multipart/form-data">
+		<form action="/product/addProducts" method="post" id="editVideo" enctype="multipart/form-data">
 			<div class="form-group">
 				<input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-				<img id="blah" width="500" height="250" />
-				<div id="preview">
-    				<div> <span class="productTitle"></span></div><br/>
-    				<div> <span class="price"></span></div>
-				</div>
+				<img src="/uploads/{{product.productImage}}" id="blah" width="500" height="250" >
 			</div>
 			
 			<div class="form-group">
-				<label class="font-italic" for="productTitle">Product Title</label>
-				<textarea class="form-control" id="productTitle" name="productTitle" rows="1"></textarea>
+				<label class="font-italic" for="description">Product Title</label>
+				<textarea class="form-control" id="productTitle" name="productTitle" rows="1">{{product.productTitle}}</textarea>
 			</div>
 
 			<div class="form-group mb-4">
 				<label class="font-italic" for="description">Description</label>
-				<textarea class="form-control" id="description" name="description" rows="7"></textarea>
+				<textarea class="form-control" id="description" name="description" rows="7">{{product.description}}</textarea>
 			</div>
 
 			<div class="form-group">
@@ -31,19 +27,19 @@
 						<label id="language" class="font-italic">Type</label>
 						<br>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headphones" value="Headphones" checked >
+							<input class="form-check-input" type="radio" name="type" id="headphones" value="Headphones" {{radioCheck product.type 'Headphones'}}>
 							<label class="form-check-label" for="headphones">Headphones</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headset" value="Headset" >
+							<input class="form-check-input" type="radio" name="type" id="headset" value="Headset" {{radioCheck product.type 'Headset'}}>
 							<label class="form-check-label" for="headset">Headset</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earbuds" value="Earbuds">
+							<input class="form-check-input" type="radio" name="type" id="earbuds" value="Earbuds" {{radioCheck product.type 'Earbuds'}}>
 							<label class="form-check-label" for="earbuds">Earbuds</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earpiece" value="Earpiece">
+							<input class="form-check-input" type="radio" name="type" id="earpiece" value="Earpiece" {{radioCheck product.type 'Earpiece'}}>
 							<label class="form-check-label" for="earpiece">Earpiece</label>
 						</div>
 					</div>
@@ -67,7 +63,7 @@
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 						<label id="price" class="font-italic">Price</label>
 						<br>
-						<textarea class="form-control" id="price" name="price" rows="1" width="10px"></textarea>
+						<textarea class="form-control" id="price" name="price" rows="1" width="10px">{{product.price}}</textarea>
 					</div>
 				</div>
 
@@ -77,16 +73,12 @@
 		</form>
 	</div>
 </div>
- 
-
-
 
 <script>
-		$('#datepicker').datepicker({
-			format: 'dd/mm/yyyy',
-			value: new Date().toLocaleDateString('EN-SG'),
-			uiLibrary: 'bootstrap4',
-		});
+	$('#datepicker').datepicker({
+	format: 'dd/mm/yyyy',
+	uiLibrary: 'bootstrap4',
+	});
 </script>
 
 
@@ -95,11 +87,3 @@
 		$('.mdb-select').materialSelect();
 	});
 </script>
-
-<script>
-   $('.form-control').keyup(function(){
-   	var $this = $(this);
-   	$('.'+$this.attr('id')+'').html($this.val());
-   });
-</script>
-

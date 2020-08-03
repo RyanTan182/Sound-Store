@@ -4,7 +4,7 @@ const moment = require('moment');
 const Order = require('../models/order');
 const Product = require('../models/Product');
 const Payment = require('../models/payment');
-
+const Addresses = require('../models/address');
 
 
 
@@ -65,14 +65,37 @@ router.post('/delete/:id', (req, res) => {
 	})
 });
 
+router.get('/address', (req, res) => {
+	res.render('order/address')
+})
 
 router.post('/address', (req, res) => {
+	let fname = req.body.fname;
+	let	lname = req.body.lname;
+	let	email = req.body.email;
+	let	address = req.body.address;
+	let	country = req.body.country;
+	let	postalcode = req.body.postalcode;
+	let	phonenum = req.body.phonenum;
+	let userId = req.user.id;
+	console.log(fname)
+	Addresses.create({
+		fname,
+		lname,
+		email,
+		address,
+		country,
+		postalcode,
+		phonenum, 
+		userId,
+	}).then((Addresses)=>{
 	Payment.findOne({
 		where:{
 			userId:req.user.id,
 		},
+	})
 	}).then((payment)=>{
-		if(payment){
+		if(!payment){
 			Payment.update(
 				{
 					total: req.body.totalprice,
@@ -85,16 +108,16 @@ router.post('/address', (req, res) => {
 			)
 		}
 		else{
-		Payment.create({
+		 Payment.create({
 			userId:req.user.id,
 			total:req.body.totalprice,
 		})
 	}
-	res.render('order/address')
+	res.redirect('/order/payment')
 })
 });
 
-router.post('/payment', (req, res) => {
+router.get('/payment', (req, res) => {
 	Payment.findOne({
 		where:{
 			userId:req.user.id,

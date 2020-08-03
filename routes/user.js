@@ -282,38 +282,20 @@ router.get('/delete/:id', (req, res) => {
         }
     })
 })
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    successRedirect: '/user/displayUsers';
-  }
 
-function signOut() {
-var auth2 = gapi.auth2.getAuthInstance();
-auth2.signOut().then(function () {
-    console.log('User signed out.');
-});
-}
+router.get(
+    '/google',
+    passport.authenticate('google',{
+        scope:['profile','email'],
+    })
+);
 
-/* // GET /auth/google
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Google authentication will involve
-//   redirecting the user to google.com.  After authorization, Google
-//   will redirect the user back to this application at /auth/google/callback
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
-
-// GET /auth/google/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-router.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/showLoginUser' }),
-  function(req, res) {
-    res.redirect('/');
-  }); */
+router.get('/google/redirect',
+passport.authenticate('google',{failureRedirect:'/loginUser'}),
+(req,res)=>{
+    User.findOne({}).then((user)=>{
+        res.redirect('/');
+    })
+})
 
 module.exports = router ;

@@ -7,6 +7,32 @@ const { radioCheck } = require('../helpers/hbs');
 const fs = require('fs');
 const { query } = require('express');
 
+/*
+let newz = rec_arrayss.rec_updatedArray
+
+const recommender = new ContentBasedRecommender({
+    minScore: 0.2,
+    maxSimilarDocuments: 15
+});
+
+
+    const documents = [
+        { id:  '1000001', content: newz[0] },
+        { id:  '1000002', content: rec_arrayz[1] },
+        { id:  '1000003', content: rec_arrayz[2] },
+        { id:  '1000004', content: rec_arrayz[3] },
+        { id:  '1000005', content: rec_arrayz[4] }
+    ];
+    console.log(rec_arrayz[0])
+    
+    recommender.train(documents);
+    
+    const similarDocuments = recommender.getSimilarDocuments(1000001, 0, 5);
+    
+    console.log(similarDocuments);    
+
+*/
+
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './public/uploads/');
@@ -20,7 +46,6 @@ const upload = multer({storage: storage});
 
 let directory = './public/uploads/';
 let imgFiles = fs.readdirSync(directory);
-console.log(imgFiles)
 
 router.get('/listProducts', (req, res) => {
     Product.findAll({
@@ -57,7 +82,7 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     let brand = req.body.brand;
     let price = req.body.price;
     let userId = req.user.id;
-
+    
     // Multi-value components return array of strings or undefined
     Product.create({
         productTitle,
@@ -74,7 +99,7 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     .catch(err => console.log(err))
 });
 
-
+/*
 router.get('/edit/:id', (req, res) => {
     Product.findOne({
         where: {
@@ -83,9 +108,28 @@ router.get('/edit/:id', (req, res) => {
     }).then((product) => {
         console.log(req.params.id)
         
-        res.render('product/editProducts', {
-            product
+        res.render('product/editProduct', {
+            product: product 
         });
+        console.log(product)
+    }).catch(err => console.log(err)); 
+});
+*/
+router.get('/edit/:id', (req, res) => {
+    Product.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((product) => {
+        console.log(product.productTitle + '=======OOOOO')
+        if(!product){
+            alertMessage(res, 'info', 'No such videos', 'fas fa-exclamation-circle', true);
+        }else{
+            checkOptions(product);
+            res.render('product/editProduct', {
+                product 
+            });
+        }
     }).catch(err => console.log(err)); 
 });
 
@@ -140,7 +184,7 @@ router.get('/browseProducts',(req, res) => {
             products: products
         });
     })  
-    .catch(err => console.log(err));
+    .catch(err => console.log(err));   
 });
 
 

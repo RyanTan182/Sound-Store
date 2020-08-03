@@ -82,7 +82,7 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     let brand = req.body.brand;
     let price = req.body.price;
     let userId = req.user.id;
-
+    
     // Multi-value components return array of strings or undefined
     Product.create({
         productTitle,

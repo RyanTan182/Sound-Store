@@ -6,7 +6,6 @@ const multer = require('multer');
 const { radioCheck } = require('../helpers/hbs');
 const fs = require('fs');
 const { query } = require('express');
-const rec_arrayss = require('../views/product/browseProducts');
 
 /*
 let newz = rec_arrayss.rec_updatedArray
@@ -122,14 +121,15 @@ router.get('/edit/:id', (req, res) => {
             id: req.params.id
         }
     }).then((product) => {
+        console.log(product.productTitle + '=======OOOOO')
         if(!product){
             alertMessage(res, 'info', 'No such videos', 'fas fa-exclamation-circle', true);
+        }else{
+            checkOptions(product);
+            res.render('product/editProduct', {
+                product 
+            });
         }
-        checkOptions(product);
-        res.render('product/editProduct', {
-            product 
-        });
-        console.log(product)
     }).catch(err => console.log(err)); 
 });
 

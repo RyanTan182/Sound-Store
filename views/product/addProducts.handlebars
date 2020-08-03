@@ -5,7 +5,10 @@
 			<div class="form-group">
 				<input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
 				<img id="blah" width="500" height="250" />
-				
+				<div id="preview">
+    				<div> <span class="productTitle"></span></div><br/>
+    				<div> <span class="price"></span></div>
+				</div>
 			</div>
 			
 			<div class="form-group">
@@ -77,69 +80,6 @@
  
 
 
-<!--
-<div id="wrapper">
-
-    <div id="info">
-      
-	  
-	  <img id="blah" width="500" height="250" />
-
-      <p>Activity Bracelet Surge</p>
-      <p>Black</p>
-
-      <div id="price">
-
-        <h2>$ 2 700</h2>
-
-      </div>
-    </div>
-
-    <div id="payment">
-
-      <form action="/product/addProducts" method="post" enctype="multipart/form-data" id="checkout">
-        <label>Add Image</label>
-        <input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-
-        <label>Product Title</label>
-        <input id="productTitle" type="text" name="productTitle" required="true" maxlength="50" placeholder="Product Title">
-
-        <label>Description</label>
-		<textarea class="form-control" id="description" name="description" rows="7" style="width: 500px;"></textarea>
-
-		<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-						<label id="language" class="font-italic">Type</label>
-						<br>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headphones" value="Headphones" checked >
-							<label class="form-check-label" for="headphones">Headphones</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headset" value="Headset" >
-							<label class="form-check-label" for="headset">Headset</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earbuds" value="Earbuds">
-							<label class="form-check-label" for="earbuds">Earbuds</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earpiece" value="Earpiece">
-							<label class="form-check-label" for="earpiece">Earpiece</label>
-						</div>
-					</div>
-
-
-        <input class="btn" type="button" name="purchase" value="Purchase">
-      </form>
-    </div>
-
-
-</div>
--->
-
-
-
-
 
 <script>
 		$('#datepicker').datepicker({
@@ -156,4 +96,10 @@
 	});
 </script>
 
+<script>
+   $('.form-control').keyup(function(){
+   	var $this = $(this);
+   	$('.'+$this.attr('id')+'').html($this.val());
+   });
+</script>
 

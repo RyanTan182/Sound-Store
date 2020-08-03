@@ -9,11 +9,6 @@ const setUpDB = (drop) => {
             console.log('sstore database connected');
         })
         .then(() => {
-            /*
-            Defines the relationship where a user has many videos.
-            In this case the primary key from user will be a foreign key
-            in video.
-            */
             user.hasMany(product);
             mySQLDB.sync({ // Creates table if none exists
                 force: drop

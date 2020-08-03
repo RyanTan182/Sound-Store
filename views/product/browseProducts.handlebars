@@ -1,50 +1,53 @@
 <div class="allthethings">
-<div class="product-filter-wrap">
-  <p><strong>Brand</strong></p>
-  <form>
- 	  <label><input type="checkbox" name="p-brand" value="Razer" id="Razer" /> Razer</label><br>
-    <label><input type="checkbox" name="p-brand" value="Beats by Dre" id="Beats by Dre" /> Beats by Dre</label><br> 
-    <label><input type="checkbox" name="p-brand" value="Sennheiser" id="Sennheiser" /> Sennheiser</label><br>                     
-    <label><input type="checkbox" name="p-brand" value="Sony" id="Sony" /> Sony</label><br>
-    <label><input type="checkbox" name="p-brand" value="other" id="other" /> Other</label>
-  </form>
-  <p><strong>Type</strong></p>
-  <form>
-    <label><input type="checkbox" name="p-type" value="Headphones" id="Headphones" /> Headphones</label><br>
-    <label><input type="checkbox" name="p-type" value="Headset" id="Headset" /> Headset</label><br>
-    <label><input type="checkbox" name="p-type" value="Earpiece" id="Earpiece" /> Earpiece</label><br> 
-    <label><input type="checkbox" name="p-type" value="Earbuds" id="Earbuds" /> Earbuds</label><br>
-  </form>  
-</div>
+  <div class="product-filter-wrap">
+    <p><strong>Brand</strong></p>
+    <form>
+      <label><input type="checkbox" name="p-brand" value="Razer" id="Razer" /> Razer</label><br>
+      <label><input type="checkbox" name="p-brand" value="Beats by Dre" id="Beats by Dre" /> Beats by Dre</label><br>
+      <label><input type="checkbox" name="p-brand" value="Sennheiser" id="Sennheiser" /> Sennheiser</label><br>
+      <label><input type="checkbox" name="p-brand" value="Sony" id="Sony" /> Sony</label><br>
+      <label><input type="checkbox" name="p-brand" value="other" id="other" /> Other</label>
+    </form>
+    <p><strong>Type</strong></p>
+    <form>
+      <label><input type="checkbox" name="p-type" value="Headphones" id="Headphones" /> Headphones</label><br>
+      <label><input type="checkbox" name="p-type" value="Headset" id="Headset" /> Headset</label><br>
+      <label><input type="checkbox" name="p-type" value="Earpiece" id="Earpiece" /> Earpiece</label><br>
+      <label><input type="checkbox" name="p-type" value="Earbuds" id="Earbuds" /> Earbuds</label><br>
+    </form>
+  </div>
 
-{{#each products}}
-<div class="rowz">
-	<div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
-        <div class="product-grid5">
-            <div class="product-image5">
-                <a href="#">
-                    <img class="pic-1" src="/uploads/{{productImage}}" >
-                    <img class="pic-2" src="/uploads/{{productImage}}">
-                </a>
-                <ul class="social">
-                    <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-                    <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                    <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
-                <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
-            </div>
-			
-            <div class="product-content">
-                <h3 class="title">{{productTitle}}</h3>
-                <div class="price">${{price}}</div>
-            </div>
+<script>
+  var rec_array = [];
+</script>
+  {{#each products}}
+  <div class="rowz">
+    <div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
+      <div class="product-grid5">
+        <div class="product-image5">
+          <a href="#">
+            <img class="pic-1" src="/uploads/{{productImage}}">
+            <img class="pic-2" src="/uploads/{{productImage}}">
+          </a>
+          <ul class="social">
+            <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+            <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+            <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+          </ul>
+          <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
         </div>
-  </div> 
-</div>
+
+        <div class="product-content">
+          <h3 class="title">{{productTitle}}</h3>
+          <div class="price">${{price}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-	<!--<section class="products">
+  <!--<section class="products">
 
 		<div class="product-card">
 			<div class="product-image"></div>
@@ -57,72 +60,78 @@
 		</div>
 
 	</section>-->
-	
-{{/each}}
+
+  <script>
+    rec_array.push(`{{productTitle}}`)
+  </script>
+
+  {{/each}}
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-	$(document).ready(function(){
-	$("#myInput").on("keyup", function() {
-		var value = $(this).val().toLowerCase();
-		$("#Product ").filter(function() {
-		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
-	});
-	});
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#Product ").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 </script>
 
 <script>
-	var $filterCheckboxes = $('input[type="checkbox"]');
-	var filterFunc = function() {
-  
-  var selectedFilters = {};
+  var $filterCheckboxes = $('input[type="checkbox"]');
+  var filterFunc = function () {
 
-  $filterCheckboxes.filter(':checked').each(function() {
+    var selectedFilters = {};
 
-    if (!selectedFilters.hasOwnProperty(this.name)) {
-      selectedFilters[this.name] = [];
-    }
+    $filterCheckboxes.filter(':checked').each(function () {
 
-    selectedFilters[this.name].push(this.value);
-  });
+      if (!selectedFilters.hasOwnProperty(this.name)) {
+        selectedFilters[this.name] = [];
+      }
 
-  // create a collection containing all of the filterable elements
-  var $filteredResults = $('.product');
-
-  // loop over the selected filter name -> (array) values pairs
-  $.each(selectedFilters, function(name, filterValues) {
-
-    // filter each .product element
-    $filteredResults = $filteredResults.filter(function() {
-
-      var matched = false,
-        currentFilterValues = $(this).data('category').split(' ');
-
-      // loop over each category value in the current .product's data-category
-      $.each(currentFilterValues, function(_, currentFilterValue) {
-
-        // if the current category exists in the selected filters array
-        // set matched to true, and stop looping. as we're ORing in each
-        // set of filters, we only need to match once
-
-        if ($.inArray(currentFilterValue, filterValues) != -1) {
-          matched = true;
-          return false;
-        }
-      });
-
-      // if matched is true the current .product element is returned
-      return matched;
-
+      selectedFilters[this.name].push(this.value);
     });
-  });
 
-  $('.product').hide().filter($filteredResults).show();
-}
+    // create a collection containing all of the filterable elements
+    var $filteredResults = $('.product');
 
-$filterCheckboxes.on('change', filterFunc);  
+    // loop over the selected filter name -> (array) values pairs
+    $.each(selectedFilters, function (name, filterValues) {
+
+      // filter each .product element
+      $filteredResults = $filteredResults.filter(function () {
+
+        var matched = false,
+          currentFilterValues = $(this).data('category').split(' ');
+
+        // loop over each category value in the current .product's data-category
+        $.each(currentFilterValues, function (_, currentFilterValue) {
+
+          // if the current category exists in the selected filters array
+          // set matched to true, and stop looping. as we're ORing in each
+          // set of filters, we only need to match once
+
+          if ($.inArray(currentFilterValue, filterValues) != -1) {
+            matched = true;
+            return false;
+          }
+        });
+
+        // if matched is true the current .product element is returned
+        return matched;
+
+      });
+    });
+
+    $('.product').hide().filter($filteredResults).show();
+  }
+
+  $filterCheckboxes.on('change', filterFunc);
 
 </script>
+
+

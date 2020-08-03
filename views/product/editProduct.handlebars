@@ -1,0 +1,90 @@
+<script>console.log({{product.price}} + 'HELOOOOOOOO')</script>
+<div class="container">
+	<div class="card card-body">
+		<h3>Add Product</h3>
+		<form action="/product/addProducts" method="post" id="editVideo" enctype="multipart/form-data">
+			<div class="form-group">
+				<input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+				<img src="/uploads/{{product.productImage}}" id="blah" width="500" height="250" >
+			</div>
+			
+			<div class="form-group">
+				<label class="font-italic" for="description">Product Title</label>
+				<textarea class="form-control" id="productTitle" name="productTitle" rows="1">{{product.productTitle}}</textarea>
+			</div>
+
+			<div class="form-group mb-4">
+				<label class="font-italic" for="description">Description</label>
+				<textarea class="form-control" id="description" name="description" rows="7">{{product.description}}</textarea>
+			</div>
+
+			<div class="form-group">
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
+						<label id="Date of Release" class="font-italic">Release Date</label>
+						<input id="datepicker" width="200" name="dateRelease">
+					</div>
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+						<label id="language" class="font-italic">Type</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="type" id="headphones" value="Headphones" {{radioCheck product.type 'Headphones'}}>
+							<label class="form-check-label" for="headphones">Headphones</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="type" id="headset" value="Headset" {{radioCheck product.type 'Headset'}}>
+							<label class="form-check-label" for="headset">Headset</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="type" id="earbuds" value="Earbuds" {{radioCheck product.type 'Earbuds'}}>
+							<label class="form-check-label" for="earbuds">Earbuds</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="type" id="earpiece" value="Earpiece" {{radioCheck product.type 'Earpiece'}}>
+							<label class="form-check-label" for="earpiece">Earpiece</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label id="brand" class="font-italic">Brand</label>
+						<br>
+						<select class="custom-select" name="brand">
+							<option selected>Choose a Brand</option>
+							<option value="Sony">Sony</option>
+							<option value="Beats by Dre">Beats by Dre</option>
+							<option value="Sennheiser">Sennheiser</option>
+							<option value="Razer">Razer</option>
+						</select>
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label id="price" class="font-italic">Price</label>
+						<br>
+						<textarea class="form-control" id="price" name="price" rows="1" width="10px">{{product.price}}</textarea>
+					</div>
+				</div>
+
+			</div>
+			<br>
+			<button id="butAddVideo" type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</div>
+
+<script>
+	$('#datepicker').datepicker({
+	format: 'dd/mm/yyyy',
+	uiLibrary: 'bootstrap4',
+	});
+</script>
+
+
+<script>
+	$(document).ready(function() {
+		$('.mdb-select').materialSelect();
+	});
+</script>

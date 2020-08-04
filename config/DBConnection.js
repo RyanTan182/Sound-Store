@@ -11,7 +11,6 @@ const setUpDB = (drop) => {
         })
         .then(() => {
             user.hasMany(product);
-            user.hasMany(delivery);
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

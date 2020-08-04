@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const Delivery = db.define('product', {
+const Delivery = db.define('delivery', {
     productTitle: {
         type: Sequelize.STRING
     },
@@ -20,15 +20,30 @@ const Delivery = db.define('product', {
     totalPrice: {
         type: Sequelize.INTEGER
     },
-    address:{
+    fname: {
         type: Sequelize.STRING
     },
-    phone:{
+    lname: {
+        type: Sequelize.STRING
+    },
+    email: {
+        type: Sequelize.STRING
+    },
+    address: {
+        type: Sequelize.STRING
+    },
+    country: {
+        type: Sequelize.STRING
+    },
+    postalcode: {
         type: Sequelize.INTEGER
     },
-    status:{
-        type : Sequelize.STRING
-    }
+    phonenum: {
+        type: Sequelize.INTEGER
+    },
+    status: {
+        type: Sequelize.STRING
+    },
 });
 
 

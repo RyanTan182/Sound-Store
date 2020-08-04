@@ -5,6 +5,7 @@ const Order = require('../models/order');
 const Product = require('../models/Product');
 const Payment = require('../models/payment');
 const Addresses = require('../models/address');
+const Delivery = require('../models/delivery')
 
 
 
@@ -145,10 +146,28 @@ router.post('/confirmation', (req, res) => {
 				id:payment.id,
 			},
 		}).then(()=>{
-			Order.destroy({
+			Order.findAll({
 				where:{
 					userId:req.user.id,
 				}
+			}).then((order) =>{
+				for(var o of order){
+					Delivery.create({
+						productTitle:o.productTitle,
+						productImage:o.productImage,
+						price:o.price,
+						quantity:o.quantity,
+						userId:req.user.id,
+						totalPrice:o.price
+					})
+
+				}
+			}).then(()=>{
+				Order.destroy({
+					where:{
+						userId:req.user.id,
+					}
+				})
 			})
 				
 			

@@ -12,14 +12,14 @@
 		</ul>
 	</nav>
 	<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for deliveries.." title="Type in a name">
-{{#if deliveries}}
-	<table  id="table" align="center" border="1">
+<table  id="table" align="center" border="1">
 	<tr>
 	<th colspan="2">Product</th>
 	<th>Price</th>
 	<th>Quantity</th>
 	<th>Remove</th>
 	<th>Total</th>
+	<th></th>
 	</tr>
   <br>
     <!--This is a comment. Comments are not displayed in the browser -->
@@ -36,6 +36,9 @@
                 <input type="submit" value="&#xf00d" class="fa fa-close" style="color:red;border:none;float:center;cursor:pointer;font-size:25px;">
             </form></td>
     <td>${{totalPrice}}</td>
+	<td><form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
+		<button type="submit">Check</button>
+	</form></td>
 </tr>
 {{/each}}
     </table>
@@ -46,4 +49,3 @@
 {{else}}
 	<h3>No Delivery Order</h3>
 {{/if}}
-

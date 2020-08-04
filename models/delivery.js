@@ -20,29 +20,9 @@ const Delivery = db.define('delivery', {
     totalPrice: {
         type: Sequelize.INTEGER
     },
-    fname: {
-        type: Sequelize.STRING
-    },
-    lname: {
-        type: Sequelize.STRING
-    },
-    email: {
-        type: Sequelize.STRING
-    },
-    address: {
-        type: Sequelize.STRING
-    },
-    country: {
-        type: Sequelize.STRING
-    },
-    postalcode: {
-        type: Sequelize.INTEGER
-    },
-    phonenum: {
-        type: Sequelize.INTEGER
-    },
     status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, 
+        defaultValue: 'ordered'
     },
 });
 

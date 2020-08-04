@@ -1,11 +1,17 @@
 const express = require('express');
 const Delivery = require('../models/delivery');
 const Order = require('../models/order');
+const Addresses = require('../models/address')
 const router = express.Router();
 
 router.get('/listDelivery', (req, res) => {
-    res.render('Delivery/listDelivery')
-})
+	Delivery.findAll({
+		order: [['productTitle', 'ASC']],
+		raw: true,
+	}).then((deliveries)=>{
+		res.render('Delivery/listDelivery',{deliveries})
+	})
+});
 
 router.get('/editDelivery', (req, res) => {
 	res.render('Delivery/editDelivery')
@@ -13,7 +19,15 @@ router.get('/editDelivery', (req, res) => {
 
 
 router.get('/listdeliveryforuser', (req, res) => {
-	res.render('Delivery/listdeliveryforuser')
+	Delivery.findAll({
+		where:{
+			userId:req.user.id,
+		},
+		order: [['productTitle', 'ASC']],
+		raw: true,
+	}).then((deliveries)=>{
+		res.render('Delivery/listDelivery',{deliveries})
+	})
 });
 
 router.get('/makedelivery', (req, res) => {
@@ -29,54 +43,16 @@ router.get('/OrderCheckUser', (req, res) => {
 	res.render('Delivery/OrderCheckUse')
 });
 
-router.post('/listDelivery',(req, res) =>{
-	Order.findOne({
+router.post('/OrderCheckStaff/:id',(req, res) =>{
+	Addresses.findOne({
 		where:{
-			id:req.params.id
+			userId: req.params.id
 		}
-	}).then((order)=>{
-		Delivery.create({
-			productTitle:order.productTitle,
-			productImage:order.productImage,
-			price:order.price,
-			quantity:1,
-			userId:req.user.id,
-			totalPrice:order.price
-		})
+	}).then((address) => {
+		//comment : variable that contains what is returned above
+		res.render('Delivery/OrderCheckStaff',{address})
 	})
-	let fname = req.body.fname;
-	let	lname = req.body.lname;
-	let	email = req.body.email;
-	let	address = req.body.address;
-	let	country = req.body.country;
-	let	postalcode = req.body.postalcode;
-	let	phonenum = req.body.phonenum;
-	let userId = req.user.id;
-	console.log(fname)
-	Delivery.create({
-		fname,
-		lname,
-		email,
-		address,
-		country,
-		postalcode,
-		phonenum, 
-		userId,
-	})
-});
-
-router.get('/Check/:id', (req, res) => {
-    Delivery.findOne({
-        where: {
-            userId: req.params.id
-        }
-    }).then((delivery) => {
-        console.log(req.params.id)
-        
-        res.render('Delivery/OrderCheckStaff', {
-            delivery
-        });
-    })
+	
 });
 
 module.exports = router;

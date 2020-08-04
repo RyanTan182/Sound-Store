@@ -65,4 +65,18 @@ router.post('/listDelivery',(req, res) =>{
 	})
 });
 
+router.get('/Check/:id', (req, res) => {
+    Delivery.findOne({
+        where: {
+            userId: req.params.id
+        }
+    }).then((delivery) => {
+        console.log(req.params.id)
+        
+        res.render('Delivery/OrderCheckStaff', {
+            delivery
+        });
+    })
+});
+
 module.exports = router;

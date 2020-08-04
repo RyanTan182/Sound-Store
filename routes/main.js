@@ -28,10 +28,6 @@ router.get('/showLoginUser', (req, res) => {
 	res.render('user/loginUser')
 });
 
-router.get('/showLoginStaff', (req, res) => {
-	res.render('user/loginStaff')
-});
-
 router.get('/showForgotPassword', (req, res) => {
 	res.render('user/forgotPassword')
 });

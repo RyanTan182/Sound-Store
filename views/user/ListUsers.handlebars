@@ -2,7 +2,7 @@
 {{#if users}}
 	<div class="card card-body">
 		<h3 class="text-warning">Customers</h3>
-		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for customers.." title="Type in a name">
+		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for customers..." title="Type in a name">
 		<br>
 		{{#each users}}
 			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
@@ -53,3 +53,16 @@
 {{else}}
 	<h3>No users listed</h3>
 {{/if}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#Product ").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>

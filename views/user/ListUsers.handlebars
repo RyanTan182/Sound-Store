@@ -5,7 +5,7 @@
 		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for customers..." title="Type in a name">
 		<br>
 		{{#each users}}
-			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
+			<div id="User" class="card bg-dark border-info mb-2 w-100 mx-auto">
 			<div id="productHeader" class="border-info">
 				<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic text-white">Email</p>
@@ -60,7 +60,7 @@
 	$(document).ready(function(){
 	$("#myInput").on("keyup", function() {
 		var value = $(this).val().toLowerCase();
-		$("#Product ").filter(function() {
+		$("#User ").filter(function() {
 		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
 	});

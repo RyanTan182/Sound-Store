@@ -127,11 +127,16 @@ router.post('/forgotPassword', (req, res) => {
 
   router.get('/newPassword', (req, res) => {
     let errors = [];
-    let {email,password/* ,password2 */}=req.body
+    let {email,password,password2}=req.body
     /* if(password !== password2) {
-      errors.push({text: 'Passwords do not match'});
+        errors.push({text: 'Passwords do not match'});
+    }
+
+    // Checks that password length is more than 4
+    if(password.length < 4) {
+        errors.push({text: 'Password must be at least 4 characters'});
     } */
-    /* else */{
+    {
         res.render('user/newPassword', {
           email:req.body.email,
           password:req.body.password

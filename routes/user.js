@@ -333,12 +333,7 @@ passport.authenticate('google',{failureRedirect:'/loginUser'}),
 (req,res)=>{
     let {SecurityQn,SecurityAnswer}=req.body
     User.findOne({}).then((user)=>{
-        if (SecurityQn=='' && SecurityAnswer==''){
-        res.redirect('/googleForm');
-        }
-        else{
-            res.redirect('/');
-        }
+        res.redirect('/googleForm')
     })
 })
 
@@ -354,16 +349,17 @@ router.get('/googleForm', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-          password:req.body.password,
-          ContactNo:req.body.ContactNo,
-          SecurityQn:req.body.SecurityQn,
-          SecurityAnswer:req.body.SecurityAnswer
+        email:users.email,
+        password:req.body.password,
+        ContactNo:req.body.ContactNo,
+        SecurityQn:req.body.SecurityQn,
+        SecurityAnswer:req.body.SecurityAnswer
         })};
 });
 
 router.post('/saveDetails', (req, res) => {
     // Create new user record
-    let{password,SecurityQn,SecurityAnswer}=req.body
+    let{password,SecurityQn,SecurityAnswer,ContactNo}=req.body
         bcrypt.hash(password,10,function(err,hash) {
             if(err) throw err;
             password = hash;

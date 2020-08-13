@@ -31,6 +31,10 @@ router.get('/showLoginUser', (req, res) => {
 router.get('/showForgotPassword', (req, res) => {
 	res.render('user/forgotPassword')
 });
+
+router.get('/showSecurityQn', (req, res) => {
+	res.render('user/securityQn')
+});
 // Register
 router.get('/showRegisterUser', (req, res) => {
 	res.render('user/registerUser')
@@ -49,6 +53,9 @@ router.get('/ListUsers', (req, res) => {
 	res.render('user/ListUsers')
 });
 
+router.get('/googleForm', (req, res) => {
+	res.render('user/googleForm')
+});
 // About
 router.get('/about', (req, res) => {
 	const author = 'Geralt'

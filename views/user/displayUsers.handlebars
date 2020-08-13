@@ -1,34 +1,73 @@
+<style>
+#email{
+	display:inline-block;
+}
+#name{
+	display:inline-block;
+}
+#password{
+	display:inline-block;
+}
+#usertype{
+	display:inline-block;
+}
+#secuirtyqn{
+	display:inline-block;
+}
+#securityanswer{
+	display:inline-block;
+}
+</style>
+
 <div class="container">
 {{#if users}}
 	<div class="card card-body">
 		<h3 class="text-warning">User</h3>
 		<br>
 		{{#each users}}
-			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
-			<div id="productHeader" class="border-info">
-				<div class="col-sm-12 col-md-12 col-lg-2">
+			<div id="User" class="card bg-dark border-info mb-2 w-100 mx-auto">
+			<div id="User" class="border-info">
+				<div class="col-sm-12 col-md-12 col-lg-2" id="Email">
 							<p class="font-italic text-white">Email</p>
-							<p class="text-info">{{email}}</p>
+							<p class="text-info" id="email">{{email}}</p>
 						</div>
 						
 				<div class="card-body">
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-3">
+						<div class="col-sm-12 col-md-12 col-lg-3" id="name">
 							<p class="font-italic text-white">Name</p>
 							<p class="text-info">
 								{{name}}
 							</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-3">
+						<div class="col-sm-12 col-md-12 col-lg-3" id="password">
 							<p class="font-italic text-white">Password</p>
 							<p class="text-info">
 								********
 							</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-3">
+						<div class="col-sm-12 col-md-12 col-lg-3" id="usertype">
 							<p class="font-italic text-white">User Type</p>
 							<p class="text-info">
 								{{UserType}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3" id="contactNo">
+							<p class="font-italic text-white">Contact Number</p>
+							<p class="text-info">
+								{{ContactNo}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3" id="securityqn">
+							<p class="font-italic text-white">Security Question</p>
+							<p class="text-info">
+								{{SecurityQn}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3" id="securityanswer">
+							<p class="font-italic text-white">Security Answer</p>
+							<p class="text-info">
+								********
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">

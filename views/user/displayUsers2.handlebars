@@ -1,3 +1,9 @@
+<style>
+#email{
+	display:inline-block;
+}
+</style>
+
 <div class="container">
 {{#if users}}
 	<div class="card card-body">
@@ -9,9 +15,8 @@
 			<div id="productHeader" class="border-info">
 				<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic text-white">Email</p>
-							<p class="text-info">{{email}}</p>
-						</div>
-						
+							<p class="text-info" id="email">{{email}}</p>
+						</div>	
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-3">
@@ -30,6 +35,24 @@
 							<p class="font-italic text-white">User Type</p>
 							<p class="text-info">
 								{{UserType}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic text-white">Contact Number</p>
+							<p class="text-info">
+								{{ContactNo}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic text-white">Security Question</p>
+							<p class="text-info">
+								{{SecurityQn}}
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic text-white">Security Answer</p>
+							<p class="text-info">
+								********
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-2">

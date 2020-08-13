@@ -1,3 +1,6 @@
+<style>
+	
+</style>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="row">
 	<div class="col-md-6 mx-auto">
@@ -22,8 +25,20 @@
 					<input type="password"  name="password2" class="form-control" value="{{password2}}" required>
 				</div>
 				<div class="form-group">
-					<label for="UserType">User Type (Admin/Customer)</label>
-					<input type="UserType"  name="UserType" class="form-control" value="{{UserType}}" required>
+					<label for="name">Contact Number</label>
+					<input type="ContactNo" class="form-control" name="ContactNo" value="{{ContactNo}}" required>
+				</div>
+				<div class="form-group">
+					<label for="name">User Type (Admin/Customer)</label>
+					<input type="text" class="form-control" name="UserType" value="{{UserType}}" required>
+				</div>
+				<div class="form-group">
+					<label for="SecurityQn">Security Question</label>
+					<input type="SecurityQn"  name="SecurityQn" class="form-control" value="{{SecurityQn}}" required>
+				</div>
+				<div class="form-group">
+					<label for="SecurityAnswer">Answer</label>
+					<input type="SecurityAnswer"  name="SecurityAnswer" class="form-control" value="{{SecurityAnswer}}" required>
 				</div>
 				<div class="g-recaptcha" data-sitekey="6LeKxbAZAAAAAChidra3BPhQ4Gn9bChZkZp0KHU3"></div>
 				<button type="submit" class="btn btn-primary">Submit</button>

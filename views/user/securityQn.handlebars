@@ -1,0 +1,25 @@
+
+<style>
+	
+</style>
+<div class="row">
+	<div class="col-md-6 mx-auto">
+		<div class="card card-body">
+			<img class="logo" src="/img/SAlogo1.png">
+			<h3 class="text-center">Security Question</h3>
+			          <div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic text-black">Security Question</p>
+							<p class="text-info">
+								{{SecurityQn}}
+							</p>
+						</div>
+			<form method="post" action="/user/securityQn"> 
+				<div class="form-group">
+					<label for="SecurityAnswer">Answer:</label>
+					<input type="text" class="form-control" name="name" value="{{SecurityAnswer}}" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>

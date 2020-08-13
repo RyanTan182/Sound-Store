@@ -136,15 +136,11 @@ let errors = []
 let {SecurityQn,SecurityAnswer,email} = req.body;
 // If all is well, checks if user is already registered
 User.findAll({
-    where: {
-        SecurityQn:SecurityQn
-    },
     order: [
         ['SecurityQn', 'ASC']
     ],
     raw: true
 })
-.then(user => {
 if (SecurityAnswer==SecurityAnswer) {
     res.redirect('newPassword');
 } else {
@@ -154,7 +150,6 @@ if (SecurityAnswer==SecurityAnswer) {
     error:'Answer incorrect!',
     });
 }
-});
 }
 );
 
@@ -170,7 +165,7 @@ router.get('/newPassword', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-          email:req.body.email,
+          email:users.email,
           password:req.body.password
         })};
 });

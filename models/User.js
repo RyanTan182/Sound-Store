@@ -16,5 +16,14 @@ const User = db.define('user', {
     UserType: {
         type: Sequelize.STRING
     },
+    ContactNo:{
+        type:Sequelize.STRING
+    },
+    SecurityQn:{
+        type: Sequelize.STRING
+    },
+    SecurityAnswer:{
+        type: Sequelize.STRING
+    },
 });
 module.exports = User;

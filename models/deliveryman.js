@@ -2,9 +2,15 @@ const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
 const Deliveryman = db.define('deliveryman', {
-    productTitle: {
+    fname: {
         type: Sequelize.STRING
     },
+    lname:{
+        type: Sequelize.STRING
+    },
+    Phone : {
+        type: Sequelize.STRING
+    }
 });
 
 

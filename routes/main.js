@@ -82,7 +82,7 @@ const transporter = nodemailer.createTransport({
 	from: 'soundstore111@gmail.com',
 	to: req.body.email,
 	subject: 'Thanks for suscribing!',
-	html:"<h1>Thank you for subscribing!</h1><img src='public/img/SAlogo1.png alt='SAlogo1.png'><p>You will now receive updates and promotions on Sound Store!</p>"
+	html:"<h1>Thank you for subscribing!</h1><p>You will now receive updates and promotions on Sound Store!</p>"
   };
   
   transporter.sendMail(mailOptions, function(error, info){

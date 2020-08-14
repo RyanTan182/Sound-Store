@@ -26,7 +26,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
-const {formatDate, radioCheck} = require('./helpers/hbs');
+const {formatDate, radioCheck, ifEquals} = require('./helpers/hbs');
 const deliveryRoute = require('./routes/Delivery')
 
 const sstoreDB = require('./config/DBConnection');
@@ -60,7 +60,8 @@ app.engine('handlebars', exphbs({
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	helpers: {
 		formatDate: formatDate,
-		radioCheck: radioCheck
+		radioCheck: radioCheck,
+		ifEquals: ifEquals,
 	},
 	
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 

@@ -56,6 +56,10 @@ router.get('/ListUsers', (req, res) => {
 router.get('/googleForm', (req, res) => {
 	res.render('user/googleForm')
 });
+
+router.get('/newPassword', (req, res) => {
+	res.render('user/newPassword')
+});
 // About
 router.get('/about', (req, res) => {
 	const author = 'Geralt'

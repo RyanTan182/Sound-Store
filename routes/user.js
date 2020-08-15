@@ -149,7 +149,7 @@ router.post('/securityQn', (req, res) => {
         bcrypt.compare(SecurityAnswer,user.SecurityAnswer,function(err, isMatch) {
             if(err) throw err;
             if (isMatch) {
-            res.redirect('newPassword');
+            res.redirect('/newPassword');
         } else {
         // If user is found, that means email has already been
             // registered
@@ -164,7 +164,7 @@ router.post('/securityQn', (req, res) => {
 
 router.get('/newPassword', (req, res) => {
     let errors = [];
-    let {email,password,password2}=req.body
+    let {name,password,password2}=req.body
     /* if(password !== password2) {
         errors.push({text: 'Passwords do not match'});
     }
@@ -174,14 +174,14 @@ router.get('/newPassword', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-          email:req.body.email,
+          name:users.name,
           password:req.body.password
         })};
 });
 
 router.post('/savePassword', (req, res) => {
     // Create new user record
-    let{password,email}=req.body
+    let{password,name}=req.body
         bcrypt.hash(password,10,function(err,hash) {
             if(err) throw err;
             password = hash;
@@ -190,15 +190,14 @@ router.post('/savePassword', (req, res) => {
             }, 
             {
             where: {
-            email:req.body.email
+            name:req.body.name
             }
             })
             .then(user => {
               res.redirect('/');
                 }).catch(err => console.log(err));
                 console.log(password)
-        
-    });
+            })
 })
       
 router.get('/displayUsers', (req, res, next) => {
@@ -365,7 +364,7 @@ router.get('/googleForm', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-        email:users.email,
+        name:req.body.name,
         password:req.body.password,
         ContactNo:req.body.ContactNo,
         SecurityQn:req.body.SecurityQn,
@@ -389,7 +388,7 @@ router.post('/saveDetails', (req, res) => {
             }, 
             {
             where: {
-            email:req.body.email
+            name:req.body.name
             }
             })
             .then(user => {

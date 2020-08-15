@@ -1,7 +1,8 @@
 const express = require('express');
 const Delivery = require('../models/delivery');
 const Order = require('../models/order');
-const Addresses = require('../models/address')
+const Addresses = require('../models/address');
+const Deliveryman = require('../models/deliveryman');
 const router = express.Router();
 
 router.get('/listDelivery', (req, res) => {
@@ -52,8 +53,24 @@ router.post('/OrderCheckStaff/:id',(req, res) =>{
 		//comment : variable that contains what is returned above
 		res.render('Delivery/OrderCheckStaff',{address})
 	})
-	
-	
 });
+
+
+router.post('/createdeliveryman', (req,res) =>{
+	let fname = req.body.fname;
+	let	lname = req.body.lname;
+	let phone = req.body.phone;
+	Deliveryman.create({
+		fname,
+		lname,
+		phone,
+	}).then((deliveryman)=>{
+		res.redirect('/Delivery/makedelivery',{deliveryman})
+	})
+})
+
+router.get('/createdeliveryman',(req, res)=>{
+	res.render('Delivery/createdeliveryman')
+})
 
 module.exports = router;

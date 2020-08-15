@@ -11,7 +11,7 @@
 			<li>Reached</li>
 		</ul>
 	</nav>
-	<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for deliveries.." title="Type in a name">
+	<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
 <table  id="table" align="center" border="1">
 	<tr>
 	<th colspan="2">Product</th>
@@ -26,6 +26,7 @@
 {{#if deliveries}}    
 <tr>
     {{#each deliveries}}
+	<div id="Delivery" class="card bg-dark border-info mb-2 w-100 mx-auto">
     <td><img src='/uploads/{{productImage}}'width="120px" height="100px"></td>
     <td>{{productTitle}}</td>
     <td>{{price}}</td>
@@ -39,6 +40,7 @@
 	<td><form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
 		<button type="submit">Check</button>
 	</form></td>
+	</div>
 </tr>
 {{/each}}
     </table>
@@ -49,3 +51,16 @@
 {{else}}
 	<h3>No Delivery Order</h3>
 {{/if}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#Delivery ").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>

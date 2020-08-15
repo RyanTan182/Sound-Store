@@ -7,31 +7,8 @@ const { radioCheck } = require('../helpers/hbs');
 const fs = require('fs');
 const { query } = require('express');
 
-/*
-let newz = rec_arrayss.rec_updatedArray
 
-const recommender = new ContentBasedRecommender({
-    minScore: 0.2,
-    maxSimilarDocuments: 15
-});
-
-
-    const documents = [
-        { id:  '1000001', content: newz[0] },
-        { id:  '1000002', content: rec_arrayz[1] },
-        { id:  '1000003', content: rec_arrayz[2] },
-        { id:  '1000004', content: rec_arrayz[3] },
-        { id:  '1000005', content: rec_arrayz[4] }
-    ];
-    console.log(rec_arrayz[0])
-    
-    recommender.train(documents);
-    
-    const similarDocuments = recommender.getSimilarDocuments(1000001, 0, 5);
-    
-    console.log(similarDocuments);    
-
-*/
+  
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -61,7 +38,7 @@ router.get('/listProducts', (req, res) => {
         res.render('product/listProducts', {
             products: products,
             productImage: products.productImage
-        });
+        });  
     })  
     .catch(err => console.log(err));
 });
@@ -99,29 +76,12 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     .catch(err => console.log(err))
 });
 
-/*
 router.get('/edit/:id', (req, res) => {
     Product.findOne({
         where: {
             id: req.params.id
         }
     }).then((product) => {
-        console.log(req.params.id)
-        
-        res.render('product/editProduct', {
-            product: product 
-        });
-        console.log(product)
-    }).catch(err => console.log(err)); 
-});
-*/
-router.get('/edit/:id', (req, res) => {
-    Product.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then((product) => {
-        console.log(product.productTitle + '=======OOOOO')
         if(!product){
             alertMessage(res, 'info', 'No such videos', 'fas fa-exclamation-circle', true);
         }else{
@@ -133,6 +93,21 @@ router.get('/edit/:id', (req, res) => {
     }).catch(err => console.log(err)); 
 });
 
+router.post('/updateProduct/:id', (req, res) => {
+    Product.update(
+        {
+            productTitle: req.body.productTitle,
+            description: req.body.description
+        },
+        {
+            where: {
+                id: req.params.id,
+            },
+        }
+    ).then(() => {
+        res.redirect(303, 'product/listProducts');
+    }).catch(err => console.log(err)); 
+});
 
 
 function checkOptions(product){

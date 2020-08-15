@@ -8,7 +8,7 @@ const Deliveryman = db.define('deliveryman', {
     lname:{
         type: Sequelize.STRING
     },
-    Phone : {
+    phone : {
         type: Sequelize.STRING
     }
 });

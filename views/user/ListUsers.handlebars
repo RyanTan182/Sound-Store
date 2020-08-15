@@ -1,15 +1,20 @@
+<style>
+#email{
+	display:inline-block;
+}
+</style>
 <div class="container">
 {{#if users}}
 	<div class="card card-body">
 		<h3 class="text-warning">Customers</h3>
-		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for customers.." title="Type in a name">
+		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for customers..." title="Type in a name">
 		<br>
 		{{#each users}}
-			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
+			<div id="User" class="card bg-dark border-info mb-2 w-100 mx-auto">
 			<div id="productHeader" class="border-info">
 				<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic text-white">Email</p>
-							<p class="text-info">{{email}}</p>
+							<p class="text-info" id="email">{{email}}</p>
 						</div>
 				<div class="card-body">
 					<div class="row">
@@ -23,6 +28,12 @@
 							<p class="font-italic text-white">Password</p>
 							<p class="text-info">
 								********
+							</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-3">
+							<p class="font-italic text-white">ContactNo</p>
+							<p class="text-info">
+								{{ContactNo}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3">
@@ -53,3 +64,16 @@
 {{else}}
 	<h3>No users listed</h3>
 {{/if}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#User ").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>

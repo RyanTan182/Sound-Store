@@ -4,7 +4,8 @@ const moment = require('moment');
 const Order = require('../models/order');
 const Product = require('../models/Product');
 const Payment = require('../models/payment');
-
+const Addresses = require('../models/address');
+const Delivery = require('../models/delivery')
 
 
 
@@ -65,6 +66,9 @@ router.post('/delete/:id', (req, res) => {
 	})
 });
 
+router.get('/address', (req, res) => {
+	res.render('order/address')
+})
 
 router.post('/address', (req, res) => {
 	Payment.findOne({
@@ -72,10 +76,13 @@ router.post('/address', (req, res) => {
 			userId:req.user.id,
 		},
 	}).then((payment)=>{
+		console.log(req.body.totalprice) 
 		if(payment){
+			//this happens if cancel half way and update existing payment
 			Payment.update(
 				{
 					total: req.body.totalprice,
+					
 				},
 				{
 					where: {
@@ -83,26 +90,46 @@ router.post('/address', (req, res) => {
 					},
 				}
 			)
-		}
-		else{
-		Payment.create({
+		}	
+		else{		
+		 Payment.create({
 			userId:req.user.id,
-			total:req.body.totalprice,
+			total:req.body.totalprice,	
 		})
 	}
+	
 	res.render('order/address')
 })
 });
 
 router.post('/payment', (req, res) => {
-	Payment.findOne({
-		where:{
-			userId:req.user.id,
-		},
-	}).then((payment)=>{
-		
-		res.render('order/payment',{payment,total:payment.total})
-
+	let fname = req.body.fname;
+	let	lname = req.body.lname;
+	let	email = req.body.email;
+	let	address = req.body.address;
+	let	country = req.body.country;
+	let	postalcode = req.body.postalcode;
+	let	phonenum = req.body.phonenum;
+	let userId = req.user.id;
+	Addresses.create({
+		fname,
+		lname,
+		email,
+		address,
+		country,
+		postalcode,
+		phonenum, 
+		userId,
+	}).then(()=>{
+		Payment.findOne({
+			where:{
+				userId:req.user.id,
+			},
+		}).then((payment)=>{
+			
+			res.render('order/payment',{payment,total:payment.total})
+	
+		})
 	})
 	
 });
@@ -114,11 +141,39 @@ router.post('/confirmation', (req, res) => {
 			userId:req.user.id,
 		},
 	}).then((payment)=>{
-		
-		res.render('order/confirmation',{payment,total:payment.total})
+		Payment.destroy({
+			where: {
+				id:payment.id,
+			},
+		}).then(()=>{
+			Order.findAll({
+				where:{
+					userId:req.user.id,
+				}
+			}).then((order) =>{
+				for(var o of order){
+					Delivery.create({
+						productTitle:o.productTitle,
+						productImage:o.productImage,
+						price:o.price,
+						quantity:o.quantity,
+						userId:req.user.id,
+						totalPrice:o.price
+					})
 
-	})
-	
+				}
+			}).then(()=>{
+				Order.destroy({
+					where:{
+						userId:req.user.id,
+					}
+				})
+			})
+				
+			
+		})
+		res.render('order/confirmation',{payment,total:payment.total})
+	})				
 });
 
 module.exports = router;

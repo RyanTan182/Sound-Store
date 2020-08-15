@@ -1,9 +1,18 @@
 const express = require('express');
+const Delivery = require('../models/delivery');
+const Order = require('../models/order');
+const Addresses = require('../models/address');
+const Deliveryman = require('../models/deliveryman');
 const router = express.Router();
 
 router.get('/listDelivery', (req, res) => {
-    res.render('Delivery/listDelivery')
-})
+	Delivery.findAll({
+		order: [['productTitle', 'ASC']],
+		raw: true,
+	}).then((deliveries)=>{
+		res.render('Delivery/listDelivery',{deliveries})
+	})
+});
 
 router.get('/editDelivery', (req, res) => {
 	res.render('Delivery/editDelivery')
@@ -11,7 +20,15 @@ router.get('/editDelivery', (req, res) => {
 
 
 router.get('/listdeliveryforuser', (req, res) => {
-	res.render('Delivery/listdeliveryforuser')
+	Delivery.findAll({
+		where:{
+			userId:req.user.id,
+		},
+		order: [['productTitle', 'ASC']],
+		raw: true,
+	}).then((deliveries)=>{
+		res.render('Delivery/listDelivery',{deliveries})
+	})
 });
 
 router.get('/makedelivery', (req, res) => {
@@ -27,5 +44,28 @@ router.get('/OrderCheckUser', (req, res) => {
 	res.render('Delivery/OrderCheckUse')
 });
 
+router.post('/OrderCheckStaff/:id',(req, res) =>{
+	Addresses.findOne({
+		where:{
+			userId: req.params.id
+		}
+	}).then((address) => {
+		//comment : variable that contains what is returned above
+		res.render('Delivery/OrderCheckStaff',{address})
+	})
+});
+
+router.post('/createdeliveryman', (req,res) =>{
+	let fname = req.body.fname;
+	let	lname = req.body.lname;
+	let phone = req.body.phone;
+	Deliveryman.create({
+		fname,
+		lname,
+		phone,
+	}).then((deliveryman)=>{
+		res.redirect('/Delivery/makedelivery',{deliveryman})
+	})
+})
 
 module.exports = router;

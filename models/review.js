@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
 
-const Delivery = db.define('delivery', {
+const Deluvery = db.define('review', {
     productTitle: {
         type: Sequelize.STRING
     },
@@ -20,12 +20,6 @@ const Delivery = db.define('delivery', {
     totalPrice: {
         type: Sequelize.INTEGER
     },
-    status: {
-        type: Sequelize.STRING, 
-        defaultValue: 'ordered'
-    },
 });
 
-
-
-module.exports = Delivery;
+module.exports = Review

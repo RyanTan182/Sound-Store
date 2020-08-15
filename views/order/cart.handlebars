@@ -84,7 +84,7 @@ h1{
 {{/each}}
     </table>
 
-<
+
 <div class="total">
        <form action="">
   <label for="discode">Discount Code:</label>
@@ -109,8 +109,8 @@ h1{
 {{else}}
 	<h3>No Items in cart</h3>
 {{/if}}
-    </>
-    <form method="post" action="/order/address">
+    
+    <form method="POST" action="/order/address">
     <input type="hidden" id="totalprice" name="totalprice">
     <button id="pay" class="btn btn-primary shop-item-button" type="Submit" >Proceed to payment</button>
        
@@ -123,14 +123,12 @@ function load() {
     var total = 0;
     var subtotal = 0;
     var table = document.getElementById('table');
-    for (i = 1; i < table.rows.length; i++) {
-        var objCells = table.rows.item(i).cells;
-        total += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML)+10;
-    }
+    
      for (i = 1; i < table.rows.length; i++) {
         var objCells = table.rows.item(i).cells;
         subtotal += parseInt(objCells.item(2).innerHTML) * parseInt(objCells.item(3).innerHTML);
     }
+    total = subtotal +10
     document.getElementById('total').innerHTML = total;
     document.getElementById('subtotal').innerHTML = subtotal;
     document.getElementById('totalprice').value = total;

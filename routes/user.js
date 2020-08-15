@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // User register URL using HTTP post => /user/register
 router.post('/registerUser', (req, res) => {
     let errors = [];
-
+    let success_msg='Success! Please login';
     // Retrieves fields from register page from request body
     let {name, email, password, password2,ContactNo,UserType,SecurityQn,SecurityAnswer} = req.body;
 
@@ -90,6 +90,8 @@ router.post('/registerUser', (req, res) => {
                             SecurityAnswer=hash;
                             User.create({ name, email, password,UserType,ContactNo,SecurityQn,SecurityAnswer })
                             .then(user => {
+                                alertMessage(res,'success', user.name +' Success!'+' Please login.', 'fas fa-email-alt', true);
+                                res.redirect('/');
                                 }).catch(err => console.log(err));
                         })
                     });
@@ -174,7 +176,7 @@ router.get('/newPassword', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-          name:users.name,
+          ContactNo:req.body.ContactNo,
           password:req.body.password
         })};
 });
@@ -190,10 +192,11 @@ router.post('/savePassword', (req, res) => {
             }, 
             {
             where: {
-            name:req.body.name
+            ContactNo:req.body.ContactNo
             }
             })
             .then(user => {
+            alertMessage(res,'success', ' Success! Password is updated!'+' Please login again with new password.', 'fas fa-email-alt', true);
               res.redirect('/');
                 }).catch(err => console.log(err));
                 console.log(password)
@@ -306,6 +309,7 @@ router.post('/saveEditedUser/:id', (req, res) => {
     // After saving, redirect to router.get(/listVideos...) to retrieve all updated
     // videos
     console.log(password)
+    alertMessage(res,'success', ' Success!'+' Information is updated!', 'fas fa-email-alt', true);
     res.redirect('/user/displayUsers');
     }).catch(err => console.log(err));
 });
@@ -392,6 +396,7 @@ router.post('/saveDetails', (req, res) => {
             }
             })
             .then(user => {
+            alertMessage(res,'success', +'Google Account updated sucessfully!'+' Please login.', 'fas fa-email-alt', true);
               res.redirect('/');
                 }).catch(err => console.log(err));
                 console.log(password)

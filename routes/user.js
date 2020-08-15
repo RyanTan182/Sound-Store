@@ -396,7 +396,7 @@ router.post('/saveDetails', (req, res) => {
             }
             })
             .then(user => {
-            alertMessage(res,'success', +'Google Account updated sucessfully!'+' Please login.', 'fas fa-email-alt', true);
+            alertMessage(res,'success', 'Google Account updated sucessfully!', 'fas fa-email-alt', true);
               res.redirect('/');
                 }).catch(err => console.log(err));
                 console.log(password)

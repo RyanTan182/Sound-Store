@@ -17,7 +17,7 @@ router.post('/registerUser', (req, res) => {
     let errors = [];
 
     // Retrieves fields from register page from request body
-    let {name, email, password, password2,UserType,captcha} = req.body;
+    let {name, email, password, password2,ContactNo,UserType,SecurityQn,SecurityAnswer} = req.body;
 
     // Checks if both passwords entered are the same
     if(password !== password2) {
@@ -36,6 +36,9 @@ router.post('/registerUser', (req, res) => {
             password,
             password2,
             UserType,
+            ContactNo,
+            SecurityQn,
+            SecurityAnswer,
         });}
     /* if(req.body.captcha===undefined ||
             req.body.captcha===''||
@@ -73,18 +76,24 @@ router.post('/registerUser', (req, res) => {
                         password,
                         password2,
                         UserType,
+                        ContactNo,
+                        SecurityQn,
+                        SecurityAnswer,
                         });
                 } else {
                     // Create new user record
                     bcrypt.genSalt(10,(err,salt) =>{
                         bcrypt.hash(password,salt,(err,hash) =>{
+                            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
                             if(err) throw err;
                             password = hash;
-                            User.create({ name, email, password,UserType, })
+                            SecurityAnswer=hash;
+                            User.create({ name, email, password,UserType,ContactNo,SecurityQn,SecurityAnswer })
                             .then(user => {
                                 }).catch(err => console.log(err));
                         })
                     });
+                });
                 }
             });
         }
@@ -104,16 +113,12 @@ router.post('/loginUser', (req, res, next) => {
     })(req, res, next);
 });
 
-
 router.post('/forgotPassword', (req, res) => {
-  let errors = []
-  // Retrieves fields from register page from request body
-  let {name, email, password, password2} = req.body;
-  // If all is well, checks if user is already registered
+  // Find user with email in input
   User.findOne({ where: {email: req.body.email} })
   .then(user => {
   if (user) {
-    res.redirect('newPassword');
+    res.render('user/securityQn',{SecurityQn: user.SecurityQn, email:req.body.email})
   } else {
   // If user is found, that means email has already been
    // registered
@@ -125,13 +130,44 @@ router.post('/forgotPassword', (req, res) => {
   }
   );
 
-  router.get('/newPassword', (req, res) => {
+router.post('/securityQn', (req, res) => {
+    let errors = []
+    // Retrieves fields from register page from request body
+    let {SecurityAnswer,email} = req.body;
+    // If all is well, checks if user is already registered
+    User.findOne({
+        order: [
+            ['SecurityQn', 'ASC']
+        ],
+        raw: true,
+        where: {
+            email:email
+        }
+    }).then((user)=>{
+        User.findOne({ where: {SecurityAnswer:SecurityAnswer} })
+        console.log(req.body.SecurityAnswer,user.SecurityAnswer);
+        bcrypt.compare(SecurityAnswer,user.SecurityAnswer,function(err, isMatch) {
+            if(err) throw err;
+            if (isMatch) {
+            res.redirect('newPassword');
+        } else {
+        // If user is found, that means email has already been
+            // registered
+            User.findOne({ where: {email: req.body.email} })
+            .then((user)=>{
+                res.render('user/securityQn', {SecurityQn: user.SecurityQn, email:req.body.email,error:'Answer incorrect!'});
+            });
+        }
+    });
+    })
+});
+
+router.get('/newPassword', (req, res) => {
     let errors = [];
     let {email,password,password2}=req.body
     /* if(password !== password2) {
         errors.push({text: 'Passwords do not match'});
     }
-
     // Checks that password length is more than 4
     if(password.length < 4) {
         errors.push({text: 'Password must be at least 4 characters'});
@@ -239,20 +275,28 @@ router.get('/edit/:id', (req, res) => {
             id:req.params.id,
             name:users.name,
             email:users.email,
-            password:users.password
+            password:users.password,
+            ContactNo:users.ContactNo,
+            SecurityQn:users.SecurityQn,
+            SecurityAnswer:users.SecurityAnswer,
         });
     }).catch(err => console.log(err)); 
 });
 
 router.post('/saveEditedUser/:id', (req, res) => {
-    let {password} = req.body;
+    let {password,SecurityAnswer} = req.body;
         bcrypt.hash(password, 10, function(err, hash) {
+            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
             if(err) throw err;
             password = hash;
+            SecurityAnswer = hash;
     // Retrieves edited values from req.body
     User.update({
         name:req.body.name,
         email:req.body.email,
+        ContactNo:req.body.ContactNo,
+        SecurityQn:req.body.SecurityQn,
+        SecurityAnswer:SecurityAnswer,
         password
     }, 
     {
@@ -265,6 +309,7 @@ router.post('/saveEditedUser/:id', (req, res) => {
     console.log(password)
     res.redirect('/user/displayUsers');
     }).catch(err => console.log(err));
+});
 });
     });
 
@@ -298,9 +343,62 @@ router.get(
 router.get('/google/redirect',
 passport.authenticate('google',{failureRedirect:'/loginUser'}),
 (req,res)=>{
-    User.findOne({}).then((user)=>{
-        res.redirect('/');
+    User.findOne({where: {email:req.user.email}}).then((user)=>{
+        if(user.SecurityQn=='' && user.SecurityAnswer==''){
+            res.redirect('/googleForm')
+        }
+        else{
+            res.redirect('/')
+        }
     })
+})
+
+router.get('/googleForm', (req, res) => {
+    let errors = [];
+    let {password,password2,SecurityQn,SecurityAnswer}=req.body
+    /* if(password !== password2) {
+        errors.push({text: 'Passwords do not match'});
+    }
+    // Checks that password length is more than 4
+    if(password.length < 4) {
+        errors.push({text: 'Password must be at least 4 characters'});
+    } */
+    {
+        res.render('user/newPassword', {
+        email:users.email,
+        password:req.body.password,
+        ContactNo:req.body.ContactNo,
+        SecurityQn:req.body.SecurityQn,
+        SecurityAnswer:req.body.SecurityAnswer
+        })};
+});
+
+router.post('/saveDetails', (req, res) => {
+    // Create new user record
+    let{password,SecurityQn,SecurityAnswer,ContactNo}=req.body
+        bcrypt.hash(password,10,function(err,hash) {
+            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
+            if(err) throw err;
+            password = hash;
+            SecurityAnswer=hash;
+            User.update({
+                password,
+                ContactNo,
+                SecurityQn,
+                SecurityAnswer
+            }, 
+            {
+            where: {
+            email:req.body.email
+            }
+            })
+            .then(user => {
+              res.redirect('/');
+                }).catch(err => console.log(err));
+                console.log(password)
+        
+    });
+})
 })
 
 module.exports = router ;

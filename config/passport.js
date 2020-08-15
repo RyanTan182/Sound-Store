@@ -60,9 +60,13 @@ function googleStrategy(passport){
                  'User not created yet. This User is being created now'
                );
                User.create({
-                 name:profile.name[0].value,
+                 name:profile.displayName,
                  email:profile.emails[0].value,
-                 password:profile.id
+                 password:profile.id,
+                 UserType:'Customer',
+                 ContactNo:'',
+                 SecurityQn:'',
+                 SecurityAnswer:''
                }).then((newuser)=> {
                  return done(null,newuser);
                })

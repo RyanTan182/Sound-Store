@@ -1,13 +1,23 @@
-<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+<!--.col-	.col-sm-  	.col-md-	.col-lg-	.col-xl- -->
 
 
-<div class="container">
+<script>
+	let searchArray = []
+</script>
+
+<a id="stickyBtnz" href="../product/addProducts"><span onclick="topFunction()" id="stickyBtn" title="Go to top"><div class="liquid"></div><i class="fa fa-plus"></i></span></a>
+
+<div class="containerz">
 {{#if products}}
 	<div class="card card-body">
-		<h3 class="text-warning">Your Products</h3>
-		<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
+		<h3 class="text-warning" id="testtest">Your Products</h3>
+		<div class="container">
+			<input type="text" class="form-control mr-sm-2" id="myInput"  placeholder="Search for products.." title="Type in a name">
+			<div class="suggestions" ></div>
+		</div>
 		<br>
 		{{#each products}}
+		<!--
 			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
 			<div id="productHeader" class="border-info">
 				<h5 id="titlez" class="card-title text-white">{{productTitle}}&nbsp;&nbsp;<img src='/uploads/{{productImage}}' width="90px" height="70px" id="productImages"></h5>
@@ -73,6 +83,33 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			searchArray.push(`{{productTitle}}`)
+		</script>
+		-->
+
+
+
+
+
+<div class="viewz" id="Product">
+  <div class="photo">
+    <img src='/uploads/{{productImage}}'>
+  </div>
+  <div class="description">
+    <h2>{{productTitle}}</h2>
+	<h4>{{brand}}</h4>
+	<h8>{{type}}</h8>
+    <h1>${{price}}</h1>
+    <p>{{description}}</p>
+	<a href="/product/edit/{{id}}" class="card-link text-success">
+		<button>Edit</button>
+	</a>
+	<a href=""  >
+		<button>Delete</button>
+	</a>
+  </div>
+</div>
 		{{/each}}
 	</div>
 
@@ -83,6 +120,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <script>
 	$(document).ready(function(){
@@ -95,3 +133,61 @@
 	});
 </script>
 
+
+<script>
+	function redirects() {
+		document.getElementById(`{{productTitle}}`) = function () {
+			location.href = "productDetails.handlebars"
+		} 
+	}
+
+	console.log(searchArray)
+	const searchSugg = [
+		{name: searchArray[0]},
+		{name: searchArray[1]},
+		{name: searchArray[2]},
+		{name: searchArray[3]},
+		{name: searchArray[4]},
+		{name: searchArray[5]},
+		{name: searchArray[6]},
+		{name: searchArray[7]},
+		{name: searchArray[8]},
+		{name: searchArray[9]},
+		{name: searchArray[10]},
+	];
+
+	const searchInput = document.querySelector('#myInput');
+	const suggestionsPanel = document.querySelector('.suggestions');
+
+	searchInput.addEventListener('keyup', function() {
+		const input = searchInput.value;
+		suggestionsPanel.innerHTML = '';
+		const suggestions = searchSugg.filter(function(ss) {
+			return ss.name.toLowerCase().startsWith(input);
+		});
+
+		suggestions.forEach(function(suggested) {
+			const div = document.createElement('div');
+			div.innerHTML = suggested.name;
+			suggestionsPanel.appendChild(div);
+		});
+
+		if (input === '') {
+			suggestionsPanel.innerHTML = '';  
+		}
+	})
+</script>
+
+<script>
+	var mybutton = document.getElementById("stickyBtn");
+
+	window.onscroll = function() {scrollFunction()};
+
+	function scrollFunction() {
+	if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+		mybutton.style.display = "block";
+	} else {
+		mybutton.style.display = "none";
+	}
+	}
+</script>

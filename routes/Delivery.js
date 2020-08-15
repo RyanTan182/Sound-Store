@@ -55,6 +55,7 @@ router.post('/OrderCheckStaff/:id',(req, res) =>{
 	})
 });
 
+
 router.post('/createdeliveryman', (req,res) =>{
 	let fname = req.body.fname;
 	let	lname = req.body.lname;
@@ -66,6 +67,10 @@ router.post('/createdeliveryman', (req,res) =>{
 	}).then((deliveryman)=>{
 		res.redirect('/Delivery/makedelivery',{deliveryman})
 	})
+})
+
+router.get('/createdeliveryman',(req, res)=>{
+	res.render('Delivery/createdeliveryman')
 })
 
 module.exports = router;

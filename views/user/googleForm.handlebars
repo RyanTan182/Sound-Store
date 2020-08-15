@@ -7,23 +7,27 @@
 			<img class="logo" src="/img/SAlogo1.png">
 			<h3 class="text-center">Additional Details</h3>
 			<form method="post" action="/user/saveDetails" > 
-			<p class="text-black">Email: <span class="text-info" style="padding-left:5px;">{{email}}</span></p>
 				<div class="form-group">
-					<label for="password">Password</label>
+					<label for="name">Enter Google Name</label>
+					<input type="name" name="name" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Enter new Password</label>
 					<input type="password" name="password" class="form-control">
 				</div>
 				<div class="form-group">
-					<label for="ContactNo">Contact Number</label>
+					<label for="ContactNo">Enter Contact Number</label>
 					<input type="ContactNo" name="ContactNo" class="form-control">
 				</div>
                 <div class="form-group">
-					<label for="SecurityQn">Security Questioon</label>
+					<label for="SecurityQn">Enter Security Questioon</label>
 					<input type="SecurityQn" name="SecurityQn" class="form-control">
 				</div>
                 <div class="form-group">
-					<label for="SecurityAnswer">Security Answer</label>
+					<label for="SecurityAnswer">Enter Security Answer</label>
 					<input type="SecurityAnswer" name="SecurityAnswer" class="form-control">
 				</div>
+				<input type="hidden" value="{{email}}" name="email" id="email">
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<p>Signed up?<a href='/'>Click here!</a></p>
 			</form>

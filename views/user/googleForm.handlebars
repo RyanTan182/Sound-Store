@@ -20,8 +20,17 @@
 					<input type="ContactNo" name="ContactNo" class="form-control">
 				</div>
                 <div class="form-group">
-					<label for="SecurityQn">Enter Security Questioon</label>
-					<input type="SecurityQn" name="SecurityQn" class="form-control">
+					<label for="SecurityQn">Security Question</label>
+					<select name="SecurityQn" id="SecurityQn" class="form-control" required>
+						<option value="" style="display: none;" disabled selected>-- Choose a Security Question --</option>
+						<option value="What is the first game you beat?">What is the first game you beat?</option>
+						<option value="What is the name of your best friend from childhood?">What is the name of your best friend from childhood?</option>
+						<option value="What primary school did you attend?">What primary school did you attend?</option>
+						<option value="What was your childhood nickname?">What was your childhood nickname?</option>
+						<option value="What is your favourite pet's name?">What is your favourite pet's name?</option>
+						<option value="What is your favourite event that you attended?">What is your favourite event that you attended?</option>
+						<option value="What was your favorite place to visit as a child?">What was your favorite place to visit as a child?</option>
+					</select>
 				</div>
                 <div class="form-group">
 					<label for="SecurityAnswer">Enter Security Answer</label>
@@ -29,7 +38,6 @@
 				</div>
 				<input type="hidden" value="{{email}}" name="email" id="email">
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<p>Signed up?<a href='/'>Click here!</a></p>
 			</form>
 		</div>
 	</div>

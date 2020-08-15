@@ -60,17 +60,24 @@ router.post('/createdeliveryman', (req,res) =>{
 	let fname = req.body.fname;
 	let	lname = req.body.lname;
 	let phone = req.body.phone;
+	
 	Deliveryman.create({
 		fname,
 		lname,
 		phone,
-	}).then((deliveryman)=>{
-		res.redirect('/Delivery/makedelivery',{deliveryman})
-	})
+	}).then(deliveries => {
+        res.redirect('/Delivery/makedelivery');
+    })
+    .catch(err => console.log(err))
 })
 
-router.get('/createdeliveryman',(req, res)=>{
-	res.render('Delivery/createdeliveryman')
-})
+router.get('/createdeliveryman', (req, res) => {
+	Deliveryman.findAll({
+		order: [['fname', 'ASC']],
+		raw: true,
+	}).then((deliverymans)=>{
+		res.render('Delivery/createdeliveryman',{deliverymans})
+	})
+});
 
 module.exports = router;

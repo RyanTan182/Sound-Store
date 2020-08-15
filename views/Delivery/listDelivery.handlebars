@@ -1,8 +1,11 @@
 <!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
 
 
-<div class="container">
+
+
+<div class="containerz">
 	<h1>Delivery History</h1>
+	<!--
 	<nav>
 		<ul>
 			<li>All</li>
@@ -23,6 +26,7 @@
 	</tr>
   <br>
     <!--This is a comment. Comments are not displayed in the browser -->
+	<!--
 {{#if deliveries}}    
 <tr>
     {{#each deliveries}}
@@ -51,6 +55,39 @@
 {{else}}
 	<h3>No Delivery Order</h3>
 {{/if}}
+-->
+<div class="container">
+	<input type="text" class="form-control mr-sm-2" id="myInput"  placeholder="Search for deliveries.." title="Type in a name">
+	<div class="suggestions" ></div>
+</div>
+<br>
+{{#if deliveries}}
+	<div class="card card-body">
+		<h2 class="text-warning" id="testtest">Your Devliveries</h2>
+		{{#each deliveries}}
+		<div class="viewz" id="Delivery">
+  <div class="photo">
+    <img src='/uploads/{{productImage}}'>
+  </div>
+  <div class="description">
+    <h2>Product : {{productTitle}}</h2>
+	<h3>Quantity :{{quantity}}</h3>
+    <h1>Price : ${{price}}</h1>
+	<h3>Status : {{status}}</h3>
+	<form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
+		<button type="submit">Check</button>
+	</form>
+
+  </div>
+</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+	<h3>No Devliveries listed</h3>
+{{/if}}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -64,3 +101,7 @@
 	});
 	});
 </script>
+
+<style>
+
+</style>

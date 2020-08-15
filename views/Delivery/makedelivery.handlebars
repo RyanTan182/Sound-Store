@@ -1,13 +1,37 @@
+<a id="stickyBtnz" href="../Delivery/createdeliveryman"><span onclick="topFunction()" id="stickyBtn" title="Go to top"><div class="liquid"></div><i class="fa fa-plus"></i></span></a>
 <div class="container">
-    {{#if deliverymans}}
-    {{else}}
-    {{/if}}
-    <div id="firstButton">
-        <a class="button" href="/Delivery/createdeliveryman" role="button">
-            <span>Add New DeliveryMan</span>
-            <div class="icon">
-                <i class="fa fa-plus"></i>
-            </div>
-        </a>
+    <h1>Deliveryman List</h1>
+    <div class="container">
+        <input type="text" class="form-control mr-sm-2" id="myInput"  placeholder="Search for deliveries.." title="Type in a name">
+        <div class="suggestions" ></div>
     </div>
+    {{#if deliverymans}}
+        <div class="card card-body">
+            {{#each deliverymans}}
+            <div class="viewz" id="Deliveryman">
+                <h2>Name : {{fname}}{{lname}}</h2>
+                <h3>Phone Number :{{phone}}</h3>
+                <form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
+                    <button type="submit">Assign</button>
+                </form>
+
+            </div>
+            {{/each}}
+
+        </div>
+    {{else}}
+        <h3>No Devliveryman Employed</h3>
+    {{/if}}
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#Delivery ").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>

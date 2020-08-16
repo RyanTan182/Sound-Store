@@ -2,27 +2,15 @@
 #email{
 	display:inline-block;
 }
-#name{
-	display:inline-block;
-}
-#password{
-	display:inline-block;
-}
-#usertype{
-	display:inline-block;
-}
-#secuirtyqn{
-	display:inline-block;
-}
-#securityanswer{
-	display:inline-block;
+.text{
+	color:#0011ff
 }
 </style>
 
 <div class="container">
 {{#if users}}
 	<div class="card card-body">
-		<h3 class="text-warning">User</h3>
+		<h3 class="text">User</h3>
 		<br>
 		{{#each users}}
 			<div id="User" class="card bg-dark border-info mb-2 w-100 mx-auto">
@@ -35,25 +23,25 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-3" id="name">
-							<p class="font-italic text-white">Name</p>
+							<p class="font-italic text-white" id="name">Name</p>
 							<p class="text-info">
 								{{name}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3" id="password">
-							<p class="font-italic text-white">Password</p>
+							<p class="font-italic text-white" id="password">Password</p>
 							<p class="text-info">
 								********
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3" id="usertype">
-							<p class="font-italic text-white">User Type</p>
+							<p class="font-italic text-white" id="usertype">User Type</p>
 							<p class="text-info">
 								{{UserType}}
 							</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-3" id="contactNo">
-							<p class="font-italic text-white">Contact Number</p>
+							<p class="font-italic text-white" id="contactNo">Contact Number</p>
 							<p class="text-info">
 								{{ContactNo}}
 							</p>

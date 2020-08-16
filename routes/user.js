@@ -368,7 +368,7 @@ router.get('/googleForm', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-        name:req.body.name,
+        email:req.body.email,
         password:req.body.password,
         ContactNo:req.body.ContactNo,
         SecurityQn:req.body.SecurityQn,
@@ -378,7 +378,7 @@ router.get('/googleForm', (req, res) => {
 
 router.post('/saveDetails', (req, res) => {
     // Create new user record
-    let{password,SecurityQn,SecurityAnswer,ContactNo}=req.body
+    let{password,SecurityQn,SecurityAnswer,ContactNo,email}=req.body
         bcrypt.hash(password,10,function(err,hash) {
             bcrypt.hash(SecurityAnswer, 10, function(err, hash){
             if(err) throw err;
@@ -392,7 +392,7 @@ router.post('/saveDetails', (req, res) => {
             }, 
             {
             where: {
-            name:req.body.name
+            email:req.body,email
             }
             })
             .then(user => {

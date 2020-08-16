@@ -6,7 +6,7 @@ const Product = require('../models/Product');
 const Payment = require('../models/payment');
 const Addresses = require('../models/address');
 const Delivery = require('../models/delivery')
-
+const nodemailer = require("nodemailer");
 
 
 router.get('/cart', (req, res) => {
@@ -140,7 +140,42 @@ router.post('/confirmation', (req, res) => {
 		where:{
 			userId:req.user.id,
 		},
+		
 	}).then((payment)=>{
+		async function main() {
+			// Generate test SMTP service account from ethereal.email
+			// Only needed if you don't have a real mail account for testing
+			
+		  
+			// create reusable transporter object using the default SMTP transport
+			var transporter = nodemailer.createTransport({
+				service: 'gmail',
+				auth: {
+					   user: 'bearmax69@gmail.com',
+					   pass: 'polarballs'
+				   }
+			   });
+			const output = `
+			$${payment.total} has been deducted from your account
+			`
+			// send mail with defined transport object
+			let info = await transporter.sendMail({
+			  from: '"Yong Sheng" <bearmax69@gmail.com>', // sender address
+			  to: "yongsheng.chia.123@gmail.com", // list of receivers
+			  subject: "Order Confirmation", // Subject line
+			  text: "{{total}} has been deducted from your account", // plain text body
+			  html: output // html body
+			});
+		  
+			console.log("Message sent: %s", info.messageId);
+			// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+		  
+			// Preview only available when sending through an Ethereal account
+			console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+			// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+		  }
+		  
+		  main().catch(console.error);
 		Payment.destroy({
 			where: {
 				id:payment.id,
@@ -173,7 +208,9 @@ router.post('/confirmation', (req, res) => {
 			
 		})
 		res.render('order/confirmation',{payment,total:payment.total})
-	})				
+	})
+	
+
 });
 
 module.exports = router;

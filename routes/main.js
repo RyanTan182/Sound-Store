@@ -94,6 +94,7 @@ const transporter = nodemailer.createTransport({
 	  console.log(error);
 	} else {
 	  console.log('Email sent: ' + info.response);
+	  alertMessage(res,'success',' Success!'+' Email sent!', 'fas fa-sign-in-alt', true);
 	  res.render('newsletter')
 	}
   });

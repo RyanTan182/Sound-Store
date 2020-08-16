@@ -165,7 +165,7 @@ router.put('/update/:id',async (req,res)=>{
 				user.id
 			)
 			const phoneNumber = users.ContactNo
-			const text = `delivery status changed:${delivery.status}`
+			const text = `Delivery status changed:${delivery.status}`
 			nexmo.message.sendSms(
 				'6588225004', phoneNumber, text, { type: 'unicode'},
 				(err, responseData) => {

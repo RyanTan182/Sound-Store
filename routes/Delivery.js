@@ -176,7 +176,6 @@ router.put('/update/:id',async (req,res)=>{
 			)
 		})
 	}
-
 })
 
 //ordered, waiting, delivering, reached

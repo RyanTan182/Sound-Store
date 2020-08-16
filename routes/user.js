@@ -351,9 +351,13 @@ router.get(
 router.get('/google/redirect',
 passport.authenticate('google',{failureRedirect:'/loginUser'}),
 (req,res)=>{
-    let {SecurityQn,SecurityAnswer}=req.body
-    User.findOne({}).then((user)=>{
-        res.redirect('/googleForm')
+    User.findOne({where: {email:req.user.email}}).then((user)=>{
+        if(user.SecurityQn=='' && user.SecurityAnswer==''){
+            res.redirect('/googleForm')
+        }
+        else{
+            res.redirect('/')
+        }
     })
 })
 

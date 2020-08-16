@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // User register URL using HTTP post => /user/register
 router.post('/registerUser', (req, res) => {
     let errors = [];
-    let success_msg='Success! Please login';
+
     // Retrieves fields from register page from request body
     let {name, email, password, password2,ContactNo,UserType,SecurityQn,SecurityAnswer} = req.body;
 
@@ -84,18 +84,19 @@ router.post('/registerUser', (req, res) => {
                     // Create new user record
                     bcrypt.genSalt(10,(err,salt) =>{
                         bcrypt.hash(password,salt,(err,hash) =>{
-                            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
+                            password = hash;
+                            bcrypt.hash(SecurityAnswer, 10, function(err, hash1){
+                                SecurityAnswer = hash1;
                             if(err) throw err;
                             password = hash;
-                            SecurityAnswer=hash;
                             User.create({ name, email, password,UserType,ContactNo,SecurityQn,SecurityAnswer })
                             .then(user => {
                                 alertMessage(res,'success', user.name +' Success!'+' Please login.', 'fas fa-email-alt', true);
                                 res.redirect('/');
                                 }).catch(err => console.log(err));
                         })
+                        })
                     });
-                });
                 }
             });
         }
@@ -105,7 +106,7 @@ router.post('/registerUser', (req, res) => {
     
 // Login Form POST => /user/login
 router.post('/loginUser', (req, res, next) => {
-    passport.authenticate('User', {
+    passport.authenticate('local', {
         successRedirect: '/user/displayUsers', // Route to /video/listVideos URL
         failureRedirect: '/showLoginUser', // Route to /login URL
         failureFlash: true
@@ -116,21 +117,24 @@ router.post('/loginUser', (req, res, next) => {
 });
 
 router.post('/forgotPassword', (req, res) => {
-  // Find user with email in input
-  User.findOne({ where: {email: req.body.email} })
-  .then(user => {
-  if (user) {
-    res.render('user/securityQn',{SecurityQn: user.SecurityQn, email:req.body.email})
-  } else {
-  // If user is found, that means email has already been
-   // registered
-   res.render('user/forgotPassword', {
-    error:'No account registered on our end! Please create a new account!',
+    let errors = []
+    // Retrieves fields from register page from request body
+    let {name, email, password, password2} = req.body;
+    // Find user with email in input
+    User.findOne({ where: {email: req.body.email} })
+    .then(user => {
+    if (user) {
+      res.render('user/securityQn',{SecurityQn: user.SecurityQn, email:req.body.email})
+    } else {
+    // If user is found, that means email has already been
+     // registered
+     res.render('user/forgotPassword', {
+      error:'No account registered on our end! Please create a new account!',
+      });
+    }
     });
-  }
-  });
-  }
-  );
+    }
+    );
 
 router.post('/securityQn', (req, res) => {
     let errors = []
@@ -183,10 +187,10 @@ router.get('/newPassword', (req, res) => {
 
 router.post('/savePassword', (req, res) => {
     // Create new user record
-    let{password,name}=req.body
+    let{password,email}=req.body
         bcrypt.hash(password,10,function(err,hash) {
-            if(err) throw err;
             password = hash;
+            if(err) throw err;
             User.update({
                 password
             }, 
@@ -196,11 +200,12 @@ router.post('/savePassword', (req, res) => {
             }
             })
             .then(user => {
-            alertMessage(res,'success', ' Success! Password is updated!'+' Please login again with new password.', 'fas fa-email-alt', true);
+                alertMessage(res,'success', ' Success! Password is updated!'+' Please login again with new password.', 'fas fa-email-alt', true);
               res.redirect('/');
                 }).catch(err => console.log(err));
                 console.log(password)
-            })
+        
+    });
 })
       
 router.get('/displayUsers', (req, res, next) => {
@@ -287,11 +292,11 @@ router.get('/edit/:id', (req, res) => {
 
 router.post('/saveEditedUser/:id', (req, res) => {
     let {password,SecurityAnswer} = req.body;
-        bcrypt.hash(password, 10, function(err, hash) {
-            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
+        bcrypt.hash(SecurityAnswer, 10, function(err, hash1) {
+            SecurityAnswer = hash1;
+            bcrypt.hash(password, 10, function(err, hash){
             if(err) throw err;
-            password = hash;
-            SecurityAnswer = hash;
+            password = hash,
     // Retrieves edited values from req.body
     User.update({
         name:req.body.name,
@@ -346,13 +351,9 @@ router.get(
 router.get('/google/redirect',
 passport.authenticate('google',{failureRedirect:'/loginUser'}),
 (req,res)=>{
-    User.findOne({where: {email:req.user.email}}).then((user)=>{
-        if(user.SecurityQn=='' && user.SecurityAnswer==''){
-            res.redirect('/googleForm')
-        }
-        else{
-            res.redirect('/')
-        }
+    let {SecurityQn,SecurityAnswer}=req.body
+    User.findOne({}).then((user)=>{
+        res.redirect('/googleForm')
     })
 })
 
@@ -368,7 +369,7 @@ router.get('/googleForm', (req, res) => {
     } */
     {
         res.render('user/newPassword', {
-        email:req.body.email,
+        email:users.email,
         password:req.body.password,
         ContactNo:req.body.ContactNo,
         SecurityQn:req.body.SecurityQn,
@@ -380,10 +381,10 @@ router.post('/saveDetails', (req, res) => {
     // Create new user record
     let{password,SecurityQn,SecurityAnswer,ContactNo,email}=req.body
         bcrypt.hash(password,10,function(err,hash) {
-            bcrypt.hash(SecurityAnswer, 10, function(err, hash){
-            if(err) throw err;
             password = hash;
-            SecurityAnswer=hash;
+            bcrypt.hash(SecurityAnswer, 10, function(err, hash1){
+                SecurityAnswer=hash1;
+            if(err) throw err;
             User.update({
                 password,
                 ContactNo,
@@ -392,7 +393,7 @@ router.post('/saveDetails', (req, res) => {
             }, 
             {
             where: {
-            email:req.body,email
+            email:req.body.email
             }
             })
             .then(user => {

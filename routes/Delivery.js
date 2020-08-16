@@ -141,7 +141,7 @@ router.post('/senddelivery/:id',(req, res) =>{
 					}
 				}
 			)
-			res.redirect()
+			res.redirect('/Delivery/listDelivery')
 		})
 	})
 })

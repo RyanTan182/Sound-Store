@@ -6,6 +6,17 @@
 	}
 	.fab fa-goole{
 		  left:1000px;
+		  color:black;
+	}
+	#googlebutton{
+		color:white;
+		   text-align: center;	
+	}
+	#forgot{
+		text-align: center;
+	}
+	#options{
+		text-align: center;
 	}
 </style>
 <div class="row">
@@ -23,8 +34,10 @@
 					<input type="password" name="password" class="form-control" required>
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<p>Forgot Password?<a href='/showForgotPassword'>Click here!</a></p>
-				<a href="/user/google" class="googlebtn"><i class="fab fa-google"></i>LOGIN WITH GOOGLE</a>
+				<br>
+				<a id="forgot" href='/showForgotPassword'>Forgot Password?</a>
+				<p id="options"> OR </p>
+				<button type="button" class="googlebtn"><a href="/user/google" id="googlebutton"><i class="fab fa-google"></i>LOGIN WITH GOOGLE</a></button>
 			</form>
 		</div>
 	</div>

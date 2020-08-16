@@ -6,18 +6,19 @@
 		<div class="card card-body">
 			<img class="logo" src="/img/SAlogo1.png">
 			<h3 class="text-center">Additional Details</h3>
+			<p>For new Google users, we require you to enter additional details to be fully registered!</p>
 			<form method="post" action="/user/saveDetails" > 
 				<div class="form-group">
-					<label for="name">Enter Google Name</label>
-					<input type="name" name="name" class="form-control" required>
+					<label for="email">Enter Google Email</label>
+					<input type="email" name="email" class="form-control" value="{{email}}" required>
 				</div>
 				<div class="form-group">
 					<label for="password">Enter new Password</label>
-					<input type="password" name="password" class="form-control">
+					<input type="password" name="password" class="form-control" value="{{password}}" required>
 				</div>
 				<div class="form-group">
 					<label for="ContactNo">Enter Contact Number</label>
-					<input type="ContactNo" name="ContactNo" class="form-control">
+					<input type="ContactNo" name="ContactNo" class="form-control" value="{{ContactNo}}" required>
 				</div>
                 <div class="form-group">
 					<label for="SecurityQn">Security Question</label>
@@ -34,7 +35,7 @@
 				</div>
                 <div class="form-group">
 					<label for="SecurityAnswer">Enter Security Answer</label>
-					<input type="SecurityAnswer" name="SecurityAnswer" class="form-control">
+					<input type="SecurityAnswer" name="SecurityAnswer" class="form-control" value="{{SecurityAnswer}}" required>
 				</div>
 				<input type="hidden" value="{{email}}" name="email" id="email">
 				<button type="submit" class="btn btn-primary">Submit</button>

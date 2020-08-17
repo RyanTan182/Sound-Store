@@ -127,7 +127,12 @@ function checkDropdown(product){
 
 //route for the optionPage
 router.get('/optionPage', (req, res) => {
-    res.render('product/optionPage')
+    if (req.user.UserType=='Customer'){
+        res.redirect('/product/browseProducts')
+      }
+    else{
+        res.render('product/optionPage')
+    }
 })
 
 router.get('/delete/:id', (req, res) => {
@@ -149,19 +154,24 @@ router.get('/delete/:id', (req, res) => {
 })
 
 router.get('/browseProducts',(req, res) => {
-    Product.findAll({
-        order: [
-            ['productTitle', 'ASC']
-        ],
-        raw: true
-    })
-    .then((products) => {
-        res.render('product/browseProducts', {
-            imgFiles:imgFiles,
-            products: products
-        });
-    })  
-    .catch(err => console.log(err));   
+    if (req.user.UserType=='Admin'){
+        res.redirect('/product/optionPage')
+      }
+    else{
+        Product.findAll({
+            order: [
+                ['productTitle', 'ASC']
+            ],
+            raw: true
+        })
+        .then((products) => {
+            res.render('product/browseProducts', {
+                imgFiles:imgFiles,
+                products: products
+            });
+        })  
+        .catch(err => console.log(err)); 
+    }  
 });
 
 

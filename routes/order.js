@@ -151,19 +151,23 @@ router.post('/confirmation', (req, res) => {
 			var transporter = nodemailer.createTransport({
 				service: 'gmail',
 				auth: {
-					   user: 'bearmax69@gmail.com',
-					   pass: 'polarballs'
+					   user: 'fullstack42069@gmail.com',
+					   pass: 'fullstonk@1'
 				   }
 			   });
 			const output = `
+			<p>Your order has been confirmed</p>
 			$${payment.total} has been deducted from your account
+			
 			`
+			
+			const tomail = `customeremail69@gmail.com`
 			// send mail with defined transport object
 			let info = await transporter.sendMail({
-			  from: '"Yong Sheng" <bearmax69@gmail.com>', // sender address
-			  to: "yongsheng.chia.123@gmail.com", // list of receivers
+			  from: '"Yong Sheng" <fullstack42069@gmail.com>', // sender address
+			  to: tomail, // list of receivers
 			  subject: "Order Confirmation", // Subject line
-			  text: "{{total}} has been deducted from your account", // plain text body
+			  text: "hi", // plain text body
 			  html: output // html body
 			});
 		  

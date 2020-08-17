@@ -269,6 +269,9 @@
 
 
 /*product Description*/
+#imgDisplay {
+  width: 450px;
+}
 .preview {
   display: -webkit-box;
   display: -webkit-flex;
@@ -304,10 +307,8 @@
     .preview-thumbnail.nav-tabs li:last-of-type {
       margin-right: 0; }
 
-.tab-content {
-  overflow: hidden; }
+
   .tab-content img {
-    width: 100%;
     -webkit-animation-name: opacity;
             animation-name: opacity;
     -webkit-animation-duration: .3s;

@@ -57,7 +57,7 @@ router.get('/OrderCheckStaff', (req, res) => {
 router.post('/OrderCheckUser/:id', (req, res) => {
 	Delivery.findOne({
 		where: {
-			userId: req.params.id
+			id: req.params.id
 		}
 	}).then((delivery) => {
 		res.render('Delivery/OrderCheckUser', { delivery })
@@ -117,7 +117,7 @@ router.post('/createdeliveryman', (req, res) => {
 router.post('/sendverificationcode', (req, res) => {
 	nexmo.verify.request({
 		number: req.body.phone,
-		brand: 'Vonage',
+		brand: 'SoundStore',
 		code_length: '4'
 	  }, (err, result) => {
 		if (err) {

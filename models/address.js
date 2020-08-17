@@ -21,7 +21,7 @@ const Addresses = db.define('addresses', {
         type: Sequelize.INTEGER
     },
     phonenum: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
     },
     userId: {
         type: Sequelize.INTEGER

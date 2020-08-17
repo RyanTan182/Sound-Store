@@ -2,6 +2,7 @@ const alertMessage = require('../helpers/messenger');
 const express = require('express');
 const router = express.Router();
 const nodemailer=require('nodemailer');
+const User = require('../models/User');
 
 router.get('/', (req, res) => {
 	const title = 'SoundStore';
@@ -32,9 +33,8 @@ router.get('/showForgotPassword', (req, res) => {
 	res.render('user/forgotPassword')
 });
 
-router.get('/showSecurityQn', (req, res) => {
-	res.render('user/securityQn')
-});
+// router.get('/showSecurityQn', (req, res) => {
+// });
 // Register
 router.get('/showRegisterUser', (req, res) => {
 	res.render('user/registerUser')
@@ -55,6 +55,10 @@ router.get('/ListUsers', (req, res) => {
 
 router.get('/googleForm', (req, res) => {
 	res.render('user/googleForm')
+});
+
+router.get('/newPassword', (req, res) => {
+	res.render('user/newPassword')
 });
 // About
 router.get('/about', (req, res) => {
@@ -82,7 +86,7 @@ const transporter = nodemailer.createTransport({
 	from: 'soundstore111@gmail.com',
 	to: req.body.email,
 	subject: 'Thanks for suscribing!',
-	text: 'Thank you for subscribing to our Newsletter! We will keep you updated with all the latest news and discounts on Sound Store!'
+	html:"<h1>Thank you for subscribing!</h1><p>You will now receive updates and promotions on Sound Store!</p>"
   };
   
   transporter.sendMail(mailOptions, function(error, info){
@@ -90,6 +94,7 @@ const transporter = nodemailer.createTransport({
 	  console.log(error);
 	} else {
 	  console.log('Email sent: ' + info.response);
+	  alertMessage(res,'success',' Success!'+' Email sent!', 'fas fa-sign-in-alt', true);
 	  res.render('newsletter')
 	}
   });

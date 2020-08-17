@@ -14,7 +14,8 @@ const User = db.define('user', {
         type: Sequelize.STRING
     },
     UserType: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "Customer",
     },
     ContactNo:{
         type:Sequelize.STRING

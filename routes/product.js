@@ -7,31 +7,8 @@ const { radioCheck } = require('../helpers/hbs');
 const fs = require('fs');
 const { query } = require('express');
 
-/*
-let newz = rec_arrayss.rec_updatedArray
 
-const recommender = new ContentBasedRecommender({
-    minScore: 0.2,
-    maxSimilarDocuments: 15
-});
-
-
-    const documents = [
-        { id:  '1000001', content: newz[0] },
-        { id:  '1000002', content: rec_arrayz[1] },
-        { id:  '1000003', content: rec_arrayz[2] },
-        { id:  '1000004', content: rec_arrayz[3] },
-        { id:  '1000005', content: rec_arrayz[4] }
-    ];
-    console.log(rec_arrayz[0])
-    
-    recommender.train(documents);
-    
-    const similarDocuments = recommender.getSimilarDocuments(1000001, 0, 5);
-    
-    console.log(similarDocuments);    
-
-*/
+  
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -61,7 +38,7 @@ router.get('/listProducts', (req, res) => {
         res.render('product/listProducts', {
             products: products,
             productImage: products.productImage
-        });
+        });  
     })  
     .catch(err => console.log(err));
 });
@@ -99,40 +76,39 @@ router.post('/addProducts', upload.single('productImage'), (req, res) => {
     .catch(err => console.log(err))
 });
 
-/*
 router.get('/edit/:id', (req, res) => {
     Product.findOne({
         where: {
             id: req.params.id
         }
     }).then((product) => {
-        console.log(req.params.id)
-        
-        res.render('product/editProduct', {
-            product: product 
-        });
-        console.log(product)
-    }).catch(err => console.log(err)); 
-});
-*/
-router.get('/edit/:id', (req, res) => {
-    Product.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then((product) => {
-        console.log(product.productTitle + '=======OOOOO')
-        if(!product){
-            alertMessage(res, 'info', 'No such videos', 'fas fa-exclamation-circle', true);
-        }else{
             checkOptions(product);
+            checkDropdown(product);
             res.render('product/editProduct', {
-                product 
+                product
             });
-        }
     }).catch(err => console.log(err)); 
 });
 
+router.post('/updateProduct/:id', upload.single('productImage'), (req, res) => {
+    Product.update(
+        {
+            productTitle: req.body.productTitle,
+            description: req.body.description,
+            type: req.body.type,
+            price: req.body.price,
+            brand: req.body.brand,
+            productImage: req.body.productImage
+        },
+        {
+            where: {
+                id: req.params.id,
+            },
+        }
+    ).then(() => {
+        res.redirect('/product/listProducts');
+    })
+});
 
 
 function checkOptions(product){
@@ -142,49 +118,60 @@ function checkOptions(product){
     product.earpieceType = (product.type.search('Earpiece') >= 0) ? 'checked' : '';
 }
 
+function checkDropdown(product){
+    product.razerBrand = (product.brand.search('Razer') >= 0) ? 'selected' : '';
+    product.sennheiserBrand = (product.brand.search('Sennheiser') >= 0) ? 'selected' : '';
+    product.beatsByDreBrand = (product.brand.search('Beats by Dre') >= 0) ? 'selected' : '';
+    product.sonyBrand = (product.brand.search('Sony') >= 0) ? 'selected' : '';
+}
+
 //route for the optionPage
 router.get('/optionPage', (req, res) => {
-    res.render('product/optionPage')
+    if (req.user.UserType=='Customer'){
+        res.redirect('/product/browseProducts')
+      }
+    else{
+        res.render('product/optionPage')
+    }
 })
 
 router.get('/delete/:id', (req, res) => {
-    let productId = req.params.id;
-    let userId = req.user.id;
-
     Product.findOne({
         where:{
-            id: productId,
-            userId: userId
+            id: req.params.id,
         },
-        attributes:['id', 'userId']
     }).then((product) => {
-        if(product != null){
-            Product.destroy({
-                where:{
-                    id: productId
-                }
-            }).then(() => {
-                alertMessage(res, 'info', 'Product Listing deleted', 'far fa-trash-alt', true);
-                res.redirect('/product/listProducts');
-            }).catch(err => console.log(err));
-        }
+        req.session.type = product.type
+        req.session.prod = product
+        Product.destroy({
+            where: {
+                id:req.params.id,
+            },
+        }).then(() => {
+            res.redirect('/product/listProducts')
+        })
     })
 })
 
 router.get('/browseProducts',(req, res) => {
-    Product.findAll({
-        order: [
-            ['productTitle', 'ASC']
-        ],
-        raw: true
-    })
-    .then((products) => {
-        res.render('product/browseProducts', {
-            imgFiles:imgFiles,
-            products: products
-        });
-    })  
-    .catch(err => console.log(err));   
+    if (req.user.UserType=='Admin'){
+        res.redirect('/product/optionPage')
+      }
+    else{
+        Product.findAll({
+            order: [
+                ['productTitle', 'ASC']
+            ],
+            raw: true
+        })
+        .then((products) => {
+            res.render('product/browseProducts', {
+                imgFiles:imgFiles,
+                products: products
+            });
+        })  
+        .catch(err => console.log(err)); 
+    }  
 });
 
 

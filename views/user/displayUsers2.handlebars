@@ -2,16 +2,46 @@
 #email{
 	display:inline-block;
 }
+.text{
+	color:#0011ff
+}
+.links{
+ display: inline;
+}
+#registering{
+	text-align:end;
+	top:100px;
+}
+#managaing{
+	text-align:left;
+}
+.register-bttn{
+	 background-color: #dd4b39;
+  	color: white;
+   border: 1px solid green;
+   top:100px;
+}
+.managing-btn{
+	 background-color: #dd4b39;
+  	color: white;
+   border: 1px solid green;
+}
+#register-button{
+	color: white;
+	top:100px;
+}
+#managing-button{
+	color: white;
+}
 </style>
 
 <div class="container">
 {{#if users}}
-	<div class="card card-body">
-		<h3 class="text-warning">User</h3>
-		<p>Managing Customers?<a href='/user/ListUsers'>Click here!</a></p>
+	<div class="card card-body" id="box">
+		<h3 class="text" id="Title">User</h3>
 		<br>
 		{{#each users}}
-			<div id="Product" class="card bg-dark border-info mb-2 w-100 mx-auto">
+			<div id="Product" class="card bg-dark border-info mb-2 w-100  color-yellow mx-auto">
 			<div id="productHeader" class="border-info">
 				<div class="col-sm-12 col-md-12 col-lg-2">
 							<p class="font-italic text-white">Email</p>
@@ -66,8 +96,9 @@
 					</div>
 
 				</div>
-
-				
+<div class="links">
+		<div id="managaing"><button type="button" class="managing-btn"><a href='/user/ListUsers' id="managing-button">Customer management</a></button></div>
+		<div id='registering'><button type="button" class="register-bttn"><a href="/showRegisterUser" id="register-button">Register users</a></button></div>	
 			</div>
 		</div>
 		{{/each}}

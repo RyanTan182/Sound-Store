@@ -15,6 +15,7 @@ const passport = require('passport');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const Handlebars = require('handlebars')
 const insecureHandlebars = allowInsecurePrototypeAccess(Handlebars)
+const Nexmo = require('nexmo');
 
 
  // To set up database with new tables set (true)
@@ -26,7 +27,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
-const {formatDate, radioCheck} = require('./helpers/hbs');
+const {formatDate, radioCheck, ifEquals, dropDownCheck} = require('./helpers/hbs');
 const deliveryRoute = require('./routes/Delivery')
 
 const sstoreDB = require('./config/DBConnection');
@@ -39,6 +40,11 @@ authenticate.googleStrategy(passport);
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
+
+const nexmo = new Nexmo({
+    apiKey: '599e1242',
+    apiSecret: 'Cx6LjAjj0Kjeh0F4'
+}, {debug: true});
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -60,7 +66,9 @@ app.engine('handlebars', exphbs({
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	helpers: {
 		formatDate: formatDate,
-		radioCheck: radioCheck
+		radioCheck: radioCheck,
+		ifEquals: ifEquals,
+		dropDownCheck: dropDownCheck
 	},
 	
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 

@@ -1,8 +1,11 @@
 <!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
 
 
-<div class="container">
+
+
+<div class="containerz">
 	<h1>Delivery History</h1>
+	<!--
 	<nav>
 		<ul>
 			<li>All</li>
@@ -11,7 +14,7 @@
 			<li>Reached</li>
 		</ul>
 	</nav>
-	<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for deliveries.." title="Type in a name">
+	<input type="text" class="form-control mr-sm-2" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
 <table  id="table" align="center" border="1">
 	<tr>
 	<th colspan="2">Product</th>
@@ -23,9 +26,11 @@
 	</tr>
   <br>
     <!--This is a comment. Comments are not displayed in the browser -->
+	<!--
 {{#if deliveries}}    
 <tr>
     {{#each deliveries}}
+	<div id="Delivery" class="card bg-dark border-info mb-2 w-100 mx-auto">
     <td><img src='/uploads/{{productImage}}'width="120px" height="100px"></td>
     <td>{{productTitle}}</td>
     <td>{{price}}</td>
@@ -39,6 +44,7 @@
 	<td><form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
 		<button type="submit">Check</button>
 	</form></td>
+	</div>
 </tr>
 {{/each}}
     </table>
@@ -49,3 +55,54 @@
 {{else}}
 	<h3>No Delivery Order</h3>
 {{/if}}
+-->
+<div class="container">
+	<input type="text" class="form-control mr-sm-2" id="myInput"  placeholder="Search for deliveries.." title="Type in a name">
+	<div class="suggestions" ></div>
+</div>
+<br>
+{{#if deliveries}}
+	<div class="card card-body">
+		<h2 class="text-warning" id="testtest">Your Devliveries</h2>
+		{{#each deliveries}}
+		<div class="viewz" id="Delivery">
+  <div class="photo">
+    <img src='/uploads/{{productImage}}'>
+  </div>
+  <div class="description">
+    <h2>Product : {{productTitle}}</h2>
+	<h3>Quantity :{{quantity}}</h3>
+	<h3>UserId : {{userId}}</h3>
+    <h1>Price : ${{price}}</h1>
+	<h3>Status : {{status}}</h3>
+	<form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
+		<button type="submit">Check</button>
+	</form>
+
+  </div>
+</div>
+		{{/each}}
+	</div>
+
+</div>
+{{else}}
+	<h3>No Devliveries listed</h3>
+{{/if}}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#Delivery ").filter(function() {
+		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	});
+</script>
+
+<style>
+
+</style>

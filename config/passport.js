@@ -5,7 +5,7 @@ const User = require('../models/User');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 function localStrategy(passport){
-passport.use('User',new LocalStrategy({usernameField: 'email'}, (email, password,
+passport.use('local',new LocalStrategy({usernameField: 'email'}, (email, password,
 done) => {
 User.findOne({ where: {email: email} })
 .then(user => {

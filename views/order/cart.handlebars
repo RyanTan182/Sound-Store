@@ -73,9 +73,7 @@ h1{
     <td><img src='/uploads/{{productImage}}'width="120px" height="100px"></td>
     <td>{{productTitle}}</td>
     <td>{{price}}</td>
-    <td>{{quantity}}&nbsp;&nbsp;<form id="del" action="/order/update/{{id}}" method="get">
-                <input type="submit" value="&#xf044" class="fa fa-edit" style="color:blue;border:none;float:center;cursor:pointer;font-size:25px;">
-            </form></td>
+    <td>{{quantity}}</td>
     <td id="del"><form action="/order/delete/{{id}}" method="POST">
                 <input type="submit" value="&#xf00d" class="fa fa-close" style="color:red;border:none;float:center;cursor:pointer;font-size:25px;">
             </form></td>
@@ -86,11 +84,6 @@ h1{
 
 
 <div class="total">
-       <form action="">
-  <label for="discode">Discount Code:</label>
-  
-  <input type="text" id="code" name="code" value=""><br><br>
-  <input type="submit" value="Enter">    
   
 </form>
     <div class="total-item">

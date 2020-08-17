@@ -293,10 +293,10 @@ router.get('/edit/:id', (req, res) => {
             id:req.params.id,
             name:users.name,
             email:users.email,
-            password:users.password,
+            password:req.body.password,
             ContactNo:users.ContactNo,
             SecurityQn:users.SecurityQn,
-            SecurityAnswer:users.SecurityAnswer,
+            SecurityAnswer:req.body.SecurityAnswer,
         });
     }).catch(err => console.log(err)); 
 });

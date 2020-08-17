@@ -17,16 +17,15 @@
 				<input class="form-control" id="email" name="email" value="{{email}}"></input>
 			</div>
 			<div class="form-group">
-					<label for="password2">Password</label>
-					<input type="password"  name="password" class="form-control" value="{{password}}">
-				</div>
-			<div class="form-group">
 				<label class="font-italic" for="description">Contact Number</label>
 				<input class="form-control" id="ContactNo" name="ContactNo" value="{{ContactNo}}"></input>
 			</div>
+			<br>
+			<p>Before saving, please enter your password, your Security Question and your Security Answer. This will prevent accidental changes on our end!</p>
+			<br>
 			<div class="form-group">
 					<label for="SecurityQn">Security Question</label>
-					<select name="SecurityQn" id="SecurityQn" class="form-control">
+					<select name="SecurityQn" id="SecurityQn" class="form-control" required>
 						<option value="" style="display: none;" disabled selected>-- Choose a Security Question --</option>
 						<option value="What is the first game you beat?">What is the first game you beat?</option>
 						<option value="What is the name of your best friend from childhood?">What is the name of your best friend from childhood?</option>
@@ -39,8 +38,12 @@
 				</div>
 			<div class="form-group">
 					<label for="password2">Security Answer</label>
-					<input type="SecurityAnswer"  name="SecurityAnswer" class="form-control" value="{{SecurityAnswer}}">
+					<input type="SecurityAnswer"  name="SecurityAnswer" class="form-control" value="{{SecurityAnswer}}" required>
 				</div>
+			<div class="form-group">
+					<label for="password2">Password</label>
+					<input type="password"  name="password" class="form-control" value="{{password}}" required>
+			</div>
 		</div>
 			<br>
 			<button id="butAddVideo" type="submit" class="btn btn-primary">Save</button>

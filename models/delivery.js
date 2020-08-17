@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/DBConfig');
+const { STRING } = require('sequelize');
+const sequelize = require('../config/DBConfig');
 
 const Delivery = db.define('delivery', {
     productTitle: {
@@ -22,8 +24,11 @@ const Delivery = db.define('delivery', {
     },
     status: {
         type: Sequelize.STRING, 
-        defaultValue: 'ordered'
+        defaultValue: 'Ordered'
     },
+    DeliverymanID :{
+        type : Sequelize.INTEGER
+    }
 });
 
 

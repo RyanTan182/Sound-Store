@@ -1,79 +1,21 @@
 <div class="container">
 	<div class="card card-body">
-		<h3>Add Product</h3>
-		<form action="/product/addProducts" method="post" id="addVideo" enctype="multipart/form-data">
-			<div class="form-group">
-				<input id="file" type="file" name="productImage" accept="image/png, image/jpeg" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
-				<img id="blah" width="500" height="250" />
-				<div id="preview">
-    				<div> <span class="productTitle"></span></div><br/>
-    				<div> <span class="price"></span></div>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="font-italic" for="productTitle">Product Title</label>
-				<textarea class="form-control" id="productTitle" name="productTitle" rows="1"></textarea>
-			</div>
-
+		<h3>Add Deliveryman</h3>
+		<form action="/Delivery/createdeliveryman" method="post" id="adddeliveryman">
 			<div class="form-group mb-4">
-				<label class="font-italic" for="description">Description</label>
-				<textarea class="form-control" id="description" name="description" rows="7"></textarea>
+				<label class="font-italic" for="fname">First name</label>
+				<textarea class="form-control" id="fname" name="fname" rows="1"></textarea>
 			</div>
-
-			<div class="form-group">
-				<div class="row mb-2">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
-						<label id="Date of Release" class="font-italic">Release Date</label>
-						<input id="datepicker" width="200" name="dateRelease">
-					</div>
-					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-						<label id="language" class="font-italic">Type</label>
-						<br>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headphones" value="Headphones" checked >
-							<label class="form-check-label" for="headphones">Headphones</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="headset" value="Headset" >
-							<label class="form-check-label" for="headset">Headset</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earbuds" value="Earbuds">
-							<label class="form-check-label" for="earbuds">Earbuds</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="type" id="earpiece" value="Earpiece">
-							<label class="form-check-label" for="earpiece">Earpiece</label>
-						</div>
-					</div>
-				</div>
+			<div class="form-group mb-4">
+				<label class="font-italic" for="lname">Last Name</label>
+				<textarea class="form-control" id="lname" name="lname" rows="1"></textarea>
 			</div>
-
-			<div class="form-group">
-				<div class="row">
-					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-						<label id="brand" class="font-italic">Brand</label>
-						<br>
-						<select class="custom-select" name="brand">
-							<option selected>Choose a Brand</option>
-							<option value="Sony">Sony</option>
-							<option value="Beats by Dre">Beats by Dre</option>
-							<option value="Sennheiser">Sennheiser</option>
-							<option value="Razer">Razer</option>
-						</select>
-					</div>
-
-					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-						<label id="price" class="font-italic">Price</label>
-						<br>
-						<textarea class="form-control" id="price" name="price" rows="1" width="10px"></textarea>
-					</div>
-				</div>
-
+			<div class="form-group mb-4">
+				<label class="font-italic" for="phone">Phone:</label>
+				<textarea class="form-control" id="phone" name="phone" rows="1"></textarea>
 			</div>
 			<br>
-			<button id="butAddVideo" type="submit" class="btn btn-primary">Save</button>
+			<button id="butAddDeliveryman" type="submit" class="btn btn-primary">Save</button>
 		</form>
 	</div>
 </div>

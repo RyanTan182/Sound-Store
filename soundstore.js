@@ -15,6 +15,7 @@ const passport = require('passport');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const Handlebars = require('handlebars')
 const insecureHandlebars = allowInsecurePrototypeAccess(Handlebars)
+const Nexmo = require('nexmo');
 
 
  // To set up database with new tables set (true)
@@ -39,6 +40,11 @@ authenticate.googleStrategy(passport);
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
+
+const nexmo = new Nexmo({
+    apiKey: '599e1242',
+    apiSecret: 'Cx6LjAjj0Kjeh0F4'
+}, {debug: true});
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications

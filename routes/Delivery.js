@@ -6,6 +6,7 @@ const Deliveryman = require('../models/deliveryman');
 const router = express.Router();
 const Nexmo = require('nexmo');
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 const nexmo = new Nexmo({
     apiKey: '599e1242',
@@ -122,7 +123,9 @@ router.post('/senddelivery/:id',(req, res) =>{
 				delivery.DeliverymanID
 			)
 			const phoneNumber = number.phone
-			const text = `the inoformation is:${delivery.productTitle},${address.address}`
+			var jwttoken = jwt.sign({ id: delivery.id, address: address }, 'secretkey')
+			const text = `the inoformation is:http://192.168.1.100:5000/Delivery/updateDelivery/${jwttoken}`
+			console.log(`http://192.168.1.100:5000/Delivery/updateDelivery/${jwttoken}`);
 			nexmo.message.sendSms(
 				'6588225004', phoneNumber, text, { type: 'unicode'},
 				(err, responseData) => {
@@ -146,18 +149,19 @@ router.post('/senddelivery/:id',(req, res) =>{
 	})
 })
 
-router.put('/update/:id',async (req,res)=>{
+router.get('/update/:id/:status',async (req,res)=>{
+	var decoded = jwt.verify(req.params.id, 'secretkey')
 	let delivery = await Delivery.findOne({
 		where: {
-			userId: req.params.id
+			userId: decoded.id
 		}
 	})
 	if (delivery.status =='Waiting' || delivery .status == 'Delivering' || delivery.status == 'Reached'){
-		delivery.status = req.body.status
+		delivery.status = req.params.status
 		await delivery.save()
 		User.findOne({
 			where:{
-				id : req.params.id
+				id : decoded.id
 			},
 			raw: true
 		}).then(async (user) =>{
@@ -174,8 +178,20 @@ router.put('/update/:id',async (req,res)=>{
 					}
 				}
 			)
+			res.redirect(`/Delivery/updateDelivery/${req.params.id}`)
 		})
 	}
+})
+
+router.get('/updateDelivery/:id', function(req, res) {
+	var decoded = jwt.verify(req.params.id, 'secretkey')
+	Delivery.findOne({where: {id:decoded.id}}).then(delivery => {
+		res.render('Delivery/updateDelivery', {
+			delivery: delivery,
+			address: decoded.address,
+			jwttoken: req.params.id
+		});
+	})
 })
 
 //ordered, waiting, delivering, reached

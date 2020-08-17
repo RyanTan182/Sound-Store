@@ -53,8 +53,14 @@ router.get('/OrderCheckStaff', (req, res) => {
 	res.render('Delivery/OrderCheckStaff')
 });
 
-router.get('/OrderCheckUser', (req, res) => {
-	res.render('Delivery/OrderCheckUse')
+router.post('/OrderCheckUser/:id', (req, res) => {
+	Delivery.findOne({
+		where:{
+			userId: req.params.id
+		}
+	}).then((delivery) => {
+		res.render('Delivery/OrderCheckUser',{delivery})
+	})
 });
 
 router.post('/OrderCheckStaff/:id',(req, res) =>{

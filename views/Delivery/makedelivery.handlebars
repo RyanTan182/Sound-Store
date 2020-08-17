@@ -1,4 +1,4 @@
-<a id="stickyBtnz" href="../Delivery/createdeliveryman"><span onclick="topFunction()" id="stickyBtn" title="Create New Deliveryman"><div class="liquid"></div><i class="fa fa-plus"></i></span></a>
+<a id="stickyBtnz" href="../createdeliveryman"><span onclick="topFunction()" id="stickyBtn" title="Create New Deliveryman"><div class="liquid"></div><i class="fa fa-plus"></i></span></a>
 <div class="container">
     <h1>Deliveryman List</h1>
     <div class="container">
@@ -14,7 +14,7 @@
                 <h1>Deliveryman : {{id}}</h1>
                 <h2>Name : {{fname}} {{lname}}</h2>
                 <h3>Phone Number :{{phone}}</h3>
-                <form class="sendDelivery" action="/Delivery/senddelivery/{{id}}/" method="POST">
+                <form class="sendDelivery" onsubmit="return confirm('click ok to assign deliveryman')" action="/Delivery/senddelivery/{{id}}/" method="POST">
                     <button type="submit">Assign</button>
                 </form>
                 </div>

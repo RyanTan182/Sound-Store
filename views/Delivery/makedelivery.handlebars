@@ -5,16 +5,19 @@
         <input type="text" class="form-control mr-sm-2" id="myInput"  placeholder="Search for deliveries.." title="Type in a name">
         <div class="suggestions" ></div>
     </div>
+    <span id="orderId" hidden>{{orderId}}</span>
     {{#if deliverymans}}
         <div class="card card-body">
             {{#each deliverymans}}
-            <div class="viewz" id="Deliveryman">
+            <div class="des" id="Deliveryman">
+                <div class="description">
+                <h1>Deliveryman : {{id}}</h1>
                 <h2>Name : {{fname}} {{lname}}</h2>
                 <h3>Phone Number :{{phone}}</h3>
-                <form action="/Delivery/senddelivery/{{id}}" method="POST">
+                <form class="sendDelivery" action="/Delivery/senddelivery/{{id}}/" method="POST">
                     <button type="submit">Assign</button>
                 </form>
-
+                </div>
             </div>
             {{/each}}
 
@@ -23,6 +26,8 @@
         <h3>No Devliveryman Employed</h3>
     {{/if}}
 </div>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -35,4 +40,14 @@
 		});
 	});
 	});
+
+    for (var item = 0; item < document.getElementsByClassName("sendDelivery").length; item++) {
+        document.getElementsByClassName("sendDelivery")[item].action += document.getElementById("orderId").innerText;
+    }
 </script>
+
+<style>
+    .des{
+       
+    }
+</style>

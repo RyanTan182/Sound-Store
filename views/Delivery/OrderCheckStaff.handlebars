@@ -1,48 +1,78 @@
-
+<!--
 <div class="container">
 	<h1>Order Check</h1>
 	<div class="row">
-		<div class="col-md-5">
-			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src='/uploads/{{delivery.productImage}}'width="120px" height="100px">
-			</div>
-		</div>
-		<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-		</a>
-		</div>
-		</div>
-
-		<div class="col-md-7">
-			<p>{{address.dataValues.fname}}</p>
-			<p>{{address.dataValues.lname}}</p>
-			<p>{{address.dataValues.email}}</p>
-			<p>{{address.dataValues.address}}</p>
-			<p>{{delivery}}</p>
-
-		</div>
-		<a href="/Delivery/makedelivery"><button type=""  class="btn btn-primary">Make Delivery</button></a>
+		<div>
+		<h2 class="text-warning" id="testtest">Details Of The Delivery</h2>
+			
+				<div class="photo">
+					<img src='/uploads/{{productImage}}'>
+				</div>
+					<div class="description">
+						<div>
+							<h2>Product : {{delivery.dataValues.productTitle}}</h2>
+							<h3>Quantity :{{delivery.dataValues.quantity}}</h3>
+							<h3>UserId : {{delivery.dataValues.userId}}</h3>
+							<h1>Price : ${{delivery.dataValues.price}}</h1>
+							<h3>Status : {{delivery.dataValues.status}}</h3>
+						</div>
+						<div class="col-md-7">
+							<h2 class="text-warning"> Details of Recipient</h2>
+							<p>Name Of The Recipient :{{address.dataValues.fname}} {{address.dataValues.lname}}</p>
+							<p>Email: {{address.dataValues.email}}</p>
+							<p>Address : {{address.dataValues.address}}</p>
+							
+						</div>
+						<a href="/Delivery/makedelivery"><button class="btn btn-primary">Make Delivery</button></a>
+						<a href="/Delivery/listDlivery"><button class="btn btn-primary">Back</button></a>
+					</div>
+		
+	</div>
+		
 		
 	</div>
 
 </div>
+-->
+<div class="containter">
+	<div class="row">
+		<div class="col-md-7">
+			<div class="photo">
+					<img src='/uploads/{{delivery.dataValues.productImage}}'>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div>
+				<h1>Order ID : {{delivery.dataValues.id}}</h1>
+				<h2>Product : {{delivery.dataValues.productTitle}}</h2>
+				<h3>Quantity :{{delivery.dataValues.quantity}}</h3>
+				<h3>Status : {{delivery.dataValues.status}}</h3>
+			</div>
+			<div class="col-md-7">
+				<h2 class="text-warning"> Details of Recipient</h2>
+				<p>Name Of The Recipient :{{address.dataValues.fname}} {{address.dataValues.lname}}</p>
+				<p>Email: {{address.dataValues.email}}</p>
+				<p>Country : {{address.dataValues.country}}</p>
+				<p>Address : {{address.dataValues.address}}</p>
+				<p>Postal Code : {{address.dataValues.postalcode}}</p>
+				<p>Phone Number : {{address.dataValues.phonenum}}</p>
+				
+				
+			</div>
+			{{#if ordered}}
+			<a href="/Delivery/makedelivery/{{delivery.id}}"><button class="btn btn-primary">Make Delivery</button></a>
+			{{/if}}
+			<a href="/Delivery/listDelivery"><button class="btn btn-primary">Back</button></a>
+		</div> 
+	</div>
 
+</div>
 
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
 <style>
-	.container{
-		
+	.photo{
+		margin-top: 100px;
 	}
 </style>

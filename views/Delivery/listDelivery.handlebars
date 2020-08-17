@@ -64,27 +64,28 @@
 {{#if deliveries}}
 	<div class="card card-body">
 		<h2 class="text-warning" id="testtest">Your Devliveries</h2>
-		{{#each deliveries}}
-		<div class="viewz" id="Delivery">
-  <div class="photo">
-    <img src='/uploads/{{productImage}}'>
-  </div>
-  <div class="description">
-    <h2>Product : {{productTitle}}</h2>
-	<h3>Quantity :{{quantity}}</h3>
-	<h3>UserId : {{userId}}</h3>
-    <h1>Price : ${{price}}</h1>
-	<h3>Status : {{status}}</h3>
-	<form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
-		<button type="submit">Check</button>
-	</form>
+			{{#each deliveries}}
+			<div class="viewz" id="Delivery">
+				<div class="photo">
+					<img src='/uploads/{{productImage}}'>
+				</div>
+					<div class="description">
+						<h2>Product : {{productTitle}}</h2>
+						<h3>Quantity :{{quantity}}</h3>
+						<h3>UserId : {{userId}}</h3>
+						<h1>Price : ${{price}}</h1>
+						<h3>Status : {{status}}</h3>
+						<form action="/Delivery/OrderCheckStaff/{{id}}" method="POST">
+							<button type="submit">Check</button>
+						</form>
 
-  </div>
-</div>
+					</div>
+			</div>
 		{{/each}}
 	</div>
 
 </div>
+
 {{else}}
 	<h3>No Devliveries listed</h3>
 {{/if}}

@@ -1,8 +1,18 @@
-<p>Status</p>
-<p>{{delivery.status}}</p>
+<h1>Delivery Details</h1>
+        <h1>Order ID : {{delivery.dataValues.id}}</h1>
+                <img src='/uploads/{{delivery.dataValues.productImage}}'>
+				<h2>Product : {{delivery.dataValues.productTitle}}</h2>
+				<h3>Quantity :{{delivery.dataValues.quantity}}</h3>
+				<h3>Status : {{delivery.dataValues.status}}</h3>
+        <h2 class="text-warning"> Details of Recipient</h2>
+				<p>Name Of The Recipient :{{address.dataValues.fname}} {{address.dataValues.lname}}</p>
+				<p>Email: {{address.dataValues.email}}</p>
+				<p>Country : {{address.dataValues.country}}</p>
+				<p>Address : {{address.dataValues.address}}</p>
+				<p>Postal Code : {{address.dataValues.postalcode}}</p>
+				<p>Phone Number : {{address.dataValues.phonenum}}</p>
+
+        <br>
+        <a href="/Delivery/update/{{jwttoken}}/Delivering"><button>Delivering</button></a>
+        <a href="/Delivery/update/{{jwttoken}}/Reached"><button>Reached</button></a>
 <br>
-<a href="/Delivery/update/{{jwttoken}}/Delivering">Delivering</a>
-<a href="/Delivery/update/{{jwttoken}}/Reached">Reached</a>
-<br>
-<p>Address</p>
-<p>{{address.address}}</p>

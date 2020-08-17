@@ -27,7 +27,7 @@ const mainRoute = require('./routes/main');
 const userRoute = require('./routes/user');
 const productRoute = require('./routes/product');
 const orderRoute = require('./routes/order');
-const {formatDate, radioCheck, ifEquals} = require('./helpers/hbs');
+const {formatDate, radioCheck, ifEquals, dropDownCheck} = require('./helpers/hbs');
 const deliveryRoute = require('./routes/Delivery')
 
 const sstoreDB = require('./config/DBConnection');
@@ -68,6 +68,7 @@ app.engine('handlebars', exphbs({
 		formatDate: formatDate,
 		radioCheck: radioCheck,
 		ifEquals: ifEquals,
+		dropDownCheck: dropDownCheck
 	},
 	
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 

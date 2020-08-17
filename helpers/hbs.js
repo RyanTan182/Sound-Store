@@ -12,5 +12,12 @@ radioCheck: function(value, radioValue){
 },
 ifEquals: function (arg1, arg2, options) {
 	return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+},
+dropDownCheck: function(value, dropDownValue){
+    if (value == dropDownValue){
+        return "selected";
+    }else{
+        return "";
+    }
 }
-} ;
+};

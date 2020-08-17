@@ -187,7 +187,17 @@ router.get('/newPassword', (req, res) => {
 
 router.post('/savePassword', (req, res) => {
     // Create new user record
-    let{password,email}=req.body
+    let errors=[]
+    let{password,email,password2}=req.body
+    if(password !== password2) {
+        errors.push({text: 'Passwords do not match'});
+    }
+
+    // Checks that password length is more than 4
+    if(password.length < 4) {
+        errors.push({text: 'Password must be at least 4 characters'});
+    }
+    else{
         bcrypt.hash(password,10,function(err,hash) {
             password = hash;
             if(err) throw err;
@@ -206,6 +216,7 @@ router.post('/savePassword', (req, res) => {
                 console.log(password)
         
     });
+    }
 })
       
 router.get('/displayUsers', (req, res, next) => {
@@ -282,10 +293,10 @@ router.get('/edit/:id', (req, res) => {
             id:req.params.id,
             name:users.name,
             email:users.email,
-            password:users.password,
+            password:req.body.password,
             ContactNo:users.ContactNo,
             SecurityQn:users.SecurityQn,
-            SecurityAnswer:users.SecurityAnswer,
+            SecurityAnswer:req.body.SecurityAnswer,
         });
     }).catch(err => console.log(err)); 
 });
@@ -364,14 +375,14 @@ passport.authenticate('google',{failureRedirect:'/loginUser'}),
 router.get('/googleForm', (req, res) => {
     let errors = [];
     let {password,password2,SecurityQn,SecurityAnswer}=req.body
-    /* if(password !== password2) {
+    if(password !== password2) {
         errors.push({text: 'Passwords do not match'});
     }
     // Checks that password length is more than 4
     if(password.length < 4) {
         errors.push({text: 'Password must be at least 4 characters'});
-    } */
-    {
+    }
+    else{
         res.render('user/newPassword', {
         email:users.email,
         password:req.body.password,
@@ -383,31 +394,42 @@ router.get('/googleForm', (req, res) => {
 
 router.post('/saveDetails', (req, res) => {
     // Create new user record
-    let{password,SecurityQn,SecurityAnswer,ContactNo,email}=req.body
+    let errors=[]
+    
+    let{password,SecurityQn,SecurityAnswer,ContactNo,password2}=req.body
+    if(password !== password2) {
+        errors.push({text: 'Passwords do not match'});
+    }
+    // Checks that password length is more than 4
+    if(password.length < 4) {
+        errors.push({text: 'Password must be at least 4 characters'});
+    }
+    else{        
         bcrypt.hash(password,10,function(err,hash) {
-            password = hash;
-            bcrypt.hash(SecurityAnswer, 10, function(err, hash1){
-                SecurityAnswer=hash1;
-            if(err) throw err;
-            User.update({
-                password,
-                ContactNo,
-                SecurityQn,
-                SecurityAnswer
-            }, 
-            {
-            where: {
-            email:req.body.email
-            }
-            })
-            .then(user => {
-            alertMessage(res,'success', 'Google Account updated sucessfully!', 'fas fa-email-alt', true);
-              res.redirect('/');
-                }).catch(err => console.log(err));
-                console.log(password)
-        
-    });
+        password = hash;
+        bcrypt.hash(SecurityAnswer, 10, function(err, hash1){
+            SecurityAnswer=hash1;
+        if(err) throw err;
+        User.update({
+            password,
+            ContactNo,
+            SecurityQn,
+            SecurityAnswer
+        }, 
+        {
+        where: {
+        email:req.body.email
+        }
+        })
+        .then(user => {
+        alertMessage(res,'success', 'Google Account updated sucessfully!', 'fas fa-email-alt', true);
+          res.redirect('/');
+            }).catch(err => console.log(err));
+            console.log(password)
+    
+});
 })
+}
 })
 
 module.exports = router ;

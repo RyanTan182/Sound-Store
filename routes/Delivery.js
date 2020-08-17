@@ -14,12 +14,17 @@ const nexmo = new Nexmo({
 }, {debug: true});
 
 router.get('/listDelivery', (req, res) => {
-	Delivery.findAll({
-		order: [['productTitle', 'ASC']],
-		raw: true,
-	}).then((deliveries)=>{
-		res.render('Delivery/listDelivery',{deliveries})
-	})
+	if (req.user.UserType=='Customer'){
+		res.redirect('/Delivery/listdeliveryforuser')
+	  }
+	else{
+		Delivery.findAll({
+			order: [['productTitle', 'ASC']],
+			raw: true,
+		}).then((deliveries)=>{
+			res.render('Delivery/listDelivery',{deliveries})
+		})
+	}
 });
 
 router.get('/editDelivery', (req, res) => {
@@ -28,15 +33,19 @@ router.get('/editDelivery', (req, res) => {
 
 
 router.get('/listdeliveryforuser', (req, res) => {
-	Delivery.findAll({
+	if (req.user.UserType=='Admin'){
+		res.redirect('/Delivery/listDelivery')
+	  }
+	else{	
+		Delivery.findAll({
 		where:{
 			userId:req.user.id,
 		},
 		order: [['productTitle', 'ASC']],
 		raw: true,
 	}).then((deliveries)=>{
-		res.render('Delivery/listDelivery',{deliveries})
-	})
+		res.render('Delivery/listdeliveryforuser',{deliveries})
+	})}
 });
 
 

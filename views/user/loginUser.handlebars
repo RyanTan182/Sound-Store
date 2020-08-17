@@ -3,6 +3,7 @@
   background-color: #dd4b39;
   color: white;
    border: 1px solid green;
+    text-align: center;
 	}
 	.fab fa-goole{
 		  left:1000px;
@@ -10,13 +11,18 @@
 	}
 	#googlebutton{
 		color:white;
-		   text-align: center;	
+		text-align: center;	
 	}
 	#forgot{
 		text-align: center;
 	}
 	#options{
 		text-align: center;
+	}
+	#forgot{
+		 position: absolute;
+  		top: 375px;
+  		right: 10px;
 	}
 </style>
 <div class="row">
@@ -35,7 +41,7 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<br>
-				<a id="forgot" href='/showForgotPassword'>Forgot Password?</a>
+				 <a id="forgot" href='/showForgotPassword'>Forgot Password?</a>
 				<p id="options"> OR </p>
 				<button type="button" class="googlebtn"><a href="/user/google" id="googlebutton"><i class="fab fa-google"></i>LOGIN WITH GOOGLE</a></button>
 			</form>

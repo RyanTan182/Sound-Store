@@ -9,20 +9,20 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 const nexmo = new Nexmo({
-    apiKey: '599e1242',
-    apiSecret: 'Cx6LjAjj0Kjeh0F4'
-}, {debug: true});
+	apiKey: '599e1242',
+	apiSecret: 'Cx6LjAjj0Kjeh0F4'
+}, { debug: true });
 
 router.get('/listDelivery', (req, res) => {
-	if (req.user.UserType=='Customer'){
+	if (req.user.UserType == 'Customer') {
 		res.redirect('/Delivery/listdeliveryforuser')
-	  }
-	else{
+	}
+	else {
 		Delivery.findAll({
 			order: [['productTitle', 'ASC']],
 			raw: true,
-		}).then((deliveries)=>{
-			res.render('Delivery/listDelivery',{deliveries})
+		}).then((deliveries) => {
+			res.render('Delivery/listDelivery', { deliveries })
 		})
 	}
 });
@@ -33,19 +33,20 @@ router.get('/editDelivery', (req, res) => {
 
 
 router.get('/listdeliveryforuser', (req, res) => {
-	if (req.user.UserType=='Admin'){
+	if (req.user.UserType == 'Admin') {
 		res.redirect('/Delivery/listDelivery')
-	  }
-	else{	
+	}
+	else {
 		Delivery.findAll({
-		where:{
-			userId:req.user.id,
-		},
-		order: [['productTitle', 'ASC']],
-		raw: true,
-	}).then((deliveries)=>{
-		res.render('Delivery/listdeliveryforuser',{deliveries})
-	})}
+			where: {
+				userId: req.user.id,
+			},
+			order: [['productTitle', 'ASC']],
+			raw: true,
+		}).then((deliveries) => {
+			res.render('Delivery/listdeliveryforuser', { deliveries })
+		})
+	}
 });
 
 
@@ -55,106 +56,149 @@ router.get('/OrderCheckStaff', (req, res) => {
 
 router.post('/OrderCheckUser/:id', (req, res) => {
 	Delivery.findOne({
-		where:{
-			userId: req.params.id
+		where: {
+			id: req.params.id
 		}
 	}).then((delivery) => {
-		res.render('Delivery/OrderCheckUser',{delivery})
+		res.render('Delivery/OrderCheckUser', { delivery })
 	})
 });
 
-router.post('/OrderCheckStaff/:id',(req, res) =>{
+router.post('/OrderCheckStaff/:id', (req, res) => {
 	Addresses.findOne({
-		where:{
-			userId: req.params.id
+		where: {
+			id: req.params.id
 		}
 	}).then((address) => {
 		//comment : variable that contains what is returned above
-		console.log(address.userId)
+		console.log(address)
 		Delivery.findOne({
-			where:{
-				userId: address.userId
+			where: {
+				id: req.params.id
 			}
-		}).then((delivery)=>{
+		}).then((delivery) => {
+			if (delivery.status == 'Ordered') {
+				ordered = true
+			} else {
+				ordered = false
+			}
 			console.log(delivery)
 			console.log(address)
-			res.render('Delivery/OrderCheckStaff',{address,delivery})
+			res.render('Delivery/OrderCheckStaff', { address, delivery, ordered })
 		})
 	})
 });
 
-router.post('/createdeliveryman', (req,res) =>{
+router.post('/createdeliveryman', (req, res) => {
 	let fname = req.body.fname;
-	let	lname = req.body.lname;
+	let lname = req.body.lname;
 	let phone = req.body.phone;
-	Deliveryman.create({
-		fname,
-		lname,
-		phone,
-	}).then(() => {
-		res.redirect('/Delivery/makedelivery');
-		console.log(req.body)
-    })
-    .catch(err => console.log(err))
+	let requestid = req.body.requestid;
+	let code = req.body.code;
+	nexmo.verify.check({
+		request_id: requestid,
+		code: code
+	  }, (err, result) => {
+		if (result.status == '0') {
+			Deliveryman.create({
+				fname,
+				lname,
+				phone,
+			}).then(() => {
+				res.redirect('/Delivery/makedelivery/1');
+				console.log(req.body)
+			}).catch(err => console.log(err))
+		} else {
+			res.redirect('/Delivery/createdeliveryman?error=wrong_code')
+		}
+	})
+	  });
+
+router.post('/sendverificationcode', (req, res) => {
+	nexmo.verify.request({
+		number: req.body.phone,
+		brand: 'SoundStore',
+		code_length: '4'
+	  }, (err, result) => {
+		if (err) {
+			res.send('invalid_phone')
+		} else {
+			console.log(result)
+			res.send({res:'code_sent', id:result.request_id})
+		}
+	  });
 })
 
 router.get('/createdeliveryman', (req, res) => {
 	Deliveryman.findAll({
 		order: [['fname', 'ASC']],
 		raw: true,
-	}).then((deliverymans)=>{
-		res.render('Delivery/createdeliveryman',{deliverymans})
+	}).then((deliverymans) => {
+		res.render('Delivery/createdeliveryman', { deliverymans })
 		console.log(deliverymans)
 	})
 });
 
-router.get('/makedelivery',(req,res) => {
+router.get('/makedelivery/:id', (req, res) => {
 	console.log('ok')
 	Deliveryman.findAll({
-		order: [['fname', 'ASC']],
-		raw: true, 
-	}).then((deliverymans)=>{
-		res.render('Delivery/makedelivery',{deliverymans})
+		order: [['id', 'ASC']],
+		raw: true,
+	}).then((deliverymans) => {
+		res.render('Delivery/makedelivery', { deliverymans, orderId:req.params.id })
 		console.log(deliverymans)
 	})
 })
 
 
-router.post('/senddelivery/:id',(req, res) =>{
+router.post('/senddelivery/:deliveryid/:orderid', (req, res) => {
 	Addresses.findOne({
-		where:{
-			userId: req.params.id
+		where: {
+			id: req.params.orderid
 		},
 		raw: true
 	}).then((address) => {
 		//comment : variable that contains what is returned above
 		Delivery.findOne({
-			where:{
-				userId: address.userId
+			where: {
+				id: req.params.orderid
 			},
 			raw: true
-		}).then(async (delivery) =>{
+		}).then(async (delivery) => {
 			const number = await Deliveryman.findByPk(
-				delivery.DeliverymanID
+				req.params.deliveryid
 			)
+			Delivery.update({
+				DeliverymanID: number.dataValues.id
+			}, 
+			{ where: { id: req.params.orderid } })
 			const phoneNumber = number.phone
+			const customerPhoneNumber = await User.findByPk(
+				delivery.userId
+			)
 			var jwttoken = jwt.sign({ id: delivery.id, address: address }, 'secretkey')
 			const text = `the inoformation is:http://192.168.1.100:5000/Delivery/updateDelivery/${jwttoken}`
+			const customerText = `The delivery status is waiting.`
 			console.log(`http://192.168.1.100:5000/Delivery/updateDelivery/${jwttoken}`);
 			nexmo.message.sendSms(
-				'6588225004', phoneNumber, text, { type: 'unicode'},
+				'6588225004', phoneNumber, text, { type: 'unicode' },
 				(err, responseData) => {
-					if(err){
+					if (err) {
 						console.log(err);
-					}else{
-						Delivery.update({
-							status: 'Waiting'
-					},{
-							where: {
-								userId : req.params.id
+					} else {
+						nexmo.message.sendSms(
+							'6588225004', customerPhoneNumber.ContactNo, customerText, { type: 'unicode' },
+							(err, responseData) => {
+								Delivery.update({
+									status: 'Waiting'
+								}, {
+									where: {
+										id: req.params.orderid
+									}
+		
+								})
 							}
-							
-						})
+						)
 						console.log(delivery.status)
 					}
 				}
@@ -164,31 +208,31 @@ router.post('/senddelivery/:id',(req, res) =>{
 	})
 })
 
-router.get('/update/:id/:status',async (req,res)=>{
+router.get('/update/:id/:status', async (req, res) => {
 	var decoded = jwt.verify(req.params.id, 'secretkey')
 	let delivery = await Delivery.findOne({
 		where: {
-			userId: decoded.id
+			id: decoded.id
 		}
 	})
-	if (delivery.status =='Waiting' || delivery .status == 'Delivering' || delivery.status == 'Reached'){
+	if (delivery.status == 'Waiting' || delivery.status == 'Delivering' || delivery.status == 'Reached') {
 		delivery.status = req.params.status
 		await delivery.save()
 		User.findOne({
-			where:{
-				id : decoded.id
+			where: {
+				id: decoded.id
 			},
 			raw: true
-		}).then(async (user) =>{
+		}).then(async (user) => {
 			const users = await User.findByPk(
 				user.id
 			)
 			const phoneNumber = users.ContactNo
 			const text = `Delivery status changed:${delivery.status}`
 			nexmo.message.sendSms(
-				'6588225004', phoneNumber, text, { type: 'unicode'},
+				'6588225004', phoneNumber, text, { type: 'unicode' },
 				(err, responseData) => {
-					if(err){
+					if (err) {
 						console.log(err);
 					}
 				}
@@ -198,12 +242,14 @@ router.get('/update/:id/:status',async (req,res)=>{
 	}
 })
 
-router.get('/updateDelivery/:id', function(req, res) {
+router.get('/updateDelivery/:id', function (req, res) {
 	var decoded = jwt.verify(req.params.id, 'secretkey')
-	Delivery.findOne({where: {id:decoded.id}}).then(delivery => {
+	Delivery.findOne({ where: { id: decoded.id } }).then(delivery => {
+		var address = {dataValues: decoded.address}
+		console.log(address)
 		res.render('Delivery/updateDelivery', {
 			delivery: delivery,
-			address: decoded.address,
+			address: address,
 			jwttoken: req.params.id
 		});
 	})

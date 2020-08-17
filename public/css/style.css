@@ -269,6 +269,9 @@
 
 
 /*product Description*/
+#imgDisplay {
+  width: 450px;
+}
 .preview {
   display: -webkit-box;
   display: -webkit-flex;
@@ -304,10 +307,8 @@
     .preview-thumbnail.nav-tabs li:last-of-type {
       margin-right: 0; }
 
-.tab-content {
-  overflow: hidden; }
+
   .tab-content img {
-    width: 100%;
     -webkit-animation-name: opacity;
             animation-name: opacity;
     -webkit-animation-duration: .3s;
@@ -678,12 +679,12 @@ input[type="checkbox"].filled:not(:disabled):after {
   box-sizing: border-box;
 }
 body .viewz {
-  width: 1050px;
+  width: 100%;
   position: relative;
   background: white;
   margin: 20px 20px 20px 20px;
   top: 150px;
-  left: 515px;
+  left: 48%;
   transform: translate(-50%, -50%);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   transition: all 0.3s;

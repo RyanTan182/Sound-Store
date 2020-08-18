@@ -57,7 +57,7 @@ router.get('/OrderCheckStaff', (req, res) => {
 router.post('/OrderCheckUser/:id', (req, res) => {
 	Delivery.findOne({
 		where: {
-			userId: req.params.id
+			id: req.params.id
 		}
 	}).then((delivery) => {
 		res.render('Delivery/OrderCheckUser', { delivery })
@@ -93,15 +93,40 @@ router.post('/createdeliveryman', (req, res) => {
 	let fname = req.body.fname;
 	let lname = req.body.lname;
 	let phone = req.body.phone;
-	Deliveryman.create({
-		fname,
-		lname,
-		phone,
-	}).then(() => {
-		res.redirect('/Delivery/makedelivery');
-		console.log(req.body)
+	let requestid = req.body.requestid;
+	let code = req.body.code;
+	nexmo.verify.check({
+		request_id: requestid,
+		code: code
+	  }, (err, result) => {
+		if (result.status == '0') {
+			Deliveryman.create({
+				fname,
+				lname,
+				phone,
+			}).then(() => {
+				res.redirect('/Delivery/makedelivery/1');
+				console.log(req.body)
+			}).catch(err => console.log(err))
+		} else {
+			res.redirect('/Delivery/createdeliveryman?error=wrong_code')
+		}
 	})
-		.catch(err => console.log(err))
+	  });
+
+router.post('/sendverificationcode', (req, res) => {
+	nexmo.verify.request({
+		number: req.body.phone,
+		brand: 'SoundStore',
+		code_length: '4'
+	  }, (err, result) => {
+		if (err) {
+			res.send('invalid_phone')
+		} else {
+			console.log(result)
+			res.send({res:'code_sent', id:result.request_id})
+		}
+	  });
 })
 
 router.get('/createdeliveryman', (req, res) => {
@@ -117,7 +142,7 @@ router.get('/createdeliveryman', (req, res) => {
 router.get('/makedelivery/:id', (req, res) => {
 	console.log('ok')
 	Deliveryman.findAll({
-		order: [['fname', 'ASC']],
+		order: [['id', 'ASC']],
 		raw: true,
 	}).then((deliverymans) => {
 		res.render('Delivery/makedelivery', { deliverymans, orderId:req.params.id })

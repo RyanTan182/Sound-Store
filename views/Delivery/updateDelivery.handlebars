@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Delivery Details</h1>
         <h1>Order ID : {{delivery.dataValues.id}}</h1>
                 <img src='/uploads/{{delivery.dataValues.productImage}}'>
@@ -13,6 +14,14 @@
 				<p>Phone Number : {{address.dataValues.phonenum}}</p>
 
         <br>
-        <a href="/Delivery/update/{{jwttoken}}/Delivering"><button>Delivering</button></a>
-        <a href="/Delivery/update/{{jwttoken}}/Reached"><button>Reached</button></a>
+        <a href="/Delivery/update/{{jwttoken}}/Delivering"><button class="btn btn-primary">Delivering</button></a>
+        <a href="/Delivery/update/{{jwttoken}}/Reached"><button class="btn btn-primary">Reached</button></a>
 <br>
+<br>
+<br>
+</div>
+<style>
+	.container{
+		bottom: 100px;
+	}
+</style>

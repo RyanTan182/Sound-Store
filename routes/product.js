@@ -181,9 +181,6 @@ router.get('/details/:id', (req, res) => {
             id: req.params.id
         }
     }).then((product) => {
-        console.log(req.params.id)
-        checkOptions(product);
-
         res.render('product/productDetails', {
             product
         });

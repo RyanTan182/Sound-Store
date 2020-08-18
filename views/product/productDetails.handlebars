@@ -1,5 +1,3 @@
-
-	
 	<div class="container">
 		<div class="card">
 			<div class="container-fliud">
@@ -43,3 +41,83 @@
 			</div>
 		</div>
 	</div>
+
+<section class="intro" style="margin-top:5%;">
+    <div id="sections">
+      <h3 id="others" style="margin-left: 140px;">Other Products you might like</h3>
+
+<div  style="float: left;margin-left:20%">
+	<div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
+        <div class="product-grid5">
+            <div class="product-image5">
+                <a href="#">
+                    <img class="pic-1" src="/uploads/earpieces.jpg" >
+                    <img class="pic-2" src="/uploads/earpieces.jpg">
+                </a>
+                <ul class="social">
+                    <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                    <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+                    <li><form method="POST" action="/order/cart/{{id}}">
+							<button type="submit" data-tip="Add to cart"><i class="fa fa-shopping-bag"></i></button>													
+							</form></li>
+                </ul>
+                <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
+            </div>
+			
+            <div class="product-content">
+                <h3 id="prodT" class="title" style="color: white;"></h3>
+                <div class="price" id="pPrice" style="color: white;"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div  style="float: right;margin-right:20%">
+	<div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
+        <div class="product-grid5">
+            <div class="product-image5">
+                <a href="#">
+                    <img class="pic-1" id="2ndImg" src="/uploads/sony.jpg" >
+                    <img class="pic-2" id="2ndImg" src="/uploads/sony.jpg">
+                </a>
+                <ul class="social">
+                    <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                    <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
+                    <li><form method="POST" action="/order/cart/{{id}}">
+							<button type="submit" data-tip="Add to cart"><i class="fa fa-shopping-bag"></i></button>													
+							</form></li>
+                </ul>
+                <a href="/product/details/{{id}}" class="select-options"><i class="fa fa-arrow-right"></i>Read More</a>
+            </div>
+			
+            <div class="product-content">
+                <h3 id="prodT2" class="title" style="color: white;"></h3>
+                <div class="price" id="pPrice2" style="color: white;"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </section>
+
+<script>
+	$(document).ready(function(){
+  var myArray = localStorage.getItem('myArray');
+	var myPrice = localStorage.getItem('myPrice');
+	var myArray1 = myArray.split(',');
+	var myArray2 = myPrice.split(',');
+  var randomTitle = myArray1[Math.floor(Math.random()*myArray1.length)];
+  var randomTitle2 = myArray1[Math.floor(Math.random()*myArray1.length)];
+  var randomPrice = myArray2[Math.floor(Math.random()*myArray2.length)];
+  var randomPrice2 = myArray2[Math.floor(Math.random()*myArray2.length)];
+  document.getElementById("prodT").innerHTML = randomTitle;
+	document.getElementById("prodT2").innerHTML = randomTitle2;
+	document.getElementById("pPrice").innerHTML = '$' + randomPrice;
+	document.getElementById("pPrice2").innerHTML = '$' + randomPrice2;
+	});
+</script>

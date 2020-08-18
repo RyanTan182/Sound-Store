@@ -30,8 +30,8 @@
 
 <script>
   let lizt = []
+  let pPrice = []
 </script>
-
 {{#each products}}
 <div class="rowz">
 	<div class="product" data-category="{{brand}} {{type}}" style="margin-left:auto;">
@@ -61,23 +61,9 @@
   </div>
 
 
-
-  <!--<section class="products">
-
-		<div class="product-card">
-			<div class="product-image"></div>
-				<img src="/uploads/{{productImage}}" alt="Denim Jeans" style="width:100px">
-			</div>
-			<div class="product-info">
-				<h5>{{productTitle}}</h5>
-				<h6>${{price}}</h6>
-    		</div>
-		</div>
-
-	</section>-->
-
   <script>
     lizt.push(`{{productTitle}}`)
+    pPrice.push(`{{price}}`)
   </script>
 
   {{/each}}
@@ -235,4 +221,11 @@
 		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
   })
+</script>
+
+<script>
+  $('#store').on('click', function(){
+    localStorage.setItem('myArray', lizt);
+    localStorage.setItem('myPrice', pPrice);
+  });
 </script>

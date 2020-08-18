@@ -890,3 +890,30 @@ textarea {
 input[type=file]{ 
   color:transparent;
 }
+
+section {
+  width: 100%;
+  padding: 0 7%;
+  display: table;
+  margin: 0;
+  max-width: none;
+  background-color: #373B44;
+  height: 100vh;
+}
+
+
+.intro {
+  height: 50vh;
+}
+
+.sections {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#others {
+  font-size: 3em;
+  display: block;
+  color: white;
+  font-weight: 300;
+}

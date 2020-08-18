@@ -1,25 +1,55 @@
-
+<!--
 <div class="container">
 	<h1>Order Check</h1>
-	<div class="row">
+	<div class="card card-body">
 		
 
 		<div class="col-md-7">
-			<img src='/uploads/{{delivery.dataValues.productImage}}'width="120px" height="100px">
+			<img src='/uploads/{{delivery.dataValues.productImage}}'width="200px" height="200px">
+		</div>
+		<div class="col-md-7">
 			<h1>Order ID : {{delivery.dataValues.id}}</h1>
 			<h2>Product : {{delivery.dataValues.productTitle}}</h2>
 			<h3>Quantity :{{delivery.dataValues.quantity}}</h3>
 			<h3>Status : {{delivery.dataValues.status}}</h3>
+			<a href="/Delivery/listdeliveryforuser"><button class="btn btn-primary">Back</button></a>
 		</div>
-		
-		<a href="/Delivery/listdeliveryforuser"><button class="btn btn-primary">Back</button></a>
 	</div>
 
 </div>
-
+-->
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img id="imgDisplay" src="/uploads/{{delivery.dataValues.productImage}}" /></div>
+						</div>
+
+						
+					</div>
+					<div class="details col-md-6">
+						<div>
+							<h1 class="text-warning">Product Detail:</h1>
+							<h3>Product : {{delivery.dataValues.productTitle}}</h3>
+							<h3>Quantity :{{delivery.dataValues.quantity}}</h3>
+							<h3>Price : ${{delivery.dataValues.totalPrice}}</h3>
+							<h3>Status : {{delivery.dataValues.status}}</h3>
+						</div>
+						<div>
+							<a href="/Delivery/listdeliveryforuser"><button class="btn btn-primary">Back</button></a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

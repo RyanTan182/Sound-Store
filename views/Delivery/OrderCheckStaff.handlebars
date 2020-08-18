@@ -34,14 +34,15 @@
 
 </div>
 -->
+<!--
 <div class="containter">
-	<div class="row">
+	<div class="card card-body">
 		<div class="col-md-7">
 			<div class="photo">
 					<img src='/uploads/{{delivery.dataValues.productImage}}'>
 			</div>
 		</div>
-		<div class="col-md-7">
+		<div class="col-md-7" id="order">
 			<div>
 				<h1>Order ID : {{delivery.dataValues.id}}</h1>
 				<h2>Product : {{delivery.dataValues.productTitle}}</h2>
@@ -67,15 +68,60 @@
 	</div>
 
 </div>
+-->
+
+<div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img id="imgDisplay" src="/uploads/{{delivery.dataValues.productImage}}" /></div>
+						</div>
+
+						
+					</div>
+					<div class="details col-md-6">
+						<div>
+							<h1 class="text-warning">Product Detail:</h1>
+							<p>Order ID : {{delivery.dataValues.id}}</hp>
+							<p>Product : {{delivery.dataValues.productTitle}}</p>
+							<p>Quantity :{{delivery.dataValues.quantity}}</p>
+							<p>Status : {{delivery.dataValues.status}}</p>
+							<h1 class="text-warning"> Details of Recipient</h2>
+							<p>Name Of The Recipient :{{address.dataValues.fname}} {{address.dataValues.lname}}</p>
+							<p>Email: {{address.dataValues.email}}</p>
+							<p>Country : {{address.dataValues.country}}</p>
+							<p>Address : {{address.dataValues.address}}</p>
+							<p>Postal Code : {{address.dataValues.postalcode}}</p>
+							<p>Phone Number : {{address.dataValues.phonenum}}</p>
+						</div>
+						<div>
+							{{#if ordered}}
+							<a href="/Delivery/makedelivery/{{delivery.id}}"><button class="btn btn-primary">Make Delivery</button></a>
+							{{/if}}
+							<a href="/Delivery/listDelivery"><button class="btn btn-primary">Back</button></a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
 <style>
 	.photo{
-		margin-top: 100px;
+		margin-top: 0px;
 	}
 	.container{
 		bottom: 100px;
+	}
+	#order{
+		float: right;
 	}
 </style>

@@ -105,7 +105,7 @@ router.post('/createdeliveryman', (req, res) => {
 				lname,
 				phone,
 			}).then(() => {
-				res.redirect('/Delivery/makedelivery/1');
+				res.redirect('/Delivery/makedelivery');
 				console.log(req.body)
 			}).catch(err => console.log(err))
 		} else {
@@ -150,6 +150,16 @@ router.get('/makedelivery/:id', (req, res) => {
 	})
 })
 
+router.get('/makedelivery', (req, res) => {
+	console.log('ok')
+	Deliveryman.findAll({
+		order: [['id', 'ASC']],
+		raw: true,
+	}).then((deliverymans) => {
+		res.render('Delivery/makedelivery', { deliverymans, orderId:req.params.id })
+		console.log(deliverymans)
+	})
+})
 
 router.post('/senddelivery/:deliveryid/:orderid', (req, res) => {
 	Addresses.findOne({

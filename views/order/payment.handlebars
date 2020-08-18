@@ -1,24 +1,22 @@
+<style>
+.class{
+	text-align: center;
+}
 
-<div class="row">
+</style>
+
+
+
+<h3 class="text-center">Payment</h3>
+<div style="text-align: center;">
+<img class="logo" src="/img/SAlogo1.png">
+</div>
+<div class="rows"style="width:800px; float:left;" id="card">
 	<div class="col-md-6 mx-auto">
 		<div class="card card-body">
-			<img class="logo" src="/img/SAlogo1.png">
-			<h3 class="text-center">Payment</h3>
-			<div class="accordion" id="storyAccordion">
-					<div class="card-header" id="headingOne">
-						<button class="btn btn-link" type="button" data-toggle="collapse"
-								data-target="#collapseOne"
-								aria-expanded="false" aria-controls="collapseOne"
-						>
-							Credit/Debit Card<i class="fas fa-chevron-down"></i>
-						</button>
 
-					</div>
-
-					<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-						 data-parent="#storyAccordion"
-					>		
-						<div class="card-body">
+						
+			<h3>Debit/Credit Card payment</h3>			
 			<form action="/order/confirmation" method="post">
 				<div class="form-group">
 					<label for="name">Credit Card Number</label>
@@ -36,29 +34,19 @@
 					<label for="password2">Security Number</label>
 					<input type="text"  name="password2" class="form-control" value="" required>
 				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				
 			</form>
 		</div>
-		
 	</div>
 </div>
-<div class="accordion" id="storyAccordion">
-					<div class="card-header" id="headingOne">
-						<button class="btn btn-link" type="button" data-toggle="collapse"
-								data-target="#collapseOne"
-								aria-expanded="false" aria-controls="collapseOne">
-							Paypal<i class="fas fa-chevron-down"></i>
-						</button>
-
-					</div>
-
-					<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-						 data-parent="#storyAccordion">		
-						<div class="card-body">
 
 
 
+<div class="row">
+	<div class="col-md-6 mx-auto">
+		<div class="card card-body"style="width:300px; float:right;">
 
+	<h3>Paypal</h3>
     <!-- Set up a container element for the button -->
     <div id="paypal-button-container"></div>
 
@@ -99,9 +87,13 @@
         }).render('#paypal-button-container');
     </script>
 	
-
+		</div>
     
-						</div>
+	</div>
 					
 </div>
-
+<div style="padding-top:100px;padding-right:150px;">
+<form action="/order/confirmation" method="post">
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>

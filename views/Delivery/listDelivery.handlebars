@@ -63,7 +63,7 @@
 <br>
 {{#if deliveries}}
 	<div class="card card-body">
-		<h2 class="text-warning" id="testtest">Your Devliveries</h2>
+		<h2 class="text-warning" id="testtest">Your Deliveries</h2>
 		<br>
 			{{#each deliveries}}
 			<div class="viewz" id="Delivery">
@@ -83,7 +83,9 @@
 					</div>
 			</div>
 		{{/each}}
+		<a href="/Delivery/makedelivery"><button class="btn btn-primary" id="look">Look At Deliveryman</button></a>
 	</div>
+	
 
 </div>
 
@@ -106,5 +108,10 @@
 </script>
 
 <style>
-
+	.container{
+		bottom: 100px;
+	}
+	#look{
+		float:right
+	}
 </style>
